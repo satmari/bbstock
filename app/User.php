@@ -32,18 +32,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	protected $hidden = ['password', 'remember_token'];
 
 	
-	/// 14. Eloquent Relationships in Laravel 5 Fundamentals
-	// many articles belongs to one user, and one article belongs to one user
-	// model User
-	public function articles() {
+	
 
-		return $this->hasMany('App\Article');
-	}
-	// model article
-	public function user() {
-
-		return $this->belongsTo('App\User');
-	}
 
 
 }

@@ -8,9 +8,8 @@
 	<title>BBStock Application</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-
-	<!-- Fonts -->
-	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+	<link href="{{ asset('/css/css.css') }}" rel="stylesheet">
+	<link href="{{ asset('/css/custom.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -63,7 +62,8 @@
 	@yield('error')
 
 	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="{{ asset('/js/jquery.min.js') }}" type="text/javascript" ></script>
+    <script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript" ></script>
+	
 </body>
 </html>

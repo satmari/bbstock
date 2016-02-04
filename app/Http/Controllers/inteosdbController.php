@@ -194,5 +194,4 @@ class inteosdbController extends Controller {
 	{
 		//
 	}
-
 }

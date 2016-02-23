@@ -8,7 +8,8 @@
 				<div class="panel-heading">Remove BB form Stock</div>
 				
 				{!! Form::open(['url' => 'removebb\destroy']) !!}
-
+				<input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
+				
 				<div class="panel-body">
 					{!! Form::input('number', 'bb_to_remove', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
 				</div>

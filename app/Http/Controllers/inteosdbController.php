@@ -48,7 +48,7 @@ class inteosdbController extends Controller {
 			'somevariable' => $inteosbbcode,
 		));*/
 		// Live database
-		$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant, [CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [BdkCLZG].[dbo].[CNF_BlueBox] FULL outer join [BdkCLZG].[dbo].CNF_PO on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [BdkCLZG].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [BdkCLZG].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+		$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [BdkCLZG].[dbo].[CNF_BlueBox] FULL outer join [BdkCLZG].[dbo].CNF_PO on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [BdkCLZG].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [BdkCLZG].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
 			'somevariable' => $inteosbbcode,
 		));
 		
@@ -82,6 +82,10 @@ class inteosdbController extends Controller {
 		$IntKeyPO =  $inteos_array[0]['IntKeyPO'];
 		$BlueBoxNum =  $inteos_array[0]['BlueBoxNum'];
 		$BoxQuant =  $inteos_array[0]['BoxQuant'];
+		$BoxDateTemp =  $inteos_array[0]['CREATEDATE'];
+		$timestamp = strtotime($BoxDateTemp);
+		$BoxDate = date('Y-m-d H:i:s', $timestamp);
+		//dd($BoxDate);
 		$POnum =  $inteos_array[0]['POnum'];
 		$Variant =  $inteos_array[0]['Variant'];
 		$ClrDesc = $inteos_array[0]['ClrDesc'];
@@ -91,7 +95,7 @@ class inteosdbController extends Controller {
 	
 		//return view('welcome', compact('bbstock', 'inteos'));
 		//return view('welcome', compact('IntKeyPO', 'BlueBoxNum'));
-		return view('inteosdb.create', compact('BlueBoxCode', 'BlueBoxNum', 'BoxQuant', 'POnum', 'Variant', 'ClrDesc', 'StyCod', 'ColorCode', 'Size' ));
+		return view('inteosdb.create', compact('BlueBoxCode', 'BlueBoxNum', 'BoxQuant', 'BoxDate','POnum', 'Variant', 'ClrDesc', 'StyCod', 'ColorCode', 'Size' ));
 	}
 
 	public function findbb()

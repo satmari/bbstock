@@ -22,7 +22,7 @@ class bbStockController extends Controller {
 	public function create(Request $request) {
 		//
 		//validation
-		$this->validate($request, ['BlueBoxCode'=>'required','QtyofBB'=>'required','BBLocation' => 'required|min:6']);
+		$this->validate($request, ['BlueBoxCode'=>'required','QtyofBB'=>'required','BBLocation' => 'required']);
 
 		$inteosinput = $request->all(); // change use (delete or comment user Requestl; )
 		//var_dump($inteosinput);
@@ -35,6 +35,7 @@ class bbStockController extends Controller {
 		$color = $inteosinput['ColorCode'];
 		$size = $inteosinput['Size'];
 		$qty = $inteosinput['BoxQuant'];
+		$boxdate = $inteosinput['BoxDate'];
 		$numofbb = $inteosinput['QtyofBB'];
 		$location = $inteosinput['BBLocation'];
 	
@@ -52,6 +53,7 @@ class bbStockController extends Controller {
 			$bbStock->color = $color;
 			$bbStock->size = $size;
 			$bbStock->qty = $qty;
+			$bbStock->boxdate = $boxdate;
 			$bbStock->numofbb = $numofbb;
 			$bbStock->location = $location;
 

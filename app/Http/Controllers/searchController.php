@@ -56,23 +56,19 @@ class searchController extends Controller {
 		if ($size) {
 			$q->searchsize($size);
 		}
+		$search = $q->get()->sortBy('boxdate');
 
-		$search = $q->get();
+		
+		// if ($po) {
+		// 	$search1 = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock WHERE po = ".$po." ORDER BY boxdate"));
 
-		//$search = bbStock::SearchPo()->get();
+		// } else if ($size) {
+		// 	$search1 = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock WHERE size = ".$size));
+		// } else {
+		// 	$search1 = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock "));
+		// }
 
-		//var_dump($search);
-		/*
-		$bbcode = $search['bbcode'];
-		$bbname = $search['bbname'];
-		$po = $search['po'];
-		$style = $search['style'];
-		$color = $search['color'];
-		$size = $search['size'];
-		$qty = $search['qty'];
-		$numofbb = $search['numofbb'];
-		$location = $search['location'];
-		*/
+
 
 		if ($search == false) {
 		 	return view('search.error'); //1971107960

@@ -22,6 +22,7 @@ class CreateBbStockTable extends Migration {
 			$table->string('color', 12);
 			$table->string('size', 8);
 			$table->integer('qty');
+			$table->dateTime('boxdate');
 			$table->tinyInteger('numofbb');
 			$table->string('location', 24);
 

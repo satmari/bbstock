@@ -55,7 +55,16 @@
 	@yield('content')
 
 	<!-- Scripts -->
-	
+	<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+	<meta name="csrf-token" content="{{ csrf_token() }}" />
+	<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+	</script>
+
 	<script src="{{ asset('/js/jquery.min.js') }}" type="text/javascript" ></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript" ></script>
 	

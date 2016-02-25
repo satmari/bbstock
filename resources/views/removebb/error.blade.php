@@ -7,7 +7,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Error!</div>
 				<br>
-				<h4 style="color:red;">BB NOT exist in Stock</h4>
+				<h4 style="color:red;">{{ $msg }}</h4>
 				<hr>
 				<div class="">
 						<a href="{{url('/removebb')}}" class="btn btn-default btn-lg center-block">Try again to remove BB</a>

@@ -64,6 +64,52 @@
 	<!-- Scripts -->
 	<script src="{{ asset('/js/jquery.min.js') }}" type="text/javascript" ></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript" ></script>
+
+        <script type="text/javascript">
+	$(function() {
+
+	/*
+    $('.session').keypress(function(event) {
+  		if ( event.which == 13 ) {
+     		event.preventDefault();
+  		}
+  		xTriggered++;
+  		var msg = "Handler for .keypress() called " + xTriggered + " time(s).";
+  		$.print( msg, "html" );
+  		//$.print( event );
+	});
+	*/
+	// $('#proba').keyup(function(e){
+	// 	if(e.keyCode == 13) {
+	// 		var bblist = $('#proba').val();
+	//   		$("#display").append("<li>" + bblist + "</li>");
+
+	//   		$('#proba').val('');
+
+	//   		var optionTexts = [];
+	// 		$("#display li").each(function() {
+	// 			optionTexts.push($(this).text()) 
+	// 		});
+
+	// 		console.log(optionTexts);
+	// 	}
+	// });
+	
+	/*
+	$("#proba").change(function() {
+    	alert("Something happened!");
+	});
+		
+	$('#proba').keyup(function () {
+  		$('#display').text($(this).val());
+	});
+	*/
+	//console.log("proba");
+
+	});	
+    </script>
+
+
 	
 </body>
 </html>

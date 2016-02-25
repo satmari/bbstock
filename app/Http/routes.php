@@ -34,6 +34,8 @@ Route::patch('bbstock/{id}', 'bbstockController@update');
 Route::get('removebb', 'removebbController@index');
 Route::get('removebb/destroy', 'removebbController@destroy');
 Route::post('removebb/destroy', 'removebbController@destroy');
+Route::get('removebb/destroybb', 'removebbController@destroybb');
+Route::post('removebb/destroybb', 'removebbController@destroybb');
 
 Route::get('search', 'searchController@index');
 Route::post('search', 'searchController@search');

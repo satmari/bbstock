@@ -18,13 +18,14 @@
 					{!! Form::input('number', 'bb_to_remove', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
 				</div>
 
+				{{--
 				<div class="panel-body">
-					{{-- {!! Form::submit('Remove BB', ['class' => 'btn btn-danger btn-lg center-block']) !!} --}}
+					{!! Form::submit('Remove BB', ['class' => 'btn btn-danger btn-lg center-block']) !!} 
 				</div>
-
+				--}}
 				@include('errors.list')
-
 				{!! Form::close() !!}
+				<hr>
 
 				{{-- 
 				<input id="proba" type="text" class="form-control" name="proba">

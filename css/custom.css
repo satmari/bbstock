@@ -1,0 +1,6 @@
+.navbar-default {
+    /*border-color: #6EBDEA !important;*/
+    /*background-image: linear-gradient(#FFFFFF, #F1F1F1 60%, #EAEAEA) !important;*/
+    border-color: #0622AD !important;
+    background-image: linear-gradient(rgb(222, 238, 255), rgba(254, 255, 253, 0.37) 60%, rgb(173, 225, 255)) !important;
+}

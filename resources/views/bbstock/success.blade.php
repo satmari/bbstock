@@ -16,13 +16,18 @@
 				<p>Qty: {{$qty}}</p>
 				<p>Number of boxes: {{$numofbb}}</p>
 				<p>Location: {{$location}}</p>
+				
+				<br>
+				<div class="">
+						<a href="{{url('/inteosdb')}}" class="btn btn-success btn-lg">Add new BB</a>
+				</div>
 				<hr>
 				<div class="panel-body">
 					<div class="">
 						<a href="{{url('/')}}" class="btn btn-default btn-lg center-block">Back to main menu</a>
 					</div>
 				</div>
-					
+				
 			</div>
 		</div>
 	</div>

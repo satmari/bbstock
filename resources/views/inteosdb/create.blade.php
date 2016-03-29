@@ -49,6 +49,11 @@
 				@include('errors.list')
 
 				{!! Form::close() !!}
+
+				<br>
+				<div class="">
+						<a href="{{url('/')}}" class="btn btn-default btn-lg center-block">Back to main menu</a>
+				</div>
 			</div>
 		</div>
 	</div>

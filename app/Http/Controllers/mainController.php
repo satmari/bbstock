@@ -4,6 +4,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Session;
+
 
 class mainController extends Controller {
 
@@ -15,6 +17,8 @@ class mainController extends Controller {
 	public function index()
 	{
 		//
+
+		Session::set('bb_to_remove_array', null);
 		return view('first');
 	}
 

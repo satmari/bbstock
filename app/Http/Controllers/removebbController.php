@@ -115,7 +115,7 @@ class removebbController extends Controller {
 				}
 			}
 			Session::set('bb_to_remove_array', null);
-			$msg = "All BB succesfuly removed form Stock";
+			$msg = "All scanned BB succesfuly removed form Stock";
 			return view('removebb.success',compact('msg'));
 		}
 

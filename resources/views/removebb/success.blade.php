@@ -12,7 +12,7 @@
 				<hr>
 				<br>
 				<div class="">
-						<a href="{{url('/removebb')}}" class="btn btn-default btn-lg center-block">Back to Remove BB form stock</a>
+						<a href="{{url('/removebb')}}" class="btn btn-danger btn-lg">Remove another BB</a>
 				</div>
 				<br>
 				<div class="">

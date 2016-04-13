@@ -32,6 +32,9 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/export') }}">Export to all CSV</a></li>
 				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/map') }}">Map</a></li>
+				</ul>
 				{{--<ul class="nav navbar-nav">
 					<li><a href="{{ url('/home') }}">Home</a></li>
 				</ul>--}}

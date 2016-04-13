@@ -46,6 +46,9 @@ Route::get('export', 'exportController@create');
 
 Route::get('home', 'HomeController@index');
 
+Route::get('map', 'mapController@index');
+Route::get('map/{id}', 'mapController@showbygroup');
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

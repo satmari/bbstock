@@ -84,4 +84,12 @@ class bbStockController extends Controller {
 
 		return view('bbstock.show', compact('bb'));
 	}
+	public function delete($id) {
+
+		$bb = bbStock::findOrFail($id);
+		// dd($bb);
+		$bb->delete();
+
+		return Redirect::to('/');
+	}
 }

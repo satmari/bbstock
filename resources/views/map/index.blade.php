@@ -25,6 +25,7 @@
 			<div class="text-center col-md-6 col-md-offset-10">
 				<a href="{{url('/map/group1')}}" class="btn btn-default btn-lg center-block">Group 1</a>
 				<a href="{{url('/map/group2')}}" class="btn btn-default btn-lg center-block">Group 2</a>
+				<a href="{{url('/map/suspended')}}" class="btn btn-default btn-lg center-block">Suspended</a>
 			</div>
 
 		</div>

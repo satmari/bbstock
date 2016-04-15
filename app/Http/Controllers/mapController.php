@@ -28,6 +28,8 @@ class mapController extends Controller {
 			$searchid =  "GROUP 1";
 		} elseif  ($id == "group2") { 
 			$searchid =  "GROUP 2";
+		} elseif  ($id == "suspended") { 
+			$searchid =  "SUSPENDED";
 		} else {
 			$searchid = $id."-%";
 		}
@@ -41,10 +43,20 @@ class mapController extends Controller {
 		} elseif  ($id == "group2") { 
 			$id = "GROUP 2";
 			return view('map.mapbygrouptemp',compact('id','bbstockbygroup'));
+		} elseif  ($id == "suspended") { 
+			$id = "SUSPENDED";
+			return view('map.mapbygrouptemp',compact('id','bbstockbygroup'));
 		} else {
 			return view('map.mapbygroup',compact('id','bbstockbygroup'));
 		}
 	}
+
+	public function table() {
+
+		$bbstock = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock ORDER BY po"));
+		return view('map.showtable',compact('bbstock'));
+	}
+	
 	
 
 }

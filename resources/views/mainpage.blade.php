@@ -9,6 +9,9 @@
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/css.css') }}" rel="stylesheet">
+	<!-- <link href="{{ asset('/css/bootstrap.min.css') }}" rel='stylesheet' type='text/css'> -->
+	<link href="{{ asset('/css/bootstrap-table.css') }}" rel='stylesheet' type='text/css'>
+	<link href="{{ asset('/css/jquery-ui.min.css') }}" rel='stylesheet' type='text/css'>
 	<link href="{{ asset('/css/custom.css') }}" rel="stylesheet">
 
 </head>
@@ -71,9 +74,23 @@
 	<script src="{{ asset('/js/jquery.min.js') }}" type="text/javascript" ></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript" ></script>
 
+    <script src="{{ asset('/js/bootstrap-table.js') }}" type="text/javascript" ></script>
+	<script src="{{ asset('/js/jquery-ui.min.js') }}" type="text/javascript" ></script>
+
+	<script src="{{ asset('/js/tableExport.js') }}" type="text/javascript" ></script>
+	<script src="{{ asset('/js/FileSaver.min.js') }}" type="text/javascript" ></script>
+	<script src="{{ asset('/js/bootstrap-table-export.js') }}" type="text/javascript" ></script>
+
         <script type="text/javascript">
 	$(function() {
+		$('#filter').keyup(function () {
 
+	        var rex = new RegExp($(this).val(), 'i');
+	        $('.searchable tr').hide();
+	        $('.searchable tr').filter(function () {
+	            return rex.test($(this).text());
+	        }).show();
+		});
 	/*
     $('.session').keypress(function(event) {
   		if ( event.which == 13 ) {

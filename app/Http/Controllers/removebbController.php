@@ -85,8 +85,7 @@ class removebbController extends Controller {
 			}
 		}
 
-		return view('removebb.index',compact('bb_to_remove_array_unique','sumofbb','msg'));
-			
+		return view('removebb.index',compact('bb_to_remove_array_unique','sumofbb','msg'));	
 	}
 
 	public function destroybb(Request $request)

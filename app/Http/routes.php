@@ -50,7 +50,11 @@ Route::get('home', 'HomeController@index');
 
 Route::get('map', 'mapController@index');
 Route::get('map/{id}', 'mapController@showbygroup');
-Route::get('table/', 'mapController@table');
+Route::get('table', 'mapController@table');
+
+//Status
+Route::get('status', 'statusController@index');
+Route::get('status/find', 'statusController@find');
 
 
 Route::controllers([

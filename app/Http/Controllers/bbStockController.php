@@ -121,6 +121,6 @@ class bbStockController extends Controller {
 		// dd($bb);
 		$bb->delete();
 
-		return Redirect::to('/');
+		return Redirect::to('/table');
 	}
 }

@@ -55,6 +55,7 @@ Route::get('table', 'mapController@table');
 //Status
 Route::get('status', 'statusController@index');
 Route::get('status/find', 'statusController@find');
+Route::post('find_by_status', 'statusController@find_by_status');
 
 
 Route::controllers([

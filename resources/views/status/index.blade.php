@@ -7,9 +7,28 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Search BB</div>
 				<br>
-				<div class="">
-						<a href="{{url('/status/find')}}" class="btn btn-success btn-lg center-block">Search and delete BB by status (on module, using, closed)</a>
+				<div>
+					<p>Enter password:</p>
+
+				{!! Form::open(['url' => 'find_by_status']) !!}
+                <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
+
+                <div class="panel-body">
+                    {!! Form::input('string', 'password', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
+                </div>
+
+                <div class="panel-body">
+                    {!! Form::submit('Search and delete BB by status (on module, using, closed)', ['class' => 'btn btn-success btn-lg center-block']) !!}
+                </div>
+
+                @include('errors.list')
+
+                {!! Form::close() !!}
+
 				</div>
+				<!-- <div class="">
+						<a href="{{url('/status/find')}}" class="btn btn-success btn-lg center-block">Search and delete BB by status (on module, using, closed)</a>
+				</div> -->
 				<br>
 				<hr>
 

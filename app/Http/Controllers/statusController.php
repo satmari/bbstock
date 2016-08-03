@@ -87,7 +87,7 @@ class statusController extends Controller {
 					$status = $inteos[0]->Status;
 					if ($status == '10' OR $status == '20' OR $status == '99') {
 
-						//$results = bbStock::where('id', '=', $bbid)->delete();
+						$results = bbStock::where('id', '=', $bbid)->delete();
 						$boxdeleted = $boxdeleted + 1;
 					}
 

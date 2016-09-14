@@ -1,3 +1,5 @@
-## Laravel PHP Framework
+# BBStock  Application 
 
-# BBStock  App by Satmari
+by
+
+Satmari Atila

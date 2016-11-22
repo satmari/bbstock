@@ -56,7 +56,7 @@ class searchController extends Controller {
 		if ($size) {
 			$q->searchsize($size);
 		}
-		$search = $q->get()->sortBy('location');
+		$search = $q->get()->sortByDesc('location');
 
 		
 		// if ($po) {

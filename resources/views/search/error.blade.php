@@ -10,7 +10,7 @@
 				<h4 style="color:red;">BB NOT exist in Stock</h4>
 				<hr>
 				<div class="">
-						<a href="{{url('/search')}}" class="btn btn-default btn-lg center-block">Try again to search BB</a>
+						<a href="{{url('/search2')}}" class="btn btn-default btn-lg center-block">Try again to search BB</a>
 				</div>
 				<br>
 				<div class="">

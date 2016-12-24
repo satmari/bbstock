@@ -82,6 +82,7 @@ class inteosdbController extends Controller {
 		$IntKeyPO =  $inteos_array[0]['IntKeyPO'];
 		$BlueBoxNum =  $inteos_array[0]['BlueBoxNum'];
 		$BoxQuant =  $inteos_array[0]['BoxQuant'];
+		
 		$BoxDateTemp =  $inteos_array[0]['CREATEDATE'];
 		$timestamp = strtotime($BoxDateTemp);
 		$BoxDate = date('Y-m-d H:i:s', $timestamp);

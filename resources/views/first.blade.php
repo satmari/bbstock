@@ -15,7 +15,7 @@
 				<br><br><br>
 				<div class="panel-body">
 					<div class="">
-						<a href="{{url('/search')}}" class="btn btn-primary btn-lg center-block"><br>Search BB<br><br></a>
+						<a href="{{url('/search2')}}" class="btn btn-primary btn-lg center-block"><br>Search BB<br><br></a>
 					</div>
 				</div>
 				<br><br><br>

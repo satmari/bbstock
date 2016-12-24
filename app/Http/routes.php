@@ -42,6 +42,9 @@ Route::post('removebb/destroybb', 'removebbController@destroybb');
 Route::get('search', 'searchController@index');
 Route::post('search', 'searchController@search');
 
+Route::get('search2', 'searchController@index2');
+Route::post('search2', 'searchController@search2');
+
 Route::get('export', 'exportController@create');
 
 //Route::get('/', 'WelcomeController@index');

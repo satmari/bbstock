@@ -7,7 +7,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Search BB</div>
 				
-				{!! Form::open(['url' => 'search']) !!}
+				{!! Form::open(['url' => 'search2']) !!}
 				<input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 				{{--
 				<p>BB code: </p>

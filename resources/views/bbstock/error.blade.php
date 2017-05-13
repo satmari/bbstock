@@ -10,11 +10,11 @@
 				<h4 style="color:red;">This BB is already in Stock</h4>
 				<hr>
 				<div class="">
-						<a href="{{url('/inteosdb')}}" class="btn btn-default btn-lg center-block">Try again to add BB</a>
+						<a href="{{url('/inteosdb')}}" class="btn btn-success btn-lg ">Add BB</a>
 				</div>
 				<br>
 				<div class="">
-						<a href="{{url('/removebb')}}" class="btn btn-default btn-lg center-block">Remove BB</a>
+						<a href="{{url('/removebb')}}" class="btn btn-danger btn-lg ">Remove BB</a>
 				</div>
 				<br>
 				<div class="">

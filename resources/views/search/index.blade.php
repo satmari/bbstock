@@ -8,6 +8,7 @@
 				<div class="panel-heading">Search BB</div>
 				
 				{!! Form::open(['url' => 'search']) !!}
+				<input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 				{{--
 				<p>BB code: </p>
 				<div class="panel-body">
@@ -21,7 +22,7 @@
 				<p>Size: </p>
 				<div class="panel-body">
 					{{--{!! Form::input('string', 'size', null, ['class' => 'form-control']) !!}--}}
-					{!! Form::select('size', array(''=>'any','S'=>'S','M'=>'M','L'=>'L','XL'=>'XL','XXL'=>'XXL'), '', array('class' => 'form-control')); !!} 
+					{!! Form::select('size', array(''=>'any','XS'=>'XS','S'=>'S','M'=>'M','L'=>'L','XL'=>'XL','XXL'=>'XXL','M/L'=>'M/L','S/M'=>'S/M'), '', array('class' => 'form-control')); !!} 
 				</div>
 
 				<div class="panel-body">
@@ -32,6 +33,10 @@
 
 				{!! Form::close() !!}
 				
+				<br>
+				<div class="">
+						<a href="{{url('/')}}" class="btn btn-default btn-lg center-block">Back to main menu</a>
+				</div>
 			</div>
 		</div>
 	</div>

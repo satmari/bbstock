@@ -5,12 +5,14 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>BBStock Application</title>
+	<title>BBStock</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-
-	<!-- Fonts -->
-	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+	<link href="{{ asset('/css/css.css') }}" rel="stylesheet">
+	<!-- <link href="{{ asset('/css/bootstrap.min.css') }}" rel='stylesheet' type='text/css'> -->
+	<link href="{{ asset('/css/bootstrap-table.css') }}" rel='stylesheet' type='text/css'>
+	<link href="{{ asset('/css/jquery-ui.min.css') }}" rel='stylesheet' type='text/css'>
+	<link href="{{ asset('/css/custom.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -32,6 +34,15 @@
 				</ul>
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/export') }}">Export to all CSV</a></li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/map') }}">Map</a></li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/table') }}">Table</a></li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/status') }}">Delete by status</a></li>
 				</ul>
 				{{--<ul class="nav navbar-nav">
 					<li><a href="{{ url('/home') }}">Home</a></li>
@@ -63,7 +74,68 @@
 	@yield('error')
 
 	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="{{ asset('/js/jquery.min.js') }}" type="text/javascript" ></script>
+    <script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript" ></script>
+
+    <script src="{{ asset('/js/bootstrap-table.js') }}" type="text/javascript" ></script>
+	<script src="{{ asset('/js/jquery-ui.min.js') }}" type="text/javascript" ></script>
+
+	<script src="{{ asset('/js/tableExport.js') }}" type="text/javascript" ></script>
+	<script src="{{ asset('/js/FileSaver.min.js') }}" type="text/javascript" ></script>
+	<script src="{{ asset('/js/bootstrap-table-export.js') }}" type="text/javascript" ></script>
+
+        <script type="text/javascript">
+	$(function() {
+		$('#filter').keyup(function () {
+
+	        var rex = new RegExp($(this).val(), 'i');
+	        $('.searchable tr').hide();
+	        $('.searchable tr').filter(function () {
+	            return rex.test($(this).text());
+	        }).show();
+		});
+	/*
+    $('.session').keypress(function(event) {
+  		if ( event.which == 13 ) {
+     		event.preventDefault();
+  		}
+  		xTriggered++;
+  		var msg = "Handler for .keypress() called " + xTriggered + " time(s).";
+  		$.print( msg, "html" );
+  		//$.print( event );
+	});
+	*/
+	// $('#proba').keyup(function(e){
+	// 	if(e.keyCode == 13) {
+	// 		var bblist = $('#proba').val();
+	//   		$("#display").append("<li>" + bblist + "</li>");
+
+	//   		$('#proba').val('');
+
+	//   		var optionTexts = [];
+	// 		$("#display li").each(function() {
+	// 			optionTexts.push($(this).text()) 
+	// 		});
+
+	// 		console.log(optionTexts);
+	// 	}
+	// });
+	
+	/*
+	$("#proba").change(function() {
+    	alert("Something happened!");
+	});
+		
+	$('#proba').keyup(function () {
+  		$('#display').text($(this).val());
+	});
+	*/
+	//console.log("proba");
+
+	});	
+    </script>
+
+
+	
 </body>
 </html>

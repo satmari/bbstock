@@ -47,14 +47,14 @@ class exportController extends Controller {
 	 */
 	public function create()
 	{
-		$people = bbStock::all();
+		$list = bbStock::all();
 
         $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
 
         $csv->insertOne(\Schema::getColumnListing('bbstock'));
 
-        foreach ($people as $person) {
-            $csv->insertOne($person->toArray());
+        foreach ($list as $line) {
+            $csv->insertOne($line->toArray());
         }
 
         $csv->output('bbstock.csv');

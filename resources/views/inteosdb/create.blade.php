@@ -34,6 +34,7 @@
 					{!! Form::hidden('BlueBoxCode', $BlueBoxCode, ['class' => 'form-control']) !!}
 					{!! Form::hidden('BlueBoxNum', $BlueBoxNum, ['class' => 'form-control']) !!}
 					{!! Form::hidden('BoxQuant', $BoxQuant, ['class' => 'form-control']) !!}
+					{!! Form::hidden('BoxDate', $BoxDate, ['class' => 'form-control']) !!}
 					{!! Form::hidden('POnum', $POnum, ['class' => 'form-control']) !!}
 					{!! Form::hidden('Variant', $Variant, ['class' => 'form-control']) !!}
 					{!! Form::hidden('ClrDesc', $ClrDesc, ['class' => 'form-control']) !!}
@@ -48,6 +49,11 @@
 				@include('errors.list')
 
 				{!! Form::close() !!}
+
+				<br>
+				<div class="">
+						<a href="{{url('/')}}" class="btn btn-default btn-lg center-block">Back to main menu</a>
+				</div>
 			</div>
 		</div>
 	</div>

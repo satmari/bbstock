@@ -32,7 +32,7 @@
 				</div>
 				<div class="panel-body">
 					<span>Size:</span>
-					{{-- {!! Form::select('size', array(''=>'any','S'=>'S','M'=>'M','L'=>'L','XL'=>'XL','XXL'=>'XXL'), '', array('class' => 'form-control')); !!} --}}
+					{{-- {!! Form::select('size', array(''=>'any','S'=>'S','M'=>'M','L'=>'L','XL'=>'XL','XXL'=>'XXL','M/L'=>'M/L','S/M'=>'S/M'), '', array('class' => 'form-control')); !!} --}}
 					{!! Form::input('string', 'size', null, ['class' => 'form-control']) !!}
 				</div>
 				<div class="panel-body">

@@ -13,6 +13,7 @@
 use App\bbStock;
 
 Route::get('/', 'mainController@index');
+Route::get('/home', 'mainController@index');
 
 Route::get('inteosdb', 'inteosdbController@index');
 Route::get('inteosdb/create', 'inteosdbController@create');
@@ -60,6 +61,10 @@ Route::get('status', 'statusController@index');
 Route::get('status/find', 'statusController@find');
 Route::post('find_by_status', 'statusController@find_by_status');
 
+// Workstudy
+Route::get('workstudy', 'workstudyController@index');
+Route::post('scan_bb', 'workstudyController@scan_bb');
+Route::post('workstudy/create', 'workstudyController@create');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

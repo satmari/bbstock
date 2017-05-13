@@ -27,8 +27,10 @@
 				</button>
 				<a class="navbar-brand" href="{{ url('/') }}"><b>BBStock Application</b></a>
 			</div>
-
+			
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+				@if (Auth::guest())
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Main menu</a></li>
 				</ul>
@@ -44,14 +46,30 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/status') }}">Delete by status</a></li>
 				</ul>
+				@else
+
+					@if (Auth::user()->name == 'workstudy')
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/export') }}">Export to all CSV</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/table') }}">Table</a></li>
+					</ul>
+					@endif
+
+				@endif
+
+
+				
 				{{--<ul class="nav navbar-nav">
 					<li><a href="{{ url('/home') }}">Home</a></li>
-				</ul>--}}
-				{{--
+				</ul>
+				--}}
+				
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
 						<li><a href="{{ url('/auth/login') }}">Login</a></li>
-						<li><a href="{{ url('/auth/register') }}">Register</a></li>
+						{{-- <li><a href="{{ url('/auth/register') }}">Register</a></li> --}}
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
@@ -61,8 +79,11 @@
 						</li>
 					@endif
 				</ul>
-				--}}
+				
 			</div>
+			
+
+			
 		</div>
 	</nav>
 

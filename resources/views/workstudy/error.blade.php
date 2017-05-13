@@ -17,7 +17,8 @@
 						<a href="{{url('/')}}" class="btn btn-default btn-lg center-block">Back to main menu</a>
 				</div>
 
-				
+				@include('errors.list')
+
 			</div>
 		</div>
 	</div>

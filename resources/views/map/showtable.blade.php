@@ -13,6 +13,7 @@
 		<tr>
 			<th data-sortable="true" >BB name</th>
 			<th>Qty of BB</th>
+			<th>Location</th>
 			<th></th>
 		</tr>
 		
@@ -22,6 +23,7 @@
 		<tr>
 			<td>{{ substr($bb->bbname, -8)  }}</td>
 			<td>{{ $bb->numofbb }}</td>
+			<td>{{ $bb->location }}</td>
 			<td><a href="{{url('/bbstock/'.$bb->id.'/delete')}}" class="btn btn-danger btn-xs ">Remove</a></td>
 		</tr>
 		@endforeach	

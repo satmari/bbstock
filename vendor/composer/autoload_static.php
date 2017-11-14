@@ -290,6 +290,7 @@ class ComposerStaticInit8bbef44cbf9ade3600ca8b43ce7af2a2
         'App\\Http\\Controllers\\removebbController' => __DIR__ . '/../..' . '/app/Http/Controllers/removebbController.php',
         'App\\Http\\Controllers\\searchController' => __DIR__ . '/../..' . '/app/Http/Controllers/searchController.php',
         'App\\Http\\Controllers\\statusController' => __DIR__ . '/../..' . '/app/Http/Controllers/statusController.php',
+        'App\\Http\\Controllers\\workstudyController' => __DIR__ . '/../..' . '/app/Http/Controllers/workstudyController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',

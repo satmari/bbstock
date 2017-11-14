@@ -25,6 +25,7 @@ return array(
     'App\\Http\\Controllers\\removebbController' => $baseDir . '/app/Http/Controllers/removebbController.php',
     'App\\Http\\Controllers\\searchController' => $baseDir . '/app/Http/Controllers/searchController.php',
     'App\\Http\\Controllers\\statusController' => $baseDir . '/app/Http/Controllers/statusController.php',
+    'App\\Http\\Controllers\\workstudyController' => $baseDir . '/app/Http/Controllers/workstudyController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',

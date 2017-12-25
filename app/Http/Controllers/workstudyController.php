@@ -100,7 +100,7 @@ class workstudyController extends Controller {
 		$bbcode = $inteosinput['BlueBoxCode'];
 		$bbname = $inteosinput['BlueBoxNum'];
 		//$po = $inteosinput['POnum'];
-		$po = substr($inteosinput['POnum'], -5); 
+		$po = substr($inteosinput['POnum'], -6); 
 		$style = $inteosinput['StyCod'];
 		$color = $inteosinput['ColorCode'];
 		$size = $inteosinput['Size'];

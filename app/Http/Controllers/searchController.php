@@ -40,7 +40,7 @@ class searchController extends Controller {
 		//remove BB
 		//validation
 		//$this->validate($request, ['bb_code'=>'required|max:10']);
-		$this->validate($request, ['po'=>'min:5|max:5']);
+		$this->validate($request, ['po'=>'min:6|max:6']);
 
 		$input = $request->all(); // change use (delete or comment user Requestl; )
 		//var_dump($inteosinput);
@@ -88,7 +88,7 @@ class searchController extends Controller {
 		//remove BB
 		//validation
 		//$this->validate($request, ['bb_code'=>'required|max:10']);
-		$this->validate($request, ['po'=>'min:5|max:5']);
+		$this->validate($request, ['po'=>'min:6|max:6']);
 
 		$input = $request->all(); // change use (delete or comment user Requestl; )
 		//var_dump($inteosinput);
@@ -141,58 +141,6 @@ class searchController extends Controller {
 
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+	
 
 }

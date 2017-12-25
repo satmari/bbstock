@@ -26,6 +26,13 @@
 						<a href="{{url('/removebb')}}" class="btn btn-danger btn-lg center-block"><br>Remove BB form Stock<br><br></a>
 					</div>
 				</div>
+
+				<div class="panel-body">
+					<div class="">
+						<p><b>Paznja: Komese su prebacene sa 5 na 6 poslednjih brojeva i prilikom pretrage morate upisati 6 brojeva!!!</b></p>
+					</div>
+				</div>
+
 				@else
 
 					@if (Auth::user()->name == 'workstudy')

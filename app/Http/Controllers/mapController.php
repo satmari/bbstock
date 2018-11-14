@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\bbStock;
+use App\bb_stock_log;
 use DB;
 
 class mapController extends Controller {
@@ -57,6 +58,11 @@ class mapController extends Controller {
 		return view('map.showtable',compact('bbstock'));
 	}
 	
+	public function tablelog() {
+
+		$bbstock = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bb_stock_logs ORDER BY po"));
+		return view('map.showtablelog',compact('bbstock'));
+	}
 	
 
 }

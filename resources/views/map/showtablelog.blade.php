@@ -13,8 +13,15 @@
 		<tr>
 			<th data-sortable="true" >BB name</th>
 			<th>Qty of BB</th>
+			<th>Po</th>
+			<th>Style</th>
+			<th>Color</th>
+			<th>Size</th>
+			<th>Qty</th>
 			<th>Location</th>
-			<th></th>
+
+			<th>Box created</th>
+			<th>Box removed from BBstock</th>
 		</tr>
 		
 	</thead>
@@ -23,8 +30,16 @@
 		<tr>
 			<td>{{ substr($bb->bbname, -9)  }}</td>
 			<td>{{ $bb->numofbb }}</td>
+			<td>{{ $bb->po }}</td>
+			<td>{{ $bb->style }}</td>
+			<td>{{ $bb->color }}</td>
+			<td>{{ $bb->size }}</td>
+			<td>{{ $bb->qty }}</td>
 			<td>{{ $bb->location }}</td>
-			<td><a href="{{url('/bbstock/'.$bb->id.'/delete')}}" class="btn btn-danger btn-xs ">Remove</a></td>
+
+			<td>{{ $bb->boxdate }}</td>
+			<td>{{ $bb->created_at }}</td>
+			
 		</tr>
 		@endforeach	
 	</tbody>

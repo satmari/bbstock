@@ -44,6 +44,9 @@
 					<li><a href="{{ url('/table') }}">Table</a></li>
 				</ul>
 				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/tablelog') }}">Table Log</a></li>
+				</ul>
+				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/status') }}">Delete by status</a></li>
 				</ul>
 				@else

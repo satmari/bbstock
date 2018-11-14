@@ -31,6 +31,11 @@ Route::post('bbstock/create', 'bbstockController@create');
 Route::patch('bbstock/{id}', 'bbstockController@update');
 Route::get('bbstock/{id}/delete', 'bbstockController@delete');
 
+// add more bb
+Route::get('addmorebb', 'addmorebbController@index');
+Route::post('set_to_add', 'addmorebbController@set_to_add');
+Route::post('addbbloc', 'addmorebbController@addbbloc');
+Route::post('addbbsave', 'addmorebbController@addbbsave');
 
 //Route::resource('bbstock', 'bbstockController');
 
@@ -55,6 +60,7 @@ Route::get('home', 'HomeController@index');
 Route::get('map', 'mapController@index');
 Route::get('map/{id}', 'mapController@showbygroup');
 Route::get('table', 'mapController@table');
+Route::get('tablelog', 'mapController@tablelog');
 
 //Status
 Route::get('status', 'statusController@index');

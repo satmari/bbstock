@@ -114,20 +114,24 @@ class removebbController extends Controller {
 
 						// dd($bb[0]->bbcode);
 
-						$bbStock_log = new bb_stock_log;
+						if (isset($bb[0]->bbcode)) {
+							
+							$bbStock_log = new bb_stock_log;
 
-						$bbStock_log->bbcode = $bb[0]->bbcode;
-						$bbStock_log->bbname = $bb[0]->bbname;
-						$bbStock_log->po = $bb[0]->po;
-						$bbStock_log->style = $bb[0]->style;
-						$bbStock_log->color = $bb[0]->color;
-						$bbStock_log->size = $bb[0]->size;
-						$bbStock_log->qty = $bb[0]->qty;
-						$bbStock_log->boxdate = $bb[0]->boxdate;
-						$bbStock_log->numofbb = $bb[0]->numofbb;
-						$bbStock_log->location = $bb[0]->location;
+							$bbStock_log->bbcode = $bb[0]->bbcode;
+							$bbStock_log->bbname = $bb[0]->bbname;
+							$bbStock_log->po = $bb[0]->po;
+							$bbStock_log->style = $bb[0]->style;
+							$bbStock_log->color = $bb[0]->color;
+							$bbStock_log->size = $bb[0]->size;
+							$bbStock_log->qty = $bb[0]->qty;
+							$bbStock_log->boxdate = $bb[0]->boxdate;
+							$bbStock_log->numofbb = $bb[0]->numofbb;
+							$bbStock_log->location = $bb[0]->location;
 
-						$bbStock_log->save();
+							$bbStock_log->save();
+
+						}
 												
 						$results = bbStock::where('bbcode', '=', $value)->delete();
 					}

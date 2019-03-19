@@ -82,7 +82,22 @@ class workstudyController extends Controller {
 		$ClrDesc = $inteos_array[0]['ClrDesc'];
 		$StyCod =  $inteos_array[0]['StyCod'];
 		
-		list($ColorCode, $Size) = explode('-', $Variant); 
+		// list($ColorCode, $Size) = explode('-', $Variant); 
+
+		$brlinija = substr_count($Variant,"-");
+			// echo $brlinija." ";
+
+			if ($brlinija == 2)
+			{
+				list($ColorCode, $size1, $size2) = explode('-', $Variant);
+				$Size = $size1."-".$size2;
+				// echo $color." ".$size;	
+			} else {
+				list($ColorCode, $Size) = explode('-', $Variant);
+				// echo $color." ".$size;
+			}
+
+
 	
 		//return view('welcome', compact('bbstock', 'inteos'));
 		//return view('welcome', compact('IntKeyPO', 'BlueBoxNum'));
@@ -100,7 +115,7 @@ class workstudyController extends Controller {
 		$bbcode = $inteosinput['BlueBoxCode'];
 		$bbname = $inteosinput['BlueBoxNum'];
 		//$po = $inteosinput['POnum'];
-		$po = substr($inteosinput['POnum'], -5); 
+		$po = substr($inteosinput['POnum'], -6); 
 		$style = $inteosinput['StyCod'];
 		$color = $inteosinput['ColorCode'];
 		$size = $inteosinput['Size'];

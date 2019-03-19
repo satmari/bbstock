@@ -7,7 +7,7 @@
 		<div class="text-center col-md-4 col-md-offset-1">
 
 			<!-- <img src="planets.gif" width="145" height="126" alt="Planets" usemap="#planetmap"> -->
-			<img src="http://172.27.161.171/bbstock/public/plan.png" width="781px" height="384px" alt="Plan" usemap="#plan">
+			<img src="http://172.27.161.173/bbstock/public/plan.png" width="781px" height="384px" alt="Plan" usemap="#plan">
 
 			<map name="plan" id="plan">
 			    

@@ -8,17 +8,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\bbStock;
+use App\bb_stock_log;
+
 use DB;
+use Log;
 
 use Session;
 
 class removebbController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
+
 	public function index()
 	{
 
@@ -48,6 +47,20 @@ class removebbController extends Controller {
 				$msg = 'BB not exist in BB stock';
 			    //return view('removebb.index',compact('msg','bb_to_remove_array_unique','sumofbb'));
 			
+			} elseif (count($bb)>1) {
+				// dd("Ima dva ista bbcode-a u bazi");
+
+				$bbid0 = $bb[0]->id;
+				$bbname0 = $bb[0]->bbname;
+				$numofbb0 = $bb[0]->numofbb;
+
+				$bbid1 = $bb[1]->id;
+				$bbcode1 = $bbcode;
+				$bbname1 = $bb[1]->bbname;
+				$numofbb1 = $bb[1]->numofbb;
+
+				return view('removebb.choose',compact('bbid0','bbcode0','bbname0','numofbb0','bbid1','bbcode1','bbname1','numofbb1'));
+
 			} else {
 
 				$bbid = $bb[0]->id;
@@ -56,10 +69,10 @@ class removebbController extends Controller {
 				$numofbb = $bb[0]->numofbb;
 
 				$bbarray = array(
-				'id' => $bbid,
-				'bbcode' => $bbcode,
-				'bbname' => $bbname,
-				'numofbb' => $numofbb
+					'id' => $bbid,
+					'bbcode' => $bbcode,
+					'bbname' => $bbname,
+					'numofbb' => $numofbb
 				);
 
 				Session::push('bb_to_remove_array',$bbarray);
@@ -88,6 +101,48 @@ class removebbController extends Controller {
 		return view('removebb.index',compact('bb_to_remove_array_unique','sumofbb','msg'));	
 	}
 
+	public function removebb_choose($id) {
+
+		$bb = DB::connection('sqlsrv')->select(DB::raw("SELECT id,bbcode,bbname,numofbb FROM bbStock WHERE id = '".$id."' "));
+
+		$bbid = $bb[0]->id;
+		$bbcode = $bb[0]->bbcode;
+		$bbname = $bb[0]->bbname;
+		$numofbb = $bb[0]->numofbb;
+
+		$bbarray = array(
+			'id' => $bbid,
+			'bbcode' => $bbcode,
+			'bbname' => $bbname,
+			'numofbb' => $numofbb
+		);
+
+		Session::push('bb_to_remove_array',$bbarray);
+
+
+		$bb_to_remove_array = Session::get('bb_to_remove_array');
+		//dd($bb_to_remove_array);
+
+		if ($bb_to_remove_array != null) {
+
+			$bb_to_remove_array_unique = array_map("unserialize", array_unique(array_map("serialize", $bb_to_remove_array)));
+			//dd($bb_to_remove_array_unique);
+
+			$sumofbb =0;
+			foreach ($bb_to_remove_array_unique as $line) {
+				foreach ($line as $key => $value) {
+					if ($key == 'numofbb') {
+						$sumofbb+=$value;
+					}
+				}
+			}
+		}
+
+		return view('removebb.index',compact('bb_to_remove_array_unique','sumofbb','msg'));	
+
+
+	}
+
 	public function destroybb(Request $request)
 	{
 
@@ -109,6 +164,31 @@ class removebbController extends Controller {
 				foreach ($line as $key => $value) {
 					if ($key == 'bbcode') {
 						//dd($value);
+
+						
+						$bb = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock WHERE bbcode = '".$value."' "));
+
+						// dd($bb[0]->bbcode);
+
+						if (isset($bb[0]->bbcode)) {
+							
+							$bbStock_log = new bb_stock_log;
+
+							$bbStock_log->bbcode = $bb[0]->bbcode;
+							$bbStock_log->bbname = $bb[0]->bbname;
+							$bbStock_log->po = $bb[0]->po;
+							$bbStock_log->style = $bb[0]->style;
+							$bbStock_log->color = $bb[0]->color;
+							$bbStock_log->size = $bb[0]->size;
+							$bbStock_log->qty = $bb[0]->qty;
+							$bbStock_log->boxdate = $bb[0]->boxdate;
+							$bbStock_log->numofbb = $bb[0]->numofbb;
+							$bbStock_log->location = $bb[0]->location;
+
+							$bbStock_log->save();
+
+						}
+												
 						$results = bbStock::where('bbcode', '=', $value)->delete();
 					}
 				}

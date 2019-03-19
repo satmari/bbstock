@@ -32,7 +32,7 @@
 				</div>
 				<div class="panel-body">
 					<span>Size:</span>
-					{{-- {!! Form::select('size', array(''=>'any','S'=>'S','M'=>'M','L'=>'L','XL'=>'XL','XXL'=>'XXL','M/L'=>'M/L','S/M'=>'S/M'), '', array('class' => 'form-control')); !!} --}}
+					{{-- {!! Form::select('size', array(''=>'any','S'=>'S','M'=>'M','L'=>'L','XL'=>'XL','XXL'=>'XXL','M/L'=>'M/L','S/M'=>'S/M','3-4'=>'3-4','5-6'=>'5-6','7-8'=>'7-8','9-10'=>'9-10','11-12'=>'11-12'), '', array('class' => 'form-control')); !!} --}}
 					{!! Form::input('string', 'size', null, ['class' => 'form-control']) !!}
 				</div>
 				<div class="panel-body">
@@ -41,7 +41,7 @@
 				</div>
 				<div class="panel-body">
 					<span>Number of BB:</span>
-					{{--{!! Form::select('QtyofBB', array('1'=>1,'2'=>2,'3'=>3,'4'=>4,'5'=>5), null, array('class' => 'form-control')); !!}  --}}
+					{{--{!! Form::select('QtyofBB', array('1'=>1,'2'=>2,'3'=>3,'4'=>4,'5'=>5,'6'=>6), null, array('class' => 'form-control')); !!}  --}}
 					{!! Form::input('number', 'numofbb', null, ['class' => 'form-control']) !!}
 				</div>
 				<div class="panel-body">

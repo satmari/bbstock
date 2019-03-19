@@ -7,22 +7,19 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Error</div>
 				<br>
-				<h4 style="color:red;">
-					@if (isset($msg))
-						{{ $msg }}
-					@endif
-
-				</h4>
+				<h4 style="color:red;">{{ $msg }}</h4>
 				<hr>
 				<div class="">
-						<a href="{{url('/workstudy')}}" class="btn btn-default btn-lg center-block">Try again to add BB</a>
+						<a href="{{url('/addmorebb')}}" class="btn btn-default btn-lg center-block">Try again to add BB</a>
 				</div>
 				<br>
 				<div class="">
 						<a href="{{url('/')}}" class="btn btn-default btn-lg center-block">Back to main menu</a>
 				</div>
 
-				
+				@include('errors.list')
+
+
 			</div>
 		</div>
 	</div>

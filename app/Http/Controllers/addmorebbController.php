@@ -20,7 +20,13 @@ class addmorebbController extends Controller {
 	{
 		//
 		$ses = Session::get('bb_to_add_array');
-		return view('addmorebb.index',compact('ses'));
+		$inteosdb = Session::get('inteosdb');
+
+		if (is_null($inteosdb)) {
+        	$inteosdb = '1';	
+        }
+        
+        return view('addmorebb.index',compact('ses', 'inteosdb'));
 	}
 
 	public function set_to_add(Request $request)
@@ -32,6 +38,11 @@ class addmorebbController extends Controller {
 		//var_dump($inteosinput);
 	
 		$bbcode = $input['bb_to_add'];
+		$inteosdb = $input['inteosdb_new'];
+		Session::set('inteosdb', $inteosdb );
+
+		$bbaddarray_unique = Session::get('bb_to_add_array');
+
 		//$results = bbStock::where('bbcode', '=', $bb_to_remove)->delete();
 		//dd($bbcode);
 		$msg = '';
@@ -39,11 +50,47 @@ class addmorebbController extends Controller {
 		if ($bbcode) {
 
 			
-			//$bb = DB::connection('sqlsrv')->select(DB::raw("SELECT id,bbname,numofbb FROM bbStock WHERE bbcode = ".$bbcode));
+			if ($inteosdb == '1') {
 
-			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [BdkCLZG].[dbo].[CNF_BlueBox] FULL outer join [BdkCLZG].[dbo].CNF_PO on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [BdkCLZG].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [BdkCLZG].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
-			'somevariable' => $bbcode,
-			));
+				// Live database
+				$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+					'somevariable' => $bbcode,
+				));
+				
+				if ($inteos) {
+					//continue
+				} else {
+		        	// $validator->errors()->add('field', 'Something is wrong with this field!');
+		        	
+		        	Log::error('Cannot find BB in Gordon Inteos');
+		        	$msg = 'Cannot find BB in Gordon Inteos';
+		        	return view('addmorebb.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
+				}
+
+			} elseif ($inteosdb == '2') {
+
+				// Kikinda database
+				$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+					'somevariable' => $bbcode,
+				));
+				
+				if ($inteos) {
+					//continue
+				} else {
+		        	//$validator->errors()->add('field', 'Something is wrong with this field!');
+		        	
+		        	Log::error('Cannot find BB in Kikinda Inteos');
+		        	$msg = 'Cannot find BB in Kikinda Inteos';
+		        	return view('addmorebb.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
+
+				}
+
+			} else {
+
+					Log::error('Cannot find BB in any Inteos');
+					$msg = 'Cannot find BB in any Inteos';
+		        	return view('addmorebb.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
+			}
 		
 
 			if ($inteos) {
@@ -105,7 +152,6 @@ class addmorebbController extends Controller {
 	        	$msg = "Cannot find BB in Inteos";
 	        	// return view('addmorebb.error', compact('msg'));
 	    	}
-
 				
 		}
 
@@ -128,7 +174,7 @@ class addmorebbController extends Controller {
 			// Session::push('bb_to_add_array',$bbaddarray_unique); // dodato sada
 		}
 
-		return view('addmorebb.index',compact('bbaddarray_unique','sumofbb','msg'));
+		return view('addmorebb.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
 	}
 
 	public function addbbloc(Request $request)

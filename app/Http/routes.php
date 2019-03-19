@@ -44,6 +44,7 @@ Route::get('removebb/destroy', 'removebbController@destroy');
 Route::post('removebb/destroy', 'removebbController@destroy');
 Route::get('removebb/destroybb', 'removebbController@destroybb');
 Route::post('removebb/destroybb', 'removebbController@destroybb');
+Route::get('removebb_choose/{id}', 'removebbController@removebb_choose');
 
 Route::get('search', 'searchController@index');
 Route::post('search', 'searchController@search');

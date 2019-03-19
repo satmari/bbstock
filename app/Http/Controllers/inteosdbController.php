@@ -13,24 +13,24 @@ use App\bbStock;
 use DB;
 use Log;
 
+use Session;
+
 class inteosdbController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
 	public function index()	{
 
         //return view('bbstock.index', compact('bbstock'));
-        return view('inteosdb.index');
+
+        $inteosdb = Session::get('inteosdb');
+        // dd($inteosdb);
+
+        if (is_null($inteosdb)) {
+        	$inteosdb = '1';	
+        }
+        
+        return view('inteosdb.index',compact('inteosdb'));
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
 	public function create(Request $request)
 	{
 		//
@@ -38,28 +38,53 @@ class inteosdbController extends Controller {
 
 		$inteosinput = $request->all(); // change use (delete or comment user Requestl; )
 		//1971107960
+		// 916333089 // double BB INTKEY
 
 		$inteosbbcode = $inteosinput['inteos_bb_code'];
-		//var_dump($inteosbb);
-		
-		//$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT IntKeyPO,BlueBoxNum,BoxQuant FROM [BdkCLZGtest].[dbo].[CNF_BlueBox] WHERE INTKEY = 56013339 "), array());
-		// Test database
-		/*$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant, [CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [BdkCLZGtest].[dbo].[CNF_BlueBox] FULL outer join [BdkCLZGtest].[dbo].CNF_PO on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [BdkCLZGtest].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [BdkCLZGtest].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
-			'somevariable' => $inteosbbcode,
-		));*/
-		// Live database
-		$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [BdkCLZG].[dbo].[CNF_BlueBox] FULL outer join [BdkCLZG].[dbo].CNF_PO on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [BdkCLZG].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [BdkCLZG].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
-			'somevariable' => $inteosbbcode,
-		));
-		
-		if ($inteos) {
-			//continue
+		$inteosdb = $inteosinput['inteosdb_new'];
+		Session::set('inteosdb', $inteosdb );
+
+
+		if ($inteosdb == '1') {
+
+			// Live database
+			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+				'somevariable' => $inteosbbcode,
+			));
+			
+			if ($inteos) {
+				//continue
+			} else {
+	        	// $validator->errors()->add('field', 'Something is wrong with this field!');
+	        	
+	        	Log::error('Cannot find BB in Gordon Inteos');
+	        	$msg = 'Cannot find BB in Gordon Inteos';
+	        	return view('inteosdb.error', compact('msg'));
+			}
+
+		} elseif ($inteosdb == '2') {
+
+			// Kikinda database
+			$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+				'somevariable' => $inteosbbcode,
+			));
+			
+			if ($inteos) {
+				//continue
+			} else {
+	        	//$validator->errors()->add('field', 'Something is wrong with this field!');
+	        	
+	        	Log::error('Cannot find BB in Kikinda Inteos');
+	        	$msg = 'Cannot find BB in Kikinda Inteos';
+	        	return view('inteosdb.error', compact('msg'));
+
+			}
+
 		} else {
-        	//$validator->errors()->add('field', 'Something is wrong with this field!');
-        	
-        	Log::error('Cannot find BB in Inteos');
-        	return view('inteosdb.error');
-    	}
+
+				Log::error('Cannot find BB in any Inteos');
+	        	return view('inteosdb.error');
+		}
 
 		function object_to_array($data)
 		{

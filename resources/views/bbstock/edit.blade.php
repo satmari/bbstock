@@ -41,7 +41,7 @@
 				</div>
 				<div class="panel-body">
 					<span>Number of BB:</span>
-					{{--{!! Form::select('QtyofBB', array('1'=>1,'2'=>2,'3'=>3,'4'=>4,'5'=>5), null, array('class' => 'form-control')); !!}  --}}
+					{{--{!! Form::select('QtyofBB', array('1'=>1,'2'=>2,'3'=>3,'4'=>4,'5'=>5,'6'=>6), null, array('class' => 'form-control')); !!}  --}}
 					{!! Form::input('number', 'numofbb', null, ['class' => 'form-control']) !!}
 				</div>
 				<div class="panel-body">

@@ -11,6 +11,11 @@
 				<input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 
 				<div class="panel-body">
+					<p>Location of Inteos: </p>
+					{!! Form::select('inteosdb_new', array('1'=>'Gordon','2'=>'Kikinda'), $inteosdb, array('class' => 'form-control')); !!} 
+				</div>
+
+				<div class="panel-body">
 					{!! Form::input('number', 'inteos_bb_code', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
 				</div>
 

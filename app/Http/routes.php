@@ -62,6 +62,8 @@ Route::get('map', 'mapController@index');
 Route::get('map/{id}', 'mapController@showbygroup');
 Route::get('table', 'mapController@table');
 Route::get('tablelog', 'mapController@tablelog');
+Route::get('bundlelog', 'mapController@bundlelog');
+Route::get('deliveredlog', 'mapController@deliveredlog');
 
 //Status
 Route::get('status', 'statusController@index');
@@ -73,7 +75,96 @@ Route::get('workstudy', 'workstudyController@index');
 Route::post('scan_bb', 'workstudyController@scan_bb');
 Route::post('workstudy/create', 'workstudyController@create');
 
+// Transit
+Route::get('transitbb', 'transitController@index');
+Route::post('transitloc', 'transitController@transitloc');
+Route::post('set_to_transit', 'transitController@set_to_transit');
+Route::post('addbb_to_transit', 'transitController@addbb_to_transit');
+Route::post('remove_to_transit', 'transitController@remove_to_transit');
+
+/*
+Route::get('transitbb', 'transitController@index');
+Route::post('transitloc', 'transitController@transitloc');
+Route::post('set_to_transit', 'transitController@set_to_transit');
+Route::post('addbb_to_transit', 'transitController@addbb_to_transit');
+Route::post('remove_to_transit', 'transitController@remove_to_transit');
+*/
+
+// Load // UnLoad
+Route::get('loadbb', 'loadController@index');
+Route::post('loadloc', 'loadController@loadloc');
+Route::post('set_to_load', 'loadController@set_to_load');
+Route::post('addbb_to_load', 'loadController@addbb_to_load');
+Route::post('remove_to_load', 'loadController@remove_to_load');
+Route::get('unloadbb', 'loadController@index_unload');
+Route::post('unloadloc', 'loadController@unloadloc');
+Route::post('unloadloc_confirm', 'loadController@unloadloc_confirm');
+
+// Load new
+Route::get('loadbbt', 'loadtruckController@index');
+Route::post('loadloct', 'loadtruckController@loadloct');
+Route::post('set_to_loadt', 'loadtruckController@set_to_loadt');
+Route::post('remove_to_loadt', 'loadtruckController@remove_to_loadt');
+Route::post('addbb_to_loadt', 'loadtruckController@addbb_to_loadt');
+Route::get('unloadbbt', 'loadtruckController@index_unloadt');
+Route::post('unloadloct', 'loadtruckController@unloadloct');
+Route::post('unloadloc_confirmt', 'loadtruckController@unloadloc_confirmt');
+
+
+// Production
+Route::get('production', 'productionController@index');
+Route::get('deliver/{username}', 'productionController@deliver');
+Route::get('deliver_confirm/{username}', 'productionController@deliver_confirm');
+Route::get('give/{bb}', 'productionController@give');
+Route::post('give_confirm', 'productionController@give_confirm');
+Route::get('receive/{username}', 'productionController@receive');
+Route::get('receive_confirm/{username}', 'productionController@receive_confirm');
+Route::get('bundle/{id}', 'productionController@bundle');
+Route::get('bundle_confirm/{id}', 'productionController@bundle_confirm');
+Route::get('to_finish', 'productionController@to_finish');
+Route::get('to_complete', 'productionController@to_complete');
+
+// Locationss table
+Route::get('locations', 'locationsController@index');
+Route::get('/location_new', 'locationsController@create');
+Route::post('/location_insert', 'locationsController@insert');
+Route::get('/location/edit/{id}', 'locationsController@edit');
+Route::post('/locations/{id}', 'locationsController@update');
+Route::get('/locations/delete/{id}', 'locationsController@delete');
+Route::post('/locations/delete/{id}', 'locationsController@delete');
+Route::get('location_import', 'locationsController@location_import');
+Route::post('post_locations', 'locationsController@post_locations');
+
+// Target
+Route::get('target/{username}', 'targetController@index');
+Route::post('target_confirm', 'targetController@target_confirm');
+Route::post('target_enter', 'targetController@target_enter');
+
+// Import 
+Route::get('import', 'importController@index');
+Route::post('postImportUser', 'importController@postImportUser');
+Route::post('postImportRoles', 'importController@postImportRoles');
+Route::post('postImportUserRoles', 'importController@postImportUserRoles');
+Route::post('postImportUpdatePass', 'importController@postImportUpdatePass');
+Route::get('update_pitch', 'importController@update_pitch');
+
+
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+/*
+Route::any('getpodata', function() {
+	$term = Input::get('term');
+
+	// $data = DB::connection('sqlsrv')->table('pos')->distinct()->select('po')->where('po','LIKE', $term.'%')->where('closed_po','=','Open')->groupBy('po')->take(10)->get();
+	$data = DB::connection('sqlsrv1')->select(DB::raw("SELECT TOP 10 (RIGHT([No_],6)) as po FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order] WHERE [Status] = '3' AND [No_] like '%".$term."%'"));
+	// var_dump($data);
+	foreach ($data as $v) {
+		$retun_array[] = array('value' => $v->po);
+	}
+return Response::json($retun_array);
+});
+*/

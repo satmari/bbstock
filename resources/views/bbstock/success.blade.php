@@ -9,12 +9,12 @@
 				<br>
 				<h4 style="color:green;">BB successfuly added on Stock</h4>
 				<hr>
-				<p>BB name: {{$bbname}}</p>
+				<p>BB name: {{$BlueBoxNum}}</p>
 				<p>Komesa: {{$po}}</p>
-				<p>Style: {{$style}}</p>
-				<p>Variant: {{$color}}-{{$size}}</p>
-				<p>Qty: {{$qty}}</p>
-				<p>Number of boxes: {{$numofbb}}</p>
+				<p>Style: {{$StyCod}}</p>
+				<p>Variant: {{$ColorCode}}-{{$Size}}</p>
+				<p>Qty: {{$BoxQuant}}</p>
+				<p>Number of boxes: {{$QtyofBB}}</p>
 				<p>Location: {{$location}}</p>
 				
 				<br>

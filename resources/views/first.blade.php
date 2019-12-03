@@ -7,50 +7,75 @@
 			<div class="panel panel-default">
 				{{--<div class="panel-heading">Home</div>--}}
 				
+				@if(isset($msg))
+				{{ $msg }}
+				@endif
 
 				@if (Auth::guest())
-				<div class="panel-body">
-					<div class="">
-						<a href="{{url('/inteosdb')}}" class="btn btn-success btn-lg center-block"><br>Add BB to Stock<br><br></a>
-					</div>
-				</div>
-				<br><br><br>
-				<div class="panel-body">
-					<div class="">
-						<a href="{{url('/search2')}}" class="btn btn-primary btn-lg center-block"><br>Search BB<br><br></a>
-					</div>
-				</div>
-				<br><br><br>
-				<div class="panel-body">
-					<div class="">
-						<a href="{{url('/removebb')}}" class="btn btn-danger btn-lg center-block"><br>Remove BB form Stock<br><br></a>
-					</div>
-				</div>
-
-				<div class="panel-body">
-					<div class="">
-						<p><b>Paznja: Komese su prebacene sa 5 na 6 poslednjih brojeva i prilikom pretrage morate upisati 6 brojeva!!!</b></p>
-					</div>
-				</div>
+				
+				Please login first.
 
 				@else
 
-					@if (Auth::user()->name == 'workstudy')
+					@if (Auth::user()->name == 'magacin' OR Auth::user()->name == 'admin')
 					<div class="panel-body">
 						<div class="">
-							<a href="{{url('/workstudy')}}" class="btn btn-success btn-lg center-block"><br><span style="color:black">Add SUSPENDED BB in production</span><br><br></a>
+							<a href="{{url('/inteosdb')}}" class="btn btn-success btn-lg center-block"><br>Add BB to Stock<br><br></a>
 						</div>
 					</div>
-					<br><br><br>
+					<br>
 					<div class="panel-body">
 						<div class="">
-							<a href="{{url('/search')}}" class="btn btn-primary btn-lg center-block"><br>Search BB<br><br></a>
+							<a href="{{url('/search2')}}" class="btn btn-primary btn-lg center-block"><br>Search BB<br><br></a>
 						</div>
 					</div>
-					<br><br><br>
+					
+					<br>
 					<div class="panel-body">
 						<div class="">
-							<a href="{{url('/removebb')}}" class="btn btn-danger btn-lg center-block"><br>Remove BB form Stock<br><br></a>
+							<a href="{{url('/transitbb')}}" class="btn btn-warning btn-lg center-block"><br>Move BB to line<br><br></a>
+						</div>
+					</div>
+
+					<br>
+					<div class="panel-body">
+						<div class="">
+							<a href="{{url('/removebb')}}" class="btn btn-danger btn-lg center-block"><br>Remove BB from Stock<br><br></a>
+						</div>
+					</div>
+					{{-- 
+					<br>
+					<div class="panel-body">
+						<div class="">
+							<a href="{{url('/loadbb')}}" class="btn btn-info btn-lg center-block"><br><span style="color:">Load truck</span><br><br></a>
+						</div>
+					</div>
+
+					<br>
+					<div class="panel-body">
+						<div class="">
+							<a href="{{url('/unloadbb')}}" class="btn btn-info btn-lg center-block"><br><span style="color:">Unload truck</span><br><br></a>
+						</div>
+					</div>
+					--}}
+					<div class="panel-body">
+						<div class="">
+							<a href="{{url('/loadbbt')}}" class="btn btn-info btn-lg center-block"><br><span style="color:">Load truck (NEW)</span><br><br></a>
+						</div>
+					</div>
+
+					<br>
+					<div class="panel-body">
+						<div class="">
+							<a href="{{url('/unloadbbt')}}" class="btn btn-info btn-lg center-block"><br><span style="color:">Unload truck (NEW)</span><br><br></a>
+						</div>
+					</div>
+
+
+					
+					<div class="panel-body">
+						<div class="">
+							<p><b></b></p>
 						</div>
 					</div>
 					@endif

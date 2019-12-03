@@ -26,6 +26,8 @@ class CreateBbStockLogsTable extends Migration {
 			$table->tinyInteger('numofbb');
 			$table->string('location');
 			
+			$table->string('status');  //added later
+
 			$table->timestamps();
 
 		});

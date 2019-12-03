@@ -53,7 +53,7 @@ class addmorebbController extends Controller {
 			if ($inteosdb == '1') {
 
 				// Live database
-				$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+				$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_PO].SMVloc,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
 					'somevariable' => $bbcode,
 				));
 				
@@ -70,7 +70,7 @@ class addmorebbController extends Controller {
 			} elseif ($inteosdb == '2') {
 
 				// Kikinda database
-				$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+				$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_PO].SMVloc,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
 					'somevariable' => $bbcode,
 				));
 				
@@ -115,6 +115,7 @@ class addmorebbController extends Controller {
 				$BlueBoxCode = $bbcode;
 				//$InitKey = $inteos_array[0]['INTKEY'];
 				$IntKeyPO =  $inteos_array[0]['IntKeyPO'];
+				$SMVloc =  $inteos_array[0]['SMVloc'];
 				$BlueBoxNum =  $inteos_array[0]['BlueBoxNum'];
 				$BoxQuant =  $inteos_array[0]['BoxQuant'];
 				
@@ -132,6 +133,7 @@ class addmorebbController extends Controller {
 				$bbaddarray = array(
 				'BlueBoxCode' => $bbcode,
 				'IntKeyPO' => $IntKeyPO,
+				'SMVloc' => $SMVloc,
 				'BlueBoxNum' => $BlueBoxNum,
 				'BoxQuant' => $BoxQuant,
 				'BoxDateTemp' => $BoxDateTemp,
@@ -202,7 +204,7 @@ class addmorebbController extends Controller {
 		$input = $request->all(); // change use (delete or comment user Requestl; )
 		// var_dump($input);
 
-		$location = $input['location'];
+		$location = strtoupper($input['location']);
 		// dd($location);
 
 		$bbaddarray = Session::get('bb_to_add_array');
@@ -224,13 +226,16 @@ class addmorebbController extends Controller {
 				$bbcode = $line['BlueBoxCode'];
 				$bbname = $line['BlueBoxNum'];
 				//$po = $line['POnum'];
-				$po = substr($line['POnum'], -6); 
+				$po = substr($line['POnum'], -6);
+				$smv = $line['SMVloc'];
 				$style = $line['StyCod'];
 				$qty = $line['BoxQuant'];
 				$boxdate = $line['BoxDate'];
 				$numofbb = 1;
 
-				$location = $location ; // NEAMA !!!!!!!!!!!
+				$location = $location ; // NEMA !!!!!!!!!!!
+
+				$status = "STOCK";
 
 				$brlinija = substr_count($line['Variant'],"-");
 				// echo $brlinija." ";
@@ -254,14 +259,16 @@ class addmorebbController extends Controller {
 					$bbStock->bbcode = $bbcode;
 					$bbStock->bbname = $bbname;
 					$bbStock->po = $po;
+					$bbStock->pitch_time = round($smv / 20 * $qty, 3);
 					$bbStock->style = $style;
 					$bbStock->color = $color;
 					$bbStock->size = $size;
 					$bbStock->qty = $qty;
 					$bbStock->boxdate = $boxdate;
 					$bbStock->numofbb = $numofbb;
-					$bbStock->location = $location;
-
+					$bbStock->location = strtoupper($location);
+					$bbStock->status = $status;
+					
 					$bbStock->save();
 				}
 				catch (\Illuminate\Database\QueryException $e) {
@@ -279,24 +286,25 @@ class addmorebbController extends Controller {
 					// dd($bb);
 					$bbstockold->delete();
 
-
 					$bbStock = new bbStock;
 					$bbStock->bbcode = $bbcode;
 					$bbStock->bbname = $bbname;
 					$bbStock->po = $po;
+					$bbStock->pitch_time = round($smv / 20 * $qty, 3);
 					$bbStock->style = $style;
 					$bbStock->color = $color;
 					$bbStock->size = $size;
 					$bbStock->qty = $qty;
 					$bbStock->boxdate = $boxdate;
 					$bbStock->numofbb = $numofbb;
-					$bbStock->location = $location;
+					$bbStock->location = strtoupper($location);
+					$bbStock->status = $status;
+					
 					$bbStock->save();
 					
 				}
 
 				// return view('bbstock.success', compact('bbname','po','style','color','size','qty','numofbb','location'));
-						
 			}
 
 			Session::set('bb_to_add_array', null);
@@ -307,8 +315,6 @@ class addmorebbController extends Controller {
 		Session::set('bb_to_add_array', null);
 		$msg = "List of BB to add is empty";
 		return view('addmorebb.success',compact('msg'));
-		
 	}
-
 
 }

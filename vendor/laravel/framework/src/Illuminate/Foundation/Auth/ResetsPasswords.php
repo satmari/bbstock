@@ -39,7 +39,7 @@ trait ResetsPasswords {
 	 */
 	public function postEmail(Request $request)
 	{
-		$this->validate($request, ['email' => 'required|email']);
+		$this->validate($request, ['email' => 'required']);
 
 		$response = $this->passwords->sendResetLink($request->only('email'), function($m)
 		{

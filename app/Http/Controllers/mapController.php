@@ -54,7 +54,7 @@ class mapController extends Controller {
 
 	public function table() {
 
-		$bbstock = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock ORDER BY po"));
+		$bbstock = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock ORDER BY location asc, status asc, updated_at asc"));
 		return view('map.showtable',compact('bbstock'));
 	}
 	
@@ -62,6 +62,18 @@ class mapController extends Controller {
 
 		$bbstock = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bb_stock_logs ORDER BY po"));
 		return view('map.showtablelog',compact('bbstock'));
+	}
+
+	public function bundlelog() {
+
+		$bbstock = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bundlelogs ORDER BY updated_at desc"));
+		return view('map.bundlelog',compact('bbstock'));
+	}
+
+	public function deliveredlog() {
+
+		$bbstock = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM deliveredlogs ORDER BY updated_at desc"));
+		return view('map.deliveredlog',compact('bbstock'));
 	}
 	
 

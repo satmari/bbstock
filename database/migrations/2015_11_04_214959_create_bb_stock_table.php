@@ -26,8 +26,11 @@ class CreateBbStockTable extends Migration {
 			$table->tinyInteger('numofbb');
 			$table->string('location', 24);
 
-			$table->timestamps();
+			$table->string('status',24)->nullable();  //added later
+			$table->integer('pitch_time')->nullable();  //added later
 
+
+			$table->timestamps();
 
 		});
 	}

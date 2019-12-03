@@ -48,7 +48,7 @@ class inteosdbController extends Controller {
 		if ($inteosdb == '1') {
 
 			// Live database
-			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_PO].SMVloc,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
 				'somevariable' => $inteosbbcode,
 			));
 			
@@ -65,7 +65,7 @@ class inteosdbController extends Controller {
 		} elseif ($inteosdb == '2') {
 
 			// Kikinda database
-			$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+			$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_PO].SMVloc,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
 				'somevariable' => $inteosbbcode,
 			));
 			
@@ -113,6 +113,7 @@ class inteosdbController extends Controller {
 		$BoxDate = date('Y-m-d H:i:s', $timestamp);
 		//dd($BoxDate);
 		$POnum =  $inteos_array[0]['POnum'];
+		$SMVloc =  $inteos_array[0]['SMVloc'];
 		$Variant =  $inteos_array[0]['Variant'];
 		$ClrDesc = $inteos_array[0]['ClrDesc'];
 		$StyCod =  $inteos_array[0]['StyCod'];
@@ -120,21 +121,22 @@ class inteosdbController extends Controller {
 		// list($ColorCode, $Size) = explode('-', $Variant); 
 
 		$brlinija = substr_count($Variant,"-");
-			// echo $brlinija." ";
+		// echo $brlinija." ";
 
-			if ($brlinija == 2)
-			{
-				list($ColorCode, $size1, $size2) = explode('-', $Variant);
-				$Size = $size1."-".$size2;
-				// echo $color." ".$size;	
-			} else {
-				list($ColorCode, $Size) = explode('-', $Variant);
-				// echo $color." ".$size;
-			}
+		if ($brlinija == 2)
+		{
+			list($ColorCode, $size1, $size2) = explode('-', $Variant);
+			$Size = $size1."-".$size2;
+			// echo $color." ".$size;	
+		} else {
+			list($ColorCode, $Size) = explode('-', $Variant);
+			// echo $color." ".$size;
+		}
 	
 		//return view('welcome', compact('bbstock', 'inteos'));
 		//return view('welcome', compact('IntKeyPO', 'BlueBoxNum'));
-		return view('inteosdb.create', compact('BlueBoxCode', 'BlueBoxNum', 'BoxQuant', 'BoxDate','POnum', 'Variant', 'ClrDesc', 'StyCod', 'ColorCode', 'Size' ));
+		$QtyofBB = null;
+		return view('inteosdb.create', compact('BlueBoxCode', 'BlueBoxNum', 'BoxQuant', 'BoxDate','POnum','SMVloc','Variant', 'ClrDesc', 'StyCod', 'ColorCode', 'Size', 'QtyofBB' ));
 	}
 
 	

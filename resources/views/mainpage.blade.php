@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>BBStock</title>
+	<title>BBStock2</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/css.css') }}" rel="stylesheet">
@@ -25,31 +25,44 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="{{ url('/') }}"><b>BBStock Application</b></a>
+				<a class="navbar-brand" href="{{ url('/') }}"><b>BBStock</b></a>
 			</div>
 			
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
 				@if (Auth::guest())
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">Main menu</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/export') }}">Export to all CSV</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/map') }}">Map</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/table') }}">Table</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/tablelog') }}">Table Log</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/status') }}">Delete by status</a></li>
-				</ul>
+				
 				@else
+
+					@if (Auth::user()->name == 'magacin' OR Auth::user()->name == 'admin')
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/') }}">Main menu</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/export') }}">Export to all CSV</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/map') }}">Map</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/table') }}">Table</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/tablelog') }}">Table Log</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/deliveredlog') }}">Delivered Log</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/bundlelog') }}">Bundle Log</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/status') }}">Delete by status</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/locations') }}">Locations</a></li>
+					</ul>
+					@endif
 
 					@if (Auth::user()->name == 'workstudy')
 					<ul class="nav navbar-nav">
@@ -118,6 +131,19 @@
 	            return rex.test($(this).text());
 	        }).show();
 		});
+
+	$(function () {
+	var $table = $('.table');
+		$('#toolbar').find('select').change(function () {
+    		$table.bootstrapTable('refreshOptions', {
+		      exportDataType: $(this).val()
+    		});
+  		});
+	});
+
+	$('#sort').bootstrapTable({
+    
+	});
 	/*
     $('.session').keypress(function(event) {
   		if ( event.which == 13 ) {

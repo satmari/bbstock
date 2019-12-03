@@ -184,6 +184,7 @@ class removebbController extends Controller {
 							$bbStock_log->boxdate = $bb[0]->boxdate;
 							$bbStock_log->numofbb = $bb[0]->numofbb;
 							$bbStock_log->location = $bb[0]->location;
+							$bbStock_log->status = "REMOVED";
 
 							$bbStock_log->save();
 

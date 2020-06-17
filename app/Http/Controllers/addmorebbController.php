@@ -49,7 +49,6 @@ class addmorebbController extends Controller {
 
 		if ($bbcode) {
 
-			
 			if ($inteosdb == '1') {
 
 				// Live database
@@ -62,8 +61,8 @@ class addmorebbController extends Controller {
 				} else {
 		        	// $validator->errors()->add('field', 'Something is wrong with this field!');
 		        	
-		        	Log::error('Cannot find BB in Gordon Inteos');
-		        	$msg = 'Cannot find BB in Gordon Inteos';
+		        	Log::error('Cannot find BB in Subotica Inteos');
+		        	$msg = 'Cannot find BB in Subotica Inteos';
 		        	return view('addmorebb.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
 				}
 

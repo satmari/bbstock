@@ -7,8 +7,10 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ChangeBbStockTable' => $baseDir . '/database/migrations/2019_03_19_121412_change_bb_stock_table.php',
+    'ChangePrepareTable' => $baseDir . '/database/migrations/2020_03_01_202749_change_prepare_table.php',
     'ChangeUserTable' => $baseDir . '/database/migrations/2019_03_19_123802_change_user_table.php',
     'CreateBbStockLogsTable' => $baseDir . '/database/migrations/2018_11_07_081541_create_bb_stock_logs_table.php',
+    'CreateBbStockPreparesTable' => $baseDir . '/database/migrations/2020_02_02_210431_create_bb_stock_prepares_table.php',
     'CreateBbStockTable' => $baseDir . '/database/migrations/2015_11_04_214959_create_bb_stock_table.php',
     'CreateBundlelogsTable' => $baseDir . '/database/migrations/2019_06_07_081329_create_bundlelogs_table.php',
     'CreateDeliveredlogsTable' => $baseDir . '/database/migrations/2019_06_11_102327_create_deliveredlogs_table.php',
@@ -21,6 +23,7 @@ return array(
     'CreateRolesTable' => $baseDir . '/database/migrations/2015_01_15_105324_create_roles_table.php',
     'CreateTargetsTable' => $baseDir . '/database/migrations/2019_11_05_141251_create_targets_table.php',
     'CreateTemploadsTable' => $baseDir . '/database/migrations/2019_10_21_110849_create_temploads_table.php',
+    'CreateTemppreparesTable' => $baseDir . '/database/migrations/2020_02_03_083359_create_tempprepares_table.php',
     'CreateTemptransitsTable' => $baseDir . '/database/migrations/2019_11_15_125652_create_temptransits_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',

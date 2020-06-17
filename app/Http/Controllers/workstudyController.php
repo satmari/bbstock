@@ -38,9 +38,43 @@ class workstudyController extends Controller {
 		// dd($inteosbbcode);
 		
 		// Live database
-		$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [BdkCLZG].[dbo].[CNF_BlueBox] FULL outer join [BdkCLZG].[dbo].CNF_PO on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [BdkCLZG].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [BdkCLZG].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
-			'somevariable' => $inteosbbcode,
-		));
+		// $inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [BdkCLZG].[dbo].[CNF_BlueBox] FULL outer join [BdkCLZG].[dbo].CNF_PO on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [BdkCLZG].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [BdkCLZG].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+		// 	'somevariable' => $inteosbbcode,
+		// ));
+
+		$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT	bb.INTKEY,
+					bb.IntKeyPO,
+					bb.BlueBoxNum,
+					bb.BoxQuant,
+					bb.CREATEDATE,
+					po.POnum,
+					--po.SMVloc as smv,
+					sku.Variant,
+					sku.ClrDesc,
+					s.StyCod
+			FROM [BdkCLZG].[dbo].[CNF_BlueBox] as bb
+			FULL outer join [BdkCLZG].[dbo].[CNF_PO] as po on po.INTKEY = bb.IntKeyPO
+			FULL outer join [BdkCLZG].[dbo].[CNF_SKU] as sku on sku.INTKEY = po.SKUKEY 
+			FULL outer join [BdkCLZG].[dbo].[CNF_STYLE] as s on s.INTKEY = sku.STYKEY 
+			WHERE bb.INTKEY = '".$inteosbbcode."'
+			UNION ALL
+			SELECT	bb.INTKEY,
+					bb.IntKeyPO,
+					bb.BlueBoxNum,
+					bb.BoxQuant,
+					bb.CREATEDATE,
+					po.POnum,
+					--po.SMVloc as smv,
+					sku.Variant,
+					sku.ClrDesc,
+					s.StyCod
+			FROM [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_BlueBox] as bb
+			FULL outer join [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_PO] as po on po.INTKEY = bb.IntKeyPO
+			FULL outer join [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_SKU] as sku on sku.INTKEY = po.SKUKEY 
+			FULL outer join [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_STYLE] as s on s.INTKEY = sku.STYKEY 
+			WHERE bb.INTKEY = '".$inteosbbcode."' "));
+
+
 		
 		if ($inteos) {
 			//continue

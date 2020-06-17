@@ -38,9 +38,11 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/') }}">Main menu</a></li>
 					</ul>
+					 
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/export') }}">Export to all CSV</a></li>
 					</ul>
+					
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/map') }}">Map</a></li>
 					</ul>
@@ -61,6 +63,12 @@
 					</ul>
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/locations') }}">Locations</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/searchbypo') }}">Search by PO</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/searchbybb') }}">Search by BB</a></li>
 					</ul>
 					@endif
 

@@ -50,6 +50,12 @@ class mainController extends Controller {
 				return view('first',compact('msg'));
 			}
 
+			if ($user->is('cutting')) { 
+			    // if user has at least one role
+			    $msg = "Hi  cutting";
+				return redirect('/prepare');
+			}	
+
 			if ($user->is('guest')) { 
 			    // if user has at least one role
 			    $msg = "Hi Guest";

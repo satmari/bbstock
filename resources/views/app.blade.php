@@ -109,6 +109,10 @@ $(function() {
   		// 	$(this).index().addClass('tezenis');
   		// }
 	});
+
+	$("#checkAll").click(function () {
+    	$(".check").prop('checked', $(this).prop('checked'));
+	});
 });
 </script>
 

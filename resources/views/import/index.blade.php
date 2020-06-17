@@ -71,6 +71,37 @@
 				<!-- <hr> -->
 			</div>
 				
+			<div class="panel panel-default">
+				<div class="panel-heading">Import in NAV SAP SKU, Item, Color, Size</div>
+				
+				{!! Form::open(['files'=>True, 'method'=>'POST', 'action'=>['importController@postImportSAP']]) !!}
+					<div class="panel-body">
+						{!! Form::file('file5', ['class' => 'center-block']) !!}
+					</div>
+					<div class="panel-body">
+						{!! Form::submit('Import', ['class' => 'btn btn-warning center-block']) !!}
+					</div>
+					@include('errors.list')
+				{!! Form::close() !!}
+
+				<!-- <hr> -->
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Import in NAV valuation class</div>
+				
+				{!! Form::open(['files'=>True, 'method'=>'POST', 'action'=>['importController@postImportSAPval']]) !!}
+					<div class="panel-body">
+						{!! Form::file('file6', ['class' => 'center-block']) !!}
+					</div>
+					<div class="panel-body">
+						{!! Form::submit('Import', ['class' => 'btn btn-warning center-block']) !!}
+					</div>
+					@include('errors.list')
+				{!! Form::close() !!}
+
+				<!-- <hr> -->
+			</div>
 
 			<div class="panel panel-default">
 				<div class="panel-body">

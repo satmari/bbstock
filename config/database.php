@@ -111,6 +111,15 @@ return [
 			'prefix'   => '',
 		],
 
+		'sqlsrv6' => [
+			'driver'   => 'sqlsrv',
+			'host'     => env('DB_HOST6', 'localhost'),
+			'database' => env('DB_DATABASE6', 'forge'),
+			'username' => env('DB_USERNAME6', 'forge'),
+			'password' => env('DB_PASSWORD6', ''),
+			'prefix'   => '',
+		],
+
 	],
 
 	/*

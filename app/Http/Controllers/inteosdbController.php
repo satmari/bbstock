@@ -57,8 +57,8 @@ class inteosdbController extends Controller {
 			} else {
 	        	// $validator->errors()->add('field', 'Something is wrong with this field!');
 	        	
-	        	Log::error('Cannot find BB in Gordon Inteos');
-	        	$msg = 'Cannot find BB in Gordon Inteos';
+	        	Log::error('Cannot find BB in Subotica Inteos');
+	        	$msg = 'Cannot find BB in Subotica Inteos';
 	        	return view('inteosdb.error', compact('msg'));
 			}
 

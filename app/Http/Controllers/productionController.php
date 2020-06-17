@@ -340,9 +340,13 @@ class productionController extends Controller {
 		for ($i=0; $i < count($db); $i++) { 
 			
 			// dd($db[$i]->bbcode);
-			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].Status FROM [CNF_BlueBox] WHERE [CNF_BlueBox].INTKEY = :somevariable"), array(
-				'somevariable' => $db[$i]->bbcode,
-			));	
+			// $inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].Status FROM [CNF_BlueBox] WHERE [CNF_BlueBox].INTKEY = :somevariable"), array(
+			// 	'somevariable' => $db[$i]->bbcode,
+			// ));	
+
+			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT	bb.Status FROM [BdkCLZG].[dbo].[CNF_BlueBox] as bb WHERE bb.INTKEY = '".$db[$i]->bbcode."'
+			UNION ALL
+			SELECT	bb.Status FROM [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_BlueBox] as bb WHERE bb.INTKEY = '".$db[$i]->bbcode."' "));
 
 			if (isset($inteos)) {
 				// dd($inteos[0]->Status);
@@ -377,9 +381,13 @@ class productionController extends Controller {
 		for ($i=0; $i < count($db); $i++) { 
 			
 			// dd($db[$i]->bbcode);
-			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].Status FROM [CNF_BlueBox] WHERE [CNF_BlueBox].INTKEY = :somevariable"), array(
-				'somevariable' => $db[$i]->bbcode,
-			));	
+			// $inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].Status FROM [CNF_BlueBox] WHERE [CNF_BlueBox].INTKEY = :somevariable"), array(
+			// 	'somevariable' => $db[$i]->bbcode,
+			// ));	
+
+			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT	bb.Status FROM [BdkCLZG].[dbo].[CNF_BlueBox] as bb WHERE bb.INTKEY = '".$db[$i]->bbcode."'
+			UNION ALL
+			SELECT	bb.Status FROM [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_BlueBox] as bb WHERE bb.INTKEY = '".$db[$i]->bbcode."' "));
 
 			if (isset($inteos)) {
 				// dd($inteos[0]->Status);

@@ -40,11 +40,23 @@ class targetController extends Controller {
 		$req_type = $input['req_type'];
 		$line = $input['line'];
 
+		// $po_data = DB::connection('sqlsrv2')->select(DB::raw("SELECT TOP 1 po.POnum, st.StyCod, sku.Variant
+		// FROM dbo.CNF_PO as po
+		// LEFT OUTER JOIN  dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY 
+		// LEFT OUTER JOIN  dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
+		// WHERE po.POnum  like  '%".$komesa."' "));
+
 		$po_data = DB::connection('sqlsrv2')->select(DB::raw("SELECT TOP 1 po.POnum, st.StyCod, sku.Variant
-		FROM dbo.CNF_PO as po
-		LEFT OUTER JOIN  dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY 
-		LEFT OUTER JOIN  dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
-		WHERE po.POnum  like  '%".$komesa."' "));
+			FROM dbo.CNF_PO as po
+			LEFT OUTER JOIN  dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY 
+			LEFT OUTER JOIN  dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
+			WHERE po.POnum  like  '%".$komesa."'
+			UNION ALL
+			SELECT TOP 1 po.POnum, st.StyCod, sku.Variant
+			FROM [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_PO as po
+			LEFT OUTER JOIN  [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY 
+			LEFT OUTER JOIN  [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
+			WHERE po.POnum  like  '%".$komesa."' "));
 
 		// dd($po_data[0]->Variant);
 

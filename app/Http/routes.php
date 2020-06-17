@@ -52,6 +52,12 @@ Route::post('search', 'searchController@search');
 Route::get('search2', 'searchController@index2');
 Route::post('search2', 'searchController@search2');
 
+Route::get('searchbypo', 'searchController@searchbypo');
+Route::post('searchbypo', 'searchController@searchbypopost');
+
+Route::get('searchbybb', 'searchController@searchbybb');
+Route::post('searchbybb', 'searchController@searchbybbpost');
+
 Route::get('export', 'exportController@create');
 
 //Route::get('/', 'WelcomeController@index');
@@ -147,7 +153,20 @@ Route::post('postImportRoles', 'importController@postImportRoles');
 Route::post('postImportUserRoles', 'importController@postImportUserRoles');
 Route::post('postImportUpdatePass', 'importController@postImportUpdatePass');
 Route::get('update_pitch', 'importController@update_pitch');
+Route::post('postImportSAP', 'importController@postImportSAP');
+Route::post('postImportSAPval', 'importController@postImportSAPval');
 
+// Prepare BB
+
+Route::get('prepare', 'bbStockPrepareController@index');
+Route::get('prepare_/{function}', 'bbStockPrepareController@prepare');
+Route::post('prepare_user', 'bbStockPrepareController@prepare_user');
+Route::post('prepare_scan', 'bbStockPrepareController@prepare_scan');
+Route::post('prepare_confirm', 'bbStockPrepareController@prepare_confirm');
+Route::get('prepare_table', 'bbStockPrepareController@prepare_table');
+
+Route::post('prepare_scan_fill', 'bbStockPrepareController@prepare_scan_fill');
+Route::post('prepare_scan_fill_confirm', 'bbStockPrepareController@prepare_scan_fill_confirm');
 
 
 Route::controllers([

@@ -38,7 +38,6 @@ class transitController extends Controller {
 		catch (\Illuminate\Database\QueryException $e) {
 			$msg = "Scaned location does not exist in production";
 			return view('transit.index', compact('msg'));
-
 		}
 		
 		if (!isset($loc[0]->id)) {
@@ -84,7 +83,21 @@ class transitController extends Controller {
 			if ($inteosdb == '1') {
 
 				// Live database
-				$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_PO].SMVloc,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+				$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY
+					,[CNF_BlueBox].IntKeyPO
+					,[CNF_BlueBox].BlueBoxNum
+					,[CNF_BlueBox].BoxQuant
+					,[CNF_BlueBox].CREATEDATE
+					,[CNF_PO].POnum
+					,[CNF_PO].SMVloc
+					,[CNF_SKU].Variant
+					,[CNF_SKU].ClrDesc
+					,[CNF_STYLE].StyCod
+					,[CNF_BlueBox].Bagno 
+					FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO 
+					FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY 
+					FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY 
+					WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
 					'somevariable' => $bbcode,
 				));
 				
@@ -101,7 +114,21 @@ class transitController extends Controller {
 			} elseif ($inteosdb == '2') {
 
 				// Kikinda database
-				$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_PO].SMVloc,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+				$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY
+					,[CNF_BlueBox].IntKeyPO
+					,[CNF_BlueBox].BlueBoxNum
+					,[CNF_BlueBox].BoxQuant
+					,[CNF_BlueBox].CREATEDATE
+					,[CNF_PO].POnum
+					,[CNF_PO].SMVloc
+					,[CNF_SKU].Variant
+					,[CNF_SKU].ClrDesc
+					,[CNF_STYLE].StyCod
+					,[CNF_BlueBox].Bagno  
+					FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO 
+					FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY 
+					FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY 
+					WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
 					'somevariable' => $bbcode,
 				));
 				
@@ -152,12 +179,25 @@ class transitController extends Controller {
 				$BoxDate = date('Y-m-d H:i:s', $timestamp);
 				//dd($BoxDate);
 				// $POnum =  $inteosinput[0]['POnum'];
-				$POnum = substr($inteos_array[0]['POnum'], -6); 
+				// $POnum = substr($inteos_array[0]['POnum'], -6); 
+
+				$brcrtica = substr_count($inteos_array[0]['POnum'],"-");
+				// echo $brcrtica." ";
+					if ($brcrtica == 1)
+				{
+					list($one, $two) = explode('-', $inteos_array[0]['POnum']);
+					$POnum = $one;
+				} else {
+					$POnum = substr($inteos_array[0]['POnum'], -6); 
+				}
+				
 				$SMVloc = $inteos_array[0]['SMVloc'];
 
 				$Variant =  $inteos_array[0]['Variant'];
 				$ClrDesc = $inteos_array[0]['ClrDesc'];
 				$StyCod =  $inteos_array[0]['StyCod'];
+
+				$Bagno =  $inteos_array[0]['Bagno'];
 
 				$numofbb = 0;
 				$status = "TEMP";
@@ -225,6 +265,7 @@ class transitController extends Controller {
 							$db->numofbb = $numofbb;
 							$db->location = strtoupper($location);
 							$db->status = $status;
+							$db->bagno = $Bagno;
 
 							$db->save();
 							
@@ -252,6 +293,7 @@ class transitController extends Controller {
 							$db->numofbb = $numofbb;
 							$db->location = strtoupper($location);
 							$db->status = $status;
+							$db->bagno = $Bagno;
 
 							$db->save();
 							
@@ -385,6 +427,8 @@ class transitController extends Controller {
 				//$status = $line->status;
 				$pitch_time = $line->pitch_time;
 
+				$bagno = $line->bagno;
+
 				$status = "TRANSIT";
 
 				try {
@@ -401,6 +445,7 @@ class transitController extends Controller {
 					$bbStock->location = strtoupper($location);
 					$bbStock->status = $status;
 					$bbStock->pitch_time = $pitch_time;
+					$bbStock->bagno = $bagno;
 
 					$bbStock->save();
 				}

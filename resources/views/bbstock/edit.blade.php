@@ -32,7 +32,7 @@
 				</div>
 				<div class="panel-body">
 					<span>Size:</span>
-					{{-- {!! Form::select('size', array(''=>'any','XS'=>'XS','S'=>'S','M'=>'M','L'=>'L','XL'=>'XL','XXL'=>'XXL','M/L'=>'M/L','S/M'=>'S/M','XS/S'=>'XS/S','2'=>'2','3-4'=>'3-4','5-6'=>'5-6','7-8'=>'7-8','9-10'=>'9-10','11-12'=>'11-12','SSHO'=>'SSHO','MSHO'=>'MSHO','XSSHO'=>'XSSHO'), '', array('class' => 'form-control')); !!} --}}
+					{{-- {!! Form::select('size', array(''=>'','XS'=>'XS','S'=>'S','M'=>'M','L'=>'L','XL'=>'XL','XXL'=>'XXL','M/L'=>'M/L','S/M'=>'S/M','XS/S'=>'XS/S','2'=>'2','3'=>'3','4'=>'4','5'=>'5','6'=>'6','3-4'=>'3-4','5-6'=>'5-6','7-8'=>'7-8','9-10'=>'9-10','11-12'=>'11-12','LSHO'=>'LSHO','SSHO'=>'SSHO','MSHO'=>'MSHO','XSSHO'=>'XSSHO','TU'=>'TU','1/2'=>'1/2','3/4'=>'3/4'), '', array('class' => 'form-control')); !!} --}}
 					{!! Form::input('string', 'size', null, ['class' => 'form-control']) !!}
 				</div>
 				<div class="panel-body">

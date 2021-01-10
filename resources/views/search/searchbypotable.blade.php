@@ -1,6 +1,6 @@
 @extends('mainpage')
 
-@section('first')
+@section('index')
 
 <div class="container container-table">
 <big><b>Search for {{ $po }}</b></big>	
@@ -21,6 +21,7 @@ data-export-types="['excel']"
 			<th data-sortable="true" >BB Qty</th>
 			<th data-sortable="true" >BB Ready</th>
 			<th data-sortable="true" >Marker</th>
+			<th data-sortable="true" >Bagno</th>
 			<th data-sortable="true" >Line</th>
 			<th data-sortable="true" >Inteos Status</th>
 			<th data-sortable="true" >BBStock Status</th>
@@ -46,6 +47,7 @@ data-export-types="['excel']"
 				@endif
 			</td>
 			<td>{{ $line->IDMarker }}</td>
+			<td>{{ $line->Bagno }}</td>
 			<td>{{ $line->ModNam }}</td>
 			<td>{{ $line->Status }}</td>
 			<td>{{ $line->BBStock_status }}</td>

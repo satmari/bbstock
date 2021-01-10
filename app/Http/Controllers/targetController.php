@@ -22,7 +22,9 @@ class targetController extends Controller {
 		// dd($username);
 		$line = $username;
 
-		$rel_po = DB::connection('sqlsrv1')->select(DB::raw("SELECT RIGHT([No_],6) as po FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order] WHERE [Status] = '3'"));
+		// $rel_po = DB::connection('sqlsrv1')->select(DB::raw("SELECT RIGHT([No_],6) as po FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order] WHERE [Status] = '3'"));
+		$rel_po = DB::connection('sqlsrv7')->select(DB::raw("SELECT DISTINCT (CASE WHEN po like '%-%' THEN substring(po, 1,6) ELSE substring (po, 4,6) END) as po
+		FROM [trebovanje].[dbo].[sap_coois] "));
 
 		// dd($data);
 
@@ -50,13 +52,13 @@ class targetController extends Controller {
 			FROM dbo.CNF_PO as po
 			LEFT OUTER JOIN  dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY 
 			LEFT OUTER JOIN  dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
-			WHERE po.POnum  like  '%".$komesa."'
+			WHERE po.POnum  like  '%".$komesa."%'
 			UNION ALL
 			SELECT TOP 1 po.POnum, st.StyCod, sku.Variant
 			FROM [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_PO as po
 			LEFT OUTER JOIN  [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY 
 			LEFT OUTER JOIN  [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
-			WHERE po.POnum  like  '%".$komesa."' "));
+			WHERE po.POnum  like  '%".$komesa."%' "));
 
 		// dd($po_data[0]->Variant);
 
@@ -101,7 +103,9 @@ class targetController extends Controller {
 		$req_type = $input['req_type'];
 
 		if (empty($input['target'])) {
-			$rel_po = DB::connection('sqlsrv1')->select(DB::raw("SELECT RIGHT([No_],6) as po FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order] WHERE [Status] = '3'"));
+			// $rel_po = DB::connection('sqlsrv1')->select(DB::raw("SELECT RIGHT([No_],6) as po FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order] WHERE [Status] = '3'"));
+			$rel_po = DB::connection('sqlsrv7')->select(DB::raw("SELECT DISTINCT (CASE WHEN po like '%-%' THEN substring(po, 1,6) ELSE substring (po, 4,6) END) as po
+			FROM [trebovanje].[dbo].[sap_coois] "));
 			$msg = 'Target is required';
 			return view('target.enter_target', compact('line','komesa', 'style', 'color', 'req_type', 'msg'));
 		}

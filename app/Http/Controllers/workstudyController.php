@@ -111,7 +111,18 @@ class workstudyController extends Controller {
 		$timestamp = strtotime($BoxDateTemp);
 		$BoxDate = date('Y-m-d H:i:s', $timestamp);
 		// dd($BoxDate);
-		$POnum =  $inteos_array[0]['POnum'];
+		// $POnum =  $inteos_array[0]['POnum'];
+
+		$brcrtica = substr_count($inteos_array[0]['POnum'],"-");
+		// echo $brcrtica." ";
+			if ($brcrtica == 1)
+		{
+			list($one, $two) = explode('-', $inteos_array[0]['POnum']);
+			$POnum = $one;
+		} else {
+			$POnum = substr($inteos_array[0]['POnum'], -6); 
+		}
+
 		$Variant =  $inteos_array[0]['Variant'];
 		$ClrDesc = $inteos_array[0]['ClrDesc'];
 		$StyCod =  $inteos_array[0]['StyCod'];
@@ -119,18 +130,17 @@ class workstudyController extends Controller {
 		// list($ColorCode, $Size) = explode('-', $Variant); 
 
 		$brlinija = substr_count($Variant,"-");
-			// echo $brlinija." ";
+		// echo $brlinija." ";
 
-			if ($brlinija == 2)
-			{
-				list($ColorCode, $size1, $size2) = explode('-', $Variant);
-				$Size = $size1."-".$size2;
-				// echo $color." ".$size;	
-			} else {
-				list($ColorCode, $Size) = explode('-', $Variant);
-				// echo $color." ".$size;
-			}
-
+		if ($brlinija == 2)
+		{
+			list($ColorCode, $size1, $size2) = explode('-', $Variant);
+			$Size = $size1."-".$size2;
+			// echo $color." ".$size;	
+		} else {
+			list($ColorCode, $Size) = explode('-', $Variant);
+			// echo $color." ".$size;
+		}
 
 	
 		//return view('welcome', compact('bbstock', 'inteos'));
@@ -150,6 +160,7 @@ class workstudyController extends Controller {
 		$bbname = $inteosinput['BlueBoxNum'];
 		//$po = $inteosinput['POnum'];
 		$po = substr($inteosinput['POnum'], -6); 
+
 		$style = $inteosinput['StyCod'];
 		$color = $inteosinput['ColorCode'];
 		$size = $inteosinput['Size'];

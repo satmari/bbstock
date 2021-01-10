@@ -103,6 +103,7 @@ class productionController extends Controller {
 			           ,[numofbb]
 			           ,[location]
 			           ,[status]
+			           ,[bagno]
 			           ,[created_at]
 					   ,[updated_at])
 			 SELECT 
@@ -117,6 +118,7 @@ class productionController extends Controller {
 			           ,[numofbb]
 			           ,[location]
 			           ,'DELIVERED'
+			           ,[bagno]
 			           ,[created_at]
 					   ,'".$da."'
 
@@ -228,7 +230,8 @@ class productionController extends Controller {
 
 		$bbname = DB::connection('sqlsrv')->select(DB::raw("SELECT bbname FROM bbStock WHERE id = '".$id."' "));
 		// dd($bbname[0]->bbname);
-		$bb = substr($bbname[0]->bbname,-9);
+		// $bb = substr($bbname[0]->bbname,-9);
+		$bb = $bbname[0]->bbname;
 
 		return view('production.bundle_confirm', compact('id','bb'));
 	}
@@ -258,6 +261,7 @@ class productionController extends Controller {
 			           ,[numofbb]
 			           ,[location]
 			           ,[status]
+			           ,[bagno]
 			           ,[created_at]
 					   ,[updated_at])
 			           
@@ -273,6 +277,7 @@ class productionController extends Controller {
 			           ,[numofbb]
 			           ,[location]
 			           ,[status]
+			           ,[bagno]
 			           ,[created_at]
 					   ,'".$da."'
 
@@ -304,6 +309,7 @@ class productionController extends Controller {
 			           ,[numofbb]
 			           ,[location]
 			           ,[status]
+			           ,[bagno]
 			           ,[created_at]
 					   ,[updated_at])
 			 SELECT 
@@ -318,6 +324,7 @@ class productionController extends Controller {
 			           ,[numofbb]
 			           ,[location]
 			           ,[status]
+			           ,[bagno]
 			           ,[created_at]
 					   ,'".$da."'
 
@@ -344,7 +351,7 @@ class productionController extends Controller {
 			// 	'somevariable' => $db[$i]->bbcode,
 			// ));	
 
-			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT	bb.Status FROM [BdkCLZG].[dbo].[CNF_BlueBox] as bb WHERE bb.INTKEY = '".$db[$i]->bbcode."'
+			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT	bb.Status FROM [BdkCLZG].[dbo].[CNF_BlueBox] as bb WHERE bb.[INTKEY] = '".$db[$i]->bbcode."'
 			UNION ALL
 			SELECT	bb.Status FROM [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_BlueBox] as bb WHERE bb.INTKEY = '".$db[$i]->bbcode."' "));
 
@@ -387,7 +394,7 @@ class productionController extends Controller {
 
 			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT	bb.Status FROM [BdkCLZG].[dbo].[CNF_BlueBox] as bb WHERE bb.INTKEY = '".$db[$i]->bbcode."'
 			UNION ALL
-			SELECT	bb.Status FROM [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_BlueBox] as bb WHERE bb.INTKEY = '".$db[$i]->bbcode."' "));
+			SELECT	bb.Status FROM [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_BlueBox] as bb WHERE bb.[INTKEY] = '".$db[$i]->bbcode."' "));
 
 			if (isset($inteos)) {
 				// dd($inteos[0]->Status);
@@ -423,6 +430,7 @@ class productionController extends Controller {
 					           ,[numofbb]
 					           ,[location]
 					           ,[status]
+					           ,[bagno]
 					           ,[created_at]
 							   ,[updated_at])
 					           
@@ -438,6 +446,7 @@ class productionController extends Controller {
 					           ,[numofbb]
 					           ,[location]
 					           ,'COMPLETED'
+					           ,[bagno]
 					           ,[created_at]
 							   ,'".$da."'
 							   

@@ -18,6 +18,11 @@
 						<span>Location Type: <span style="color:red;">*</span></span>
 						{!! Form::select('location_type', array(''=>'','STOCK'=>'STOCK','MODULE/LINE'=>'MODULE/LINE','RECEIVING'=>'RECEIVING'), null, array('class' => 'form-control')); !!} 
 					</div>
+
+					<div class="panel-body">
+						<span>Location Destination: <span style="color:red;">*</span></span>
+						{!! Form::select('location_dest', array(''=>'','SUBOTICA'=>'SUBOTICA','KIKINDA'=>'KIKINDA','LAZAREVAC'=>'LAZAREVAC'), null, array('class' => 'form-control')); !!} 
+					</div>
 					
 
 					<div class="panel-body">
@@ -29,11 +34,12 @@
 					{!! Form::close() !!}
 					<br>
 					
+					{{-- 
 					{!! Form::open(['method'=>'POST', 'url'=>'/locations/delete/'.$location->id]) !!}
 					{!! Form::hidden('id', $location->id, ['class' => 'form-control']) !!}
 					{!! Form::submit('Delete', ['class' => 'btn  btn-danger btn-xs center-block']) !!}
 					{!! Form::close() !!}
-					
+					--}}
 				<hr>
 				<div class="panel-body">
 					<div class="">

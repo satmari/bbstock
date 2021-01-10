@@ -87,7 +87,6 @@ class statusController extends Controller {
 				UNION ALL
 				SELECT	bb.Status FROM [SBT-SQLDB01P\\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_BlueBox] as bb WHERE bb.INTKEY = '".$bbcode."' "));
 
-				
 				if ($inteos) {
 				
 					//dd($inteos[0]->Status);
@@ -104,7 +103,7 @@ class statusController extends Controller {
 				}
 			}
 		} else {
-			$msg = "Marijana, did you really forget your password ?";
+			$msg = "Marijana, did you really forgot your password ?";
 			return view('status.error',compact('msg'));			
 		}
 

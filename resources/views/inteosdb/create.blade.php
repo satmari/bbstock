@@ -44,6 +44,7 @@
 					{!! Form::hidden('StyCod', $StyCod, ['class' => 'form-control']) !!}
 					{!! Form::hidden('ColorCode', $ColorCode, ['class' => 'form-control']) !!}
 					{!! Form::hidden('Size', $Size, ['class' => 'form-control']) !!}
+					{!! Form::hidden('Bagno', $Bagno, ['class' => 'form-control']) !!}
 
 				<div class="panel-body">
 					{!! Form::submit('Add BB to Stock', ['class' => 'btn btn-success btn-lg center-block']) !!}

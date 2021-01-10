@@ -32,7 +32,18 @@ class bbStockController extends Controller {
 		$BlueBoxNum = $inteosinput['BlueBoxNum'];
 		//$po = $inteosinput['POnum'];
 		$POnum = $inteosinput['POnum'];
-		$po = substr($inteosinput['POnum'], -6); 
+		// $po = substr($inteosinput['POnum'], -6); 
+
+		$brcrtica = substr_count($inteosinput['POnum'],"-");
+		// echo $brcrtica." ";
+		if ($brcrtica == 1)
+		{
+			list($one, $two) = explode('-', $inteosinput['POnum']);
+			$po = $one;
+		} else {
+			$po = substr($inteosinput['POnum'],-6);
+		}
+
 		$SMVloc = $inteosinput['SMVloc'];
 		$StyCod = $inteosinput['StyCod'];
 		$ColorCode = $inteosinput['ColorCode'];
@@ -46,13 +57,14 @@ class bbStockController extends Controller {
 		$Variant = $inteosinput['Variant'];
 		$ClrDesc = $inteosinput['ClrDesc'];
 
+		$Bagno = $inteosinput['Bagno'];
+
 		$loc = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM locations WHERE location = '".$location."' and (location_type = 'STOCK' or location_type = 'RECEIVING')"));
 		
 		if (!isset($loc[0]->id)) {
 			$msg = "Scaned location does not exist, or is not correct type of location. ";
-			return view('inteosdb.create', compact('BlueBoxCode', 'BlueBoxNum', 'BoxQuant', 'BoxDate','POnum','SMVloc', 'Variant', 'ClrDesc', 'StyCod', 'ColorCode', 'Size', 'QtyofBB', 'msg' ));
+			return view('inteosdb.create', compact('BlueBoxCode', 'BlueBoxNum', 'BoxQuant', 'BoxDate','POnum','SMVloc', 'Variant', 'ClrDesc', 'StyCod', 'Bagno', 'ColorCode', 'Size', 'QtyofBB', 'msg' ));
 		}
-		
 		
 		try {
 			$bbStock = new bbStock;
@@ -71,6 +83,8 @@ class bbStockController extends Controller {
 			$bbStock->location = strtoupper($location);
 			$bbStock->status = $status;
 
+			$bbStock->bagno = $Bagno;
+
 			$bbStock->save();
 		}
 		catch (\Illuminate\Database\QueryException $e) {
@@ -83,11 +97,11 @@ class bbStockController extends Controller {
 			foreach ($bb as $b) {
 				$bbid = $b->id;
 			}
-
+			
 			$bbstockold = bbStock::findOrFail($bbid);
 			// dd($bb);
 			// $bbstockold->delete();
-
+			
 			// $bbstockold = new bbStock;
 			$bbstockold->bbcode = $BlueBoxCode;
 			$bbstockold->bbname = $BlueBoxNum;
@@ -102,6 +116,8 @@ class bbStockController extends Controller {
 
 			$bbstockold->location = strtoupper($location);
 			$bbstockold->status = $status;
+
+			$bbStock->bagno = $Bagno;
 
 			$bbstockold->save();
 			

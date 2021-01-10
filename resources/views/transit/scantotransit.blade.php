@@ -47,7 +47,7 @@
 									
 										@if($key == 'bbname') {{--@if($key == 'BlueBoxNum')--}}
 										<td>
-								    		{{ substr($value, -9,6) }} <b>{{ substr($value, -3) }}</b>
+								    		{{ substr($value, -13,10) }} <b>{{ substr($value, -3) }}</b>
 								    	</td>
 								    	<td>
 								    		{!! Form::open(['url' => 'remove_to_transit']) !!}

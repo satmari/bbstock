@@ -100,13 +100,14 @@
 	                        
                             <td></td>
                             <td></td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody class="searchable">
 			        @foreach ($db as $req)
                         <tr>
                             {{--<td>{{ $req->id }}</td>--}}
-                            <td><big>{{ substr($req->bbname,-9,6)  }} <b>{{substr($req->bbname,-3)}}</b></big></td>
+                            <td><big>{{ substr($req->bbname,-13,10)  }} <b>{{substr($req->bbname,-3)}}</b></big></td>
                             <td>{{ $req->style }}</td>
                             <td>{{ $req->color }}</td>
                             <td>{{ $req->size }}</td>
@@ -116,13 +117,19 @@
                             <td><b>{{ $req->status }}</b></td>
                             {{--<td>{{ $req->updated_at }}</td>--}}
 
-                            <td><a href="{{ url('/bundle/'.$req->id) }}" class="btn btn-info btn-s center-block"
+                            <td><a href="{{ url('/bundle/'.$req->id) }}" class="btn btn-info btn-xs center-block"
                             @if ($req->status != 'DELIVERED')
                                 disabled
                             @endif
-                                >Bundle IN</a></td>
-                            <td><a href="{{ url('/give/'.$req->id) }}" class="btn btn-info btn-s center-block"
-                            >Give BB</a></td>
+                                ><span style="font-size:xx-small">Bundle IN</span></a></td>
+                            <td>
+                                <a href="{{ url('/give/'.$req->id) }}" class="btn btn-info btn-xs center-block"
+                            ><span style="font-size:xx-small">Give BB</span></a>
+                            </td>
+                            <td>
+                                <a href="http://172.27.161.171/cutting/bb/{{ $username }}/{{ $req->id }} " class="btn btn-info btn-xs center-block"
+                            ><span style="font-size:xx-small">Cut parts</span></a>
+                            </td>
                         </tr>
                     @endforeach
                     

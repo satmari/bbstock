@@ -20,7 +20,8 @@ class ChangeBbStockTable extends Migration {
 	 		//$table->dropColumn('defect_type_status'); //drop
 	 		// $table->string('name', 50)->nullable()->change(); //change
    			//$table->renameColumn('defect_type_status', 'visible'); //rename
-	 		// $table->string('status',24);
+	 		// $table->string('bbname_old')->nullable();
+	 		// $table->string('bbcode_old')->nullable();
 
 		});
 	}

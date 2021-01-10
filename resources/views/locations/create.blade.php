@@ -18,6 +18,11 @@
 						<p>Location type: <span style="color:red;">*</span></p>
 							{!! Form::select('location_type', array(''=>'','STOCK'=>'STOCK','MODULE/LINE'=>'MODULE/LINE','RECEIVING'=>'RECEIVING'), null, array('class' => 'form-control')); !!} 
 						</div>
+
+						<div class="panel-body">
+						<p>Location Destination: <span style="color:red;">*</span></p>
+							{!! Form::select('location_dest', array(''=>'','SUBOTICA'=>'SUBOTICA','KIKINDA'=>'KIKINDA','LAZAREVAC'=>'LAZAREVAC'), null, array('class' => 'form-control')); !!} 
+						</div>
 						
 						{!! Form::submit('Add', ['class' => 'btn  btn-success center-block']) !!}
 

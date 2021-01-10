@@ -163,6 +163,7 @@ class searchController extends Controller {
 			 bb.WIP,
 			 bb.Scrap,
 			 bb.IDMarker,
+			 bb.Bagno,
 			 m.ModNam,
 			 (CASE WHEN bb.[Status] = '0' THEN 'New' WHEN bb.[Status] = '30' THEN 'Suspended' WHEN bb.[Status] = '10' THEN 'On Module' WHEN bb.[Status] = '99' THEN 'Completed'
              WHEN bb.[Status] = '20' THEN 'In Use' END) AS Status,
@@ -194,7 +195,7 @@ FROM         CNF_BlueBox AS bb LEFT OUTER JOIN
              CNF_Modules AS m ON bb.Module = m.Module
                          
 WHERE		 bb.[Status] != '99'  and bb.BoxQuant != '0'  and 
-			 (po.POClosed != '1'  OR po.POClosed IS NULL) and po.POnum like '%".$po."'
+			 (po.POClosed != '1'  OR po.POClosed IS NULL) and po.POnum like '%".$po."%'
 			 
 GROUP BY	 bb.IntKeyPO,
 			 bb.BlueBoxNum,
@@ -206,6 +207,7 @@ GROUP BY	 bb.IntKeyPO,
 			 bb.IDMarker,
 			 bb.Status,
 			 bb.CREATEDATE,
+			 bb.Bagno,
 			 po.POnum,
 			 po.SKUKEY,
 			 sku.Variant,
@@ -225,6 +227,7 @@ SELECT       bb.IntKeyPO,
 			 bb.WIP,
 			 bb.Scrap,
 			 bb.IDMarker,
+			 bb.Bagno,
 			 m.ModNam,
 			 (CASE WHEN bb.[Status] = '0' THEN 'New' WHEN bb.[Status] = '30' THEN 'Suspended' WHEN bb.[Status] = '10' THEN 'On Module' WHEN bb.[Status] = '99' THEN 'Completed'
              WHEN bb.[Status] = '20' THEN 'In Use' END) AS Status,
@@ -254,7 +257,7 @@ FROM         [172.27.161.221\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_BlueBox AS bb LEFT
              [172.27.161.221\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_Modules AS m ON bb.Module = m.Module
                          
 WHERE		 bb.[Status] != '99'  and bb.BoxQuant != '0'  and 
-			 (po.POClosed != '1'  OR po.POClosed IS NULL) and po.POnum like '%".$po."'
+			 (po.POClosed != '1'  OR po.POClosed IS NULL) and po.POnum like '%".$po."%'
 			 
 GROUP BY	 bb.IntKeyPO,
 			 bb.BlueBoxNum,
@@ -266,6 +269,7 @@ GROUP BY	 bb.IntKeyPO,
 			 bb.IDMarker,
 			 bb.Status,
 			 bb.CREATEDATE,
+			 bb.Bagno,
 			 po.POnum,
 			 po.SKUKEY,
 			 sku.Variant,
@@ -301,6 +305,7 @@ ORDER BY bb.BlueBoxNum asc, bb.CREATEDATE"));
 
 		if (isset($findpo[0])) {
 			$po = $findpo[0]->po;
+
 		} else {
 			dd("Can not find PO from this BB");
 		}
@@ -346,7 +351,7 @@ FROM         CNF_BlueBox AS bb LEFT OUTER JOIN
              CNF_Modules AS m ON bb.Module = m.Module
                          
 WHERE		 bb.[Status] != '99'  and bb.BoxQuant != '0'  and 
-			 (po.POClosed != '1'  OR po.POClosed IS NULL) and po.POnum like '%".$po."'
+			 (po.POClosed != '1'  OR po.POClosed IS NULL) and po.POnum like '%".$po."%'
 			 
 GROUP BY	 bb.IntKeyPO,
 			 bb.BlueBoxNum,
@@ -406,7 +411,7 @@ FROM         [172.27.161.221\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_BlueBox AS bb LEFT
              [172.27.161.221\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_Modules AS m ON bb.Module = m.Module
                          
 WHERE		 bb.[Status] != '99'  and bb.BoxQuant != '0'  and 
-			 (po.POClosed != '1'  OR po.POClosed IS NULL) and po.POnum like '%".$po."'
+			 (po.POClosed != '1'  OR po.POClosed IS NULL) and po.POnum like '%".$po."%'
 			 
 GROUP BY	 bb.IntKeyPO,
 			 bb.BlueBoxNum,

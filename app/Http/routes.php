@@ -148,13 +148,15 @@ Route::post('target_enter', 'targetController@target_enter');
 
 // Import 
 Route::get('import', 'importController@index');
-Route::post('postImportUser', 'importController@postImportUser');
-Route::post('postImportRoles', 'importController@postImportRoles');
-Route::post('postImportUserRoles', 'importController@postImportUserRoles');
-Route::post('postImportUpdatePass', 'importController@postImportUpdatePass');
-Route::get('update_pitch', 'importController@update_pitch');
-Route::post('postImportSAP', 'importController@postImportSAP');
-Route::post('postImportSAPval', 'importController@postImportSAPval');
+// Route::post('postImportUser', 'importController@postImportUser');
+// Route::post('postImportRoles', 'importController@postImportRoles');
+// Route::post('postImportUserRoles', 'importController@postImportUserRoles');
+// Route::post('postImportUpdatePass', 'importController@postImportUpdatePass');
+// Route::get('update_pitch', 'importController@update_pitch');
+// Route::post('postImportSAP', 'importController@postImportSAP');
+// Route::post('postImportSAPval', 'importController@postImportSAPval');
+Route::post('postImport_bb_su', 'importController@postImport_bb_su');
+Route::post('postImport_bb_ki', 'importController@postImport_bb_ki');
 
 // Prepare BB
 

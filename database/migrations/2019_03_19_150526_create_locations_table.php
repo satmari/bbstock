@@ -18,6 +18,7 @@ class CreateLocationsTable extends Migration {
 
 			$table->string('location'); 
 			$table->string('location_type'); //0= stock ; 1= modle/line
+			$table->string('location_dest')->nullable(); //added 2020.11.24
 
 			$table->timestamps();
 		});

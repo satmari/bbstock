@@ -18,9 +18,11 @@ data-export-types="['excel']"
 			<th data-sortable="true" >Style</th>
 			<th data-sortable="true" >Color</th>
 			<th data-sortable="true" >Size</th>
+			<th>Qty</th>
 			<th>Qty of BB</th>
 			<th>Location</th>
 			<th>Status</th>
+			<th>Bagno</th>
 			<th>Updated at</th>
 			<th></th>
 		</tr>
@@ -29,13 +31,15 @@ data-export-types="['excel']"
 	<tbody class="searchable">
 		@foreach ($bbstock as $bb)	
 		<tr>
-			<td>{{ substr($bb->bbname, -9)  }}</td>
+			<td>{{ $bb->bbname  }}</td>
 			<td>{{ $bb->style }}</td>
 			<td>{{ $bb->color }}</td>
 			<td>{{ $bb->size }}</td>
+			<td>{{ $bb->qty }}</td>
 			<td>{{ $bb->numofbb }}</td>
 			<td>{{ $bb->location }}</td>
 			<td>{{ $bb->status }}</td>
+			<td>{{ $bb->bagno }}</td>
 			<td>{{ $bb->updated_at }}</td>
 			<td><a href="{{url('/bbstock/'.$bb->id.'/delete')}}" class="btn btn-danger btn-xs ">Remove</a></td>
 		</tr>

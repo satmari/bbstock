@@ -120,6 +120,15 @@ return [
 			'prefix'   => '',
 		],
 
+		'sqlsrv7' => [
+			'driver'   => 'sqlsrv',
+			'host'     => env('DB_HOST7', 'localhost'),
+			'database' => env('DB_DATABASE7', 'forge'),
+			'username' => env('DB_USERNAME7', 'forge'),
+			'password' => env('DB_PASSWORD7', ''),
+			'prefix'   => '',
+		],
+
 	],
 
 	/*

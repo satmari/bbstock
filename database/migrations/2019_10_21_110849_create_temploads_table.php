@@ -29,6 +29,7 @@ class CreateTemploadsTable extends Migration {
 			$table->string('status',24)->nullable();  //added later
 			$table->double('pitch_time')->nullable();  //added later
 
+			$table->string('bagno')->nullable();  //added later
 
 			$table->timestamps();
 		});

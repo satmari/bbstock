@@ -75,7 +75,20 @@ class transitController extends Controller {
 			if ($inteosdb == '1') {
 
 				// Live database
-				$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+				$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY
+					,[CNF_BlueBox].IntKeyPO
+					,[CNF_BlueBox].BlueBoxNum
+					,[CNF_BlueBox].BoxQuant
+					,[CNF_BlueBox].CREATEDATE
+					,[CNF_PO].POnum
+					,[CNF_SKU].Variant
+					,[CNF_SKU].ClrDesc
+					,[CNF_STYLE].StyCod
+					,[CNF_BlueBox].Bagno 
+					FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO 
+					FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY 
+					FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY 
+					WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
 					'somevariable' => $bbcode,
 				));
 				
@@ -92,7 +105,20 @@ class transitController extends Controller {
 			} elseif ($inteosdb == '2') {
 
 				// Kikinda database
-				$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant,[CNF_BlueBox].CREATEDATE,[CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
+				$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY
+					,[CNF_BlueBox].IntKeyPO
+					,[CNF_BlueBox].BlueBoxNum
+					,[CNF_BlueBox].BoxQuant
+					,[CNF_BlueBox].CREATEDATE
+					,[CNF_PO].POnum
+					,[CNF_SKU].Variant
+					,[CNF_SKU].ClrDesc
+					,[CNF_STYLE].StyCod 
+					,[CNF_BlueBox].Bagno
+					FROM [CNF_BlueBox] FULL outer join [CNF_PO] on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO 
+					FULL outer join [CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY 
+					FULL outer join [CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY 
+					WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
 					'somevariable' => $bbcode,
 				));
 				
@@ -146,6 +172,8 @@ class transitController extends Controller {
 				$ClrDesc = $inteos_array[0]['ClrDesc'];
 				$StyCod =  $inteos_array[0]['StyCod'];
 
+				$Bagno =  $inteos_array[0]['Bagno'];
+
 				$bbaddarray = array(
 				'BlueBoxCode' => $bbcode,
 				'IntKeyPO' => $IntKeyPO,
@@ -156,7 +184,8 @@ class transitController extends Controller {
 				'POnum' => $POnum,
 				'Variant' => $Variant,
 				'ClrDesc' => $ClrDesc,
-				'StyCod' => $StyCod
+				'StyCod' => $StyCod,
+				'Bagno' => $Bagno
 				);
 			
 				Session::push('bb_to_add_array_tr',$bbaddarray);
@@ -280,6 +309,8 @@ class transitController extends Controller {
 				$color = $ColorCode;
 				$size = $Size;
 
+				$bagno = $line['Bagno'];
+
 				try {
 					$bbStock = new bbStock;
 					$bbStock->bbcode = $bbcode;
@@ -293,6 +324,7 @@ class transitController extends Controller {
 					$bbStock->numofbb = $numofbb;
 					$bbStock->location = $location;
 					$bbStock->status = $status;
+					$bbStock->bagno = $bagno;
 
 					$bbStock->save();
 				}

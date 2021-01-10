@@ -28,6 +28,8 @@ class CreateBbStockLogsTable extends Migration {
 			
 			$table->string('status');  //added later
 
+			$table->string('bagno')->nullable();  //added later
+			
 			$table->timestamps();
 
 		});

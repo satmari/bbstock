@@ -31,7 +31,7 @@ data-export-types="['excel']">
 	<tbody class="searchable">
 		@foreach ($bbstock as $bb)	
 		<tr>
-			<td>{{ substr($bb->bbname, -9)  }}</td>
+			<td>{{ $bb->bbname  }}</td>
 			<td>{{ $bb->numofbb }}</td>
 			<td>{{ $bb->po }}</td>
 			<td>{{ $bb->style }}</td>

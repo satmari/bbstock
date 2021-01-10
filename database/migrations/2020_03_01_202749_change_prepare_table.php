@@ -13,11 +13,11 @@ class ChangePrepareTable extends Migration {
 	public function up()
 	{
 		//
-		 Schema::table('bb_stock_prepares', function ($table) {
+		 // Schema::table('bb_stock_prepares', function ($table) {
 
 
-		$table->string('operation')->nullable();
-		$table->string('operation_code')->nullable();
+		// $table->string('operation')->nullable();
+		// $table->string('operation_code')->nullable();
 
 		// 	// $table->string('visible')->nullable(); //add
 		// 	//$table->dropColumn('defect_type_status'); //drop
@@ -26,7 +26,50 @@ class ChangePrepareTable extends Migration {
 
 		// 	// $table->dropColumn('name_id'); //drop
 
+		// });
+
+		// Schema::table('bbStock', function ($table) {
+
+		//  	$table->string('bagno')->nullable();  //added later
+
+		// });	
+
+		// Schema::table('bb_stock_logs', function ($table) {
+
+		//  	$table->string('bagno')->nullable();  //added later
+		 	
+		// });	
+
+		// Schema::table('bundlelogs', function ($table) {
+
+		//  	$table->string('bagno')->nullable();  //added later
+		 	
+		// });	
+
+		// Schema::table('deliveredlogs', function ($table) {
+
+		//  	$table->string('bagno')->nullable();  //added later
+		 	
+		// });	
+
+		// Schema::table('temploads', function ($table) {
+
+		// 	$table->string('bagno')->nullable();  //added later
+		 	
+		// });	
+
+		// Schema::table('temptransits', function ($table) {
+
+		// 	$table->string('bagno')->nullable();  //added later
+		 	
+		// });
+		
+		Schema::table('locations', function ($table) {
+
+			$table->string('location_dest')->nullable();  //added later
+		 	
 		});
+		  
 	}
 
 	/**

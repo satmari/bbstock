@@ -69,7 +69,7 @@
 					</ul>
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/searchbybb') }}">Search by BB</a></li>
-					</ul>
+					</ul> 
 					@endif
 
 					@if (Auth::user()->name == 'workstudy')

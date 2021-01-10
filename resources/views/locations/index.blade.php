@@ -22,10 +22,11 @@
                 </div>
                 
                 <table class="table table-striped table-bordered" id="sort" 
+                data-show-export="true"
+                data-export-types="['excel']"
                 >
                     <!--
-                    data-show-export="true"
-                    data-export-types="['excel']"
+                    
                     data-search="true"
                     data-show-refresh="true"
                     data-show-toggle="true"
@@ -49,7 +50,8 @@
                         	<tr>
     	                        <!-- <td>Id</td> -->
     	                        <th>Location</th>
-    	                        <th>Locations type</th>
+    	                        <th>Location type</th>
+                                <th>Location destination</th>
     	                        
                                 <th></th>
                             </tr>
@@ -60,6 +62,7 @@
                                 {{--<td>{{ $req->id }}</td>--}}
                                 <td>{{ $req->location }}</td>
                                 <td>{{ $req->location_type }}</td>
+                                <td>{{ $req->location_dest }}</td>
                                 
                                 @if (Auth::check() && Auth::user()->level() != 3)
                                     <td><a href="{{ url('/location/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>

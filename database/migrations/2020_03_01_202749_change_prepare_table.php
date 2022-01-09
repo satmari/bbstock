@@ -64,11 +64,25 @@ class ChangePrepareTable extends Migration {
 		 	
 		// });
 		
-		Schema::table('locations', function ($table) {
+		// Schema::table('locations', function ($table) {
 
-			$table->string('location_dest')->nullable();  //added later
+		// 	$table->string('location_dest')->nullable();  //added later
 		 	
+		// });
+
+		Schema::table('bbStock', function ($table) {
+	 		$table->string('sku')->nullable();  //added later
 		});
+
+		Schema::table('bb_stock_logs', function ($table) {
+			$table->string('sku')->nullable();  //added later
+		});
+
+		// Schema::table('bb_stock_prepares', function ($table) {
+
+		// 	$table->string('sku')->nullable();  //added later
+
+		// });bundlelogs deliveredlogs temploads bb_stock_prepares
 		  
 	}
 

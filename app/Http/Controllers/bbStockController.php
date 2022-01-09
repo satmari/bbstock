@@ -17,7 +17,6 @@ class bbStockController extends Controller {
 
 	public function index(/*Request $request*/)	{
 
-
 	    //return view('bbstock.create');
 	}
 	public function create(Request $request) {
@@ -65,6 +64,12 @@ class bbStockController extends Controller {
 			$msg = "Scaned location does not exist, or is not correct type of location. ";
 			return view('inteosdb.create', compact('BlueBoxCode', 'BlueBoxNum', 'BoxQuant', 'BoxDate','POnum','SMVloc', 'Variant', 'ClrDesc', 'StyCod', 'Bagno', 'ColorCode', 'Size', 'QtyofBB', 'msg' ));
 		}
+
+		$style_sap = str_pad($StyCod, 9); 
+		$color_sap = str_pad($ColorCode, 4);
+		$size_sap = str_pad($Size, 5);
+
+		$sku = $style_sap.$color_sap.$size_sap;
 		
 		try {
 			$bbStock = new bbStock;
@@ -84,6 +89,8 @@ class bbStockController extends Controller {
 			$bbStock->status = $status;
 
 			$bbStock->bagno = $Bagno;
+
+			$bbStock->sku = $sku;
 
 			$bbStock->save();
 		}
@@ -116,8 +123,8 @@ class bbStockController extends Controller {
 
 			$bbstockold->location = strtoupper($location);
 			$bbstockold->status = $status;
-
-			$bbStock->bagno = $Bagno;
+			$bbstockold->bagno = $Bagno;
+			$bbstockold->sku = $sku;
 
 			$bbstockold->save();
 			
@@ -138,9 +145,7 @@ class bbStockController extends Controller {
 	public function update($id, Request $request) {
 
 		$bb = bbStock::findOrFail($id);		
-
 		$bb->update($request->all());
-
 
 		return view('bbstock.show', compact('bb'));
 	}
@@ -149,6 +154,15 @@ class bbStockController extends Controller {
 		$bb = bbStock::findOrFail($id);
 		// dd($bb);
 		$bb->delete();
+
+		return Redirect::to('/table');
+	}
+
+	public function delete_pallet($id) {
+
+		$bb = bbStock::findOrFail($id);
+		$bb->pallet = '';
+		$bb->save();
 
 		return Redirect::to('/table');
 	}

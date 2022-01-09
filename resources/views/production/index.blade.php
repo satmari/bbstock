@@ -2,7 +2,7 @@
 
 @section('content')
 
-{{ header( "refresh:60;url=/production" ) }}
+{{ header( "refresh:240;url=/production" ) }}
 
 <div class="container-fluid">
     <div class="row vertical-center-row">

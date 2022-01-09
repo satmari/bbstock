@@ -389,10 +389,32 @@ class loadtruckController extends Controller {
 	{	
 
 		$input = $request->all(); // change use (delete or comment user Requestl; )
-		// var_dump($input);
+		// dd($input);
 
 		$location = $input['location'];
+		$inteosdb = $input['inteosdb'];
+		
 		// dd($location);
+		return view('loadbbt.addbb_to_loadt_complete', compact('location','inteosdb'));
+		
+	}
+
+	public function addbb_to_loadt_complete(Request $request)
+	{	
+
+		$input = $request->all(); // change use (delete or comment user Requestl; )
+		// dd($input);
+
+		$location = $input['location'];
+		$inteosdb = $input['inteosdb'];
+		$pallet = $input['pallet'];
+
+
+		if (substr($pallet, 0,3) != 'PAL') {
+			$msg = "Pallet barcode should start with PAL..";
+			return view('loadbbt.addbb_to_loadt_complete', compact('location','inteosdb', 'msg'));
+		}
+		// dd($pallet);
 
 		/*
 		if (isset($input['bbloadarray_unique_tr'])) {
@@ -412,7 +434,6 @@ class loadtruckController extends Controller {
 				$msg = "List of BB to add is empty, try again!";
 				return view('loadbbt.error',compact('msg'));
 			}
-			
 		}
 		*/
 		
@@ -439,6 +460,7 @@ class loadtruckController extends Controller {
 				$boxdate = $line->boxdate;
 				$numofbb = $line->numofbb;
 				$location = strtoupper($location); 
+				$pallet = strtoupper($pallet); 
 				//$status = $line->status;
 				$pitch_time = $line->pitch_time;
 				$bagno = $line->bagno;
@@ -460,6 +482,7 @@ class loadtruckController extends Controller {
 					$bbStock->status = $status;
 					$bbStock->pitch_time = $pitch_time;
 					$bbStock->bagno = $bagno;
+					$bbStock->pallet = $pallet;
 
 					$bbStock->save();
 				}
@@ -490,6 +513,7 @@ class loadtruckController extends Controller {
 					$bbstockold->location = strtoupper($location);
 					$bbstockold->status = $status;
 					// $bbstockold->pitch_time = round($smv / 20 * $qty, 3);
+					$bbstockold->pallet = $pallet;
 					
 					$bbstockold->save();
 				}

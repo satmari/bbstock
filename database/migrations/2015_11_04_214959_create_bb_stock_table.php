@@ -31,6 +31,9 @@ class CreateBbStockTable extends Migration {
 
 			$table->string('bagno')->nullable();  //added later
 
+			$table->string('sku')->nullable();  //added later
+			$table->string('pallet')->nullable();  //added later
+
 			$table->timestamps();
 
 		});

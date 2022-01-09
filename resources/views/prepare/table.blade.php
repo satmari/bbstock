@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">Prepare Table 
+                            <div class="panel-heading">Prepare Table (last 7 days)
                            
                             </div>
                             <div class="input-group"> <span class="input-group-addon">Filter</span>
@@ -18,6 +18,7 @@
                             <table class="table table-striped table-bordered" id="sort" 
                             data-show-export="true"
                             data-export-types="['excel']"
+
                             >
                             <!--
                             data-show-export="true"
@@ -25,7 +26,7 @@
                             data-search="true"
                             data-show-refresh="true"
                             data-show-toggle="true"
-                            data-query-params="queryParams" 
+                            data-query-params="queryParams"
                             data-pagination="true"
                             data-height="300"
                             data-show-columns="true" 

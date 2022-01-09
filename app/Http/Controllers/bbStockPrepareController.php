@@ -331,7 +331,6 @@ class bbStockPrepareController extends Controller {
 	return view('prepare.index');
 	}
 
-
 	public function prepare_scan_fill(Request $request) {
 
 		$input = $request->all(); // change use (delete or comment user Requestl; 
@@ -621,7 +620,7 @@ class bbStockPrepareController extends Controller {
 
 	public function prepare_table() {
 
-		$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bb_stock_prepares] ORDER BY created_at desc"));
+		$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bb_stock_prepares] WHERE created_at >= DATEADD(day,-7,GETDATE()) ORDER BY created_at desc"));
 
 	return view('prepare.table', compact('batch'));
 

@@ -15,6 +15,7 @@ class CreateTemploadsTable extends Migration {
 		Schema::create('temploads', function(Blueprint $table)
 		{
 			$table->increments('id');
+			
 			$table->integer('bbcode');
 			$table->string('bbname', 24)->unique();
 			$table->string('po', 24);
@@ -30,6 +31,7 @@ class CreateTemploadsTable extends Migration {
 			$table->double('pitch_time')->nullable();  //added later
 
 			$table->string('bagno')->nullable();  //added later
+			$table->string('pallet')->nullable();  //added later
 
 			$table->timestamps();
 		});

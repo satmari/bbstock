@@ -30,6 +30,7 @@ Route::post('bbstock', 'bbstockController@create');
 Route::post('bbstock/create', 'bbstockController@create');
 Route::patch('bbstock/{id}', 'bbstockController@update');
 Route::get('bbstock/{id}/delete', 'bbstockController@delete');
+Route::get('bbstock/{id}/delete_pallet', 'bbstockController@delete_pallet');
 
 // add more bb
 Route::get('addmorebb', 'addmorebbController@index');
@@ -88,6 +89,13 @@ Route::post('set_to_transit', 'transitController@set_to_transit');
 Route::post('addbb_to_transit', 'transitController@addbb_to_transit');
 Route::post('remove_to_transit', 'transitController@remove_to_transit');
 
+// Pallet
+Route::get('select_pallet', 'palletController@select_pallet');
+Route::post('select_pallet_confirm', 'palletController@select_pallet_confirm');
+Route::post('select_location_confirm', 'palletController@select_location_confirm');
+
+
+
 /*
 Route::get('transitbb', 'transitController@index');
 Route::post('transitloc', 'transitController@transitloc');
@@ -112,6 +120,7 @@ Route::post('loadloct', 'loadtruckController@loadloct');
 Route::post('set_to_loadt', 'loadtruckController@set_to_loadt');
 Route::post('remove_to_loadt', 'loadtruckController@remove_to_loadt');
 Route::post('addbb_to_loadt', 'loadtruckController@addbb_to_loadt');
+Route::post('addbb_to_loadt_complete', 'loadtruckController@addbb_to_loadt_complete');
 Route::get('unloadbbt', 'loadtruckController@index_unloadt');
 Route::post('unloadloct', 'loadtruckController@unloadloct');
 Route::post('unloadloc_confirmt', 'loadtruckController@unloadloc_confirmt');

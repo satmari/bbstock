@@ -27,6 +27,10 @@ class inteosdbController extends Controller {
         if (is_null($inteosdb)) {
         	$inteosdb = '1';
         }
+
+        // if ($inteosdb == '3') {
+        // 	$inteosdb = '1';
+        // }
         
         return view('inteosdb.index',compact('inteosdb'));
 	}
@@ -45,7 +49,7 @@ class inteosdbController extends Controller {
 		Session::set('inteosdb', $inteosdb );
 
 
-		if ($inteosdb == '1') {
+		if (($inteosdb == '1') OR ($inteosdb == '3')) {
 
 			// Live database
 			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY
@@ -105,7 +109,6 @@ class inteosdbController extends Controller {
 	        	Log::error('Cannot find BB in Kikinda Inteos');
 	        	$msg = 'Cannot find BB in Kikinda Inteos';
 	        	return view('inteosdb.error', compact('msg'));
-
 			}
 
 		} else {
@@ -156,7 +159,6 @@ class inteosdbController extends Controller {
 		$Variant =  $inteos_array[0]['Variant'];
 		$ClrDesc = $inteos_array[0]['ClrDesc'];
 		$StyCod =  $inteos_array[0]['StyCod'];
-
 		$Bagno =  $inteos_array[0]['Bagno'];
 		
 		// list($ColorCode, $Size) = explode('-', $Variant); 

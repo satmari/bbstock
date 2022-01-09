@@ -292,6 +292,12 @@ class addmorebbController extends Controller {
 				$color = $ColorCode;
 				$size = $Size;
 
+				$style_sap = str_pad($style, 9); 
+				$color_sap = str_pad($color, 4);
+				$size_sap = str_pad($size, 5);
+
+				$sku = $style_sap.$color_sap.$size_sap;
+
 				try {
 					$bbStock = new bbStock;
 
@@ -309,6 +315,8 @@ class addmorebbController extends Controller {
 					$bbStock->status = $status;
 					$bbStock->bagno = $bagno;
 					
+					$bbStock->sku = $sku;
+
 					$bbStock->save();
 				}
 				catch (\Illuminate\Database\QueryException $e) {
@@ -340,6 +348,8 @@ class addmorebbController extends Controller {
 					$bbStock->location = strtoupper($location);
 					$bbStock->status = $status;
 					$bbStock->bagno = $bagno;
+
+					$bbStock->sku = $sku;
 					
 					$bbStock->save();
 				}

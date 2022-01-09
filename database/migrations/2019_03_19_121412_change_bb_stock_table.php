@@ -15,15 +15,44 @@ class ChangeBbStockTable extends Migration {
 		//
 		Schema::table('bbStock', function ($table) {
 
-			
-			// $table->double('pitch_time')->nullable();  //added later
-	 		//$table->dropColumn('defect_type_status'); //drop
-	 		// $table->string('name', 50)->nullable()->change(); //change
-   			//$table->renameColumn('defect_type_status', 'visible'); //rename
-	 		// $table->string('bbname_old')->nullable();
-	 		// $table->string('bbcode_old')->nullable();
+
+		 //$table->string('sku')->nullable();  //added later
 
 		});
+
+		Schema::table('bb_stock_logs', function ($table) {
+
+			// $table->string('sku')->nullable();  //added later
+
+		});
+
+		Schema::table('bundlelogs', function ($table) {
+
+			$table->string('pallet')->nullable();  //added later
+
+		});
+
+		Schema::table('deliveredlogs', function ($table) {
+
+	
+			$table->string('pallet')->nullable();  //added later
+
+		});
+
+		Schema::table('temploads', function ($table) {
+
+	
+			$table->string('pallet')->nullable();  //added later
+
+		});
+
+		Schema::table('temptransits', function ($table) {
+
+	
+			$table->string('pallet')->nullable();  //added later
+
+		});
+
 	}
 
 	/**

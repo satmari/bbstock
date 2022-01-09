@@ -31,6 +31,7 @@ class CreateTemptransitsTable extends Migration {
 			$table->double('pitch_time')->nullable();  //added later
 
 			$table->string('bagno')->nullable();  //added later
+			$table->string('pallet')->nullable();  //added later
 
 			$table->timestamps();
 		});

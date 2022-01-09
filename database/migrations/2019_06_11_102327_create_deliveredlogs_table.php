@@ -30,6 +30,7 @@ class CreateDeliveredlogsTable extends Migration {
 			$table->string('status',24)->nullable();
 
 			$table->string('bagno')->nullable();  //added later
+			$table->string('pallet')->nullable();  //added later
 			
 			$table->timestamps();
 		});

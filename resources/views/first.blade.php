@@ -71,6 +71,13 @@
 						</div>
 					</div>
 
+					<br>
+					<div class="panel-body">
+						<div class="">
+							<a href="{{url('/select_pallet')}}" class="btn btn-info btn-lg center-block"><br><span style="color:">Transfer pallet (NEW)</span><br><br></a>
+						</div>
+					</div>
+
 
 					
 					<div class="panel-body">

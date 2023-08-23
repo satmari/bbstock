@@ -67,7 +67,12 @@ class loadtruckController extends Controller {
 		}
 		$bbloadarray_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM temploads WHERE location = '".$location."' "));
 
-		return view('loadbbt.scantoload',compact('location','bbloadarray_unique_tr','inteosdb'));
+		$count_bbload_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT count(id) as count_bb FROM temploads WHERE location = '".$location."' "));
+		// dd($count_bbload_unique_tr[0]->count_bb);
+		$count_bbload_unique_tr = $count_bbload_unique_tr[0]->count_bb;
+		// dd($count_bbload_unique_tr);
+
+		return view('loadbbt.scantoload',compact('location','bbloadarray_unique_tr','inteosdb', 'count_bbload_unique_tr'));
 	}
 	
 	public function set_to_loadt(Request $request)
@@ -87,6 +92,7 @@ class loadtruckController extends Controller {
 		// $bbloadarray_unique_tr = Session::get('bb_to_load_array_tr');
 		$bbloadarray_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM temploads WHERE location = '".$location."' "));
 		// dd($bbloadarray_unique_tr);
+
 
 		if (!isset($bbloadarray_unique_tr)) {
 			$bbloadarray_unique_tr = NULL;
@@ -125,7 +131,13 @@ class loadtruckController extends Controller {
 		        	
 		        	Log::error('Cannot find BB in Subotica Inteos');
 		        	$msg = 'Cannot find BB in Subotica Inteos';
-		        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb', 'location','inteosdb'));
+
+		        	$count_bbload_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT count(id) as count_bb FROM temploads WHERE location = '".$location."' "));
+					// dd($count_bbload_unique_tr[0]->count_bb);
+					$count_bbload_unique_tr = $count_bbload_unique_tr[0]->count_bb;
+					// dd($count_bbload_unique_tr);
+
+		        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb', 'location','inteosdb','count_bbload_unique_tr'));
 				}
 
 			} elseif ($inteosdb == '2') {
@@ -156,13 +168,25 @@ class loadtruckController extends Controller {
 		        	
 		        	Log::error('Cannot find BB in Kikinda Inteos');
 		        	$msg = 'Cannot find BB in Kikinda Inteos';
-		        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb','location','inteosdb'));
+
+		        	$count_bbload_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT count(id) as count_bb FROM temploads WHERE location = '".$location."' "));
+					// dd($count_bbload_unique_tr[0]->count_bb);
+					$count_bbload_unique_tr = $count_bbload_unique_tr[0]->count_bb;
+					// dd($count_bbload_unique_tr);
+
+		        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb','location','inteosdb','count_bbload_unique_tr'));
 				}
 			} else {
 
 					Log::error('Cannot find BB in any Inteos');
 					$msg = 'Cannot find BB in any Inteos';
-		        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb','location','inteosdb'));
+
+					$count_bbload_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT count(id) as count_bb FROM temploads WHERE location = '".$location."' "));
+					// dd($count_bbload_unique_tr[0]->count_bb);
+					$count_bbload_unique_tr = $count_bbload_unique_tr[0]->count_bb;
+					// dd($count_bbload_unique_tr);
+
+		        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb','location','inteosdb','count_bbload_unique_tr'));
 			}
 		
 			if ($inteos) {
@@ -260,7 +284,13 @@ class loadtruckController extends Controller {
 
 							Log::error('BB already scaned for this location!');
 							$msg = 'BB already scaned for this location!';
-				        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb','location'));
+
+							$count_bbload_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT count(id) as count_bb FROM temploads WHERE location = '".$location."' "));
+							// dd($count_bbload_unique_tr[0]->count_bb);
+							$count_bbload_unique_tr = $count_bbload_unique_tr[0]->count_bb;
+							// dd($count_bbload_unique_tr);
+
+				        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb','location','count_bbload_unique_tr'));
 
 						} else {
 
@@ -286,7 +316,13 @@ class loadtruckController extends Controller {
 							catch (\Illuminate\Database\QueryException $e) {
 								Log::error('BB already scaned for this location!');
 								$msg = 'BB already scaned for this location!';
-					        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb','location'));
+
+								$count_bbload_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT count(id) as count_bb FROM temploads WHERE location = '".$location."' "));
+								// dd($count_bbload_unique_tr[0]->count_bb);
+								$count_bbload_unique_tr = $count_bbload_unique_tr[0]->count_bb;
+								// dd($count_bbload_unique_tr);
+
+					        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb','location','count_bbload_unique_tr'));
 							}
 						}
 
@@ -314,7 +350,13 @@ class loadtruckController extends Controller {
 					catch (\Illuminate\Database\QueryException $e) {
 						Log::error('BB already scaned for this location!');
 						$msg = 'BB already scaned for this location!';
-			        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb','location'));
+
+						$count_bbload_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT count(id) as count_bb FROM temploads WHERE location = '".$location."' "));
+						// dd($count_bbload_unique_tr[0]->count_bb);
+						$count_bbload_unique_tr = $count_bbload_unique_tr[0]->count_bb;
+						// dd($count_bbload_unique_tr);
+
+			        	return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','sumofbb','msg','inteosdb','location','count_bbload_unique_tr'));
 					}
 				}
 				
@@ -346,7 +388,12 @@ class loadtruckController extends Controller {
 
 		$bbloadarray_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM temploads WHERE location = '".$location."' "));
 
-		return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','msg','location','inteosdb'));
+		$count_bbload_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT count(id) as count_bb FROM temploads WHERE location = '".$location."' "));
+		// dd($count_bbload_unique_tr[0]->count_bb);
+		$count_bbload_unique_tr = $count_bbload_unique_tr[0]->count_bb;
+		// dd($count_bbload_unique_tr);
+
+		return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','msg','location','inteosdb','count_bbload_unique_tr'));
 	}
 
 	public function remove_to_loadt(Request $request)
@@ -382,7 +429,12 @@ class loadtruckController extends Controller {
 		DB::connection('sqlsrv')->select(DB::raw("SET NOCOUNT ON;DELETE FROM temploads WHERE bbname = '".$bb."'; SELECT TOP 1 id FROM temploads"));
 		$bbloadarray_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM temploads WHERE location = '".$location."' "));
 
-		return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','location','inteosdb'));
+		$count_bbload_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT count(id) as count_bb FROM temploads WHERE location = '".$location."' "));
+		// dd($count_bbload_unique_tr[0]->count_bb);
+		$count_bbload_unique_tr = $count_bbload_unique_tr[0]->count_bb;
+		// dd($count_bbload_unique_tr);
+
+		return view('loadbbt.scantoload',compact('bbloadarray_unique_tr','location','inteosdb', 'count_bbload_unique_tr'));
 	}
 
 	public function addbb_to_loadt(Request $request)

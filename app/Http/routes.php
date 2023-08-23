@@ -19,8 +19,8 @@ Route::get('inteosdb', 'inteosdbController@index');
 Route::get('inteosdb/create', 'inteosdbController@create');
 //Route::get('inteosdb/{id}', 'inteosdbController@show');
 Route::post('inteosdb', 'inteosdbController@create');
-Route::post('inteosdb/create', 'bbstockController@create');
 
+Route::post('inteosdb/create', 'bbstockController@create');
 Route::get('bbstock', 'bbstockController@index');
 Route::get('bbstock/create', 'bbstockController@create');
 //Route::get('bbstock/remove', 'bbstockController@remove');
@@ -37,7 +37,6 @@ Route::get('addmorebb', 'addmorebbController@index');
 Route::post('set_to_add', 'addmorebbController@set_to_add');
 Route::post('addbbloc', 'addmorebbController@addbbloc');
 Route::post('addbbsave', 'addmorebbController@addbbsave');
-
 //Route::resource('bbstock', 'bbstockController');
 
 Route::get('removebb', 'removebbController@index');
@@ -49,19 +48,14 @@ Route::get('removebb_choose/{id}', 'removebbController@removebb_choose');
 
 Route::get('search', 'searchController@index');
 Route::post('search', 'searchController@search');
-
 Route::get('search2', 'searchController@index2');
 Route::post('search2', 'searchController@search2');
-
 Route::get('searchbypo', 'searchController@searchbypo');
 Route::post('searchbypo', 'searchController@searchbypopost');
-
 Route::get('searchbybb', 'searchController@searchbybb');
 Route::post('searchbybb', 'searchController@searchbybbpost');
 
 Route::get('export', 'exportController@create');
-
-//Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
 
@@ -95,7 +89,6 @@ Route::post('select_pallet_confirm', 'palletController@select_pallet_confirm');
 Route::post('select_location_confirm', 'palletController@select_location_confirm');
 
 
-
 /*
 Route::get('transitbb', 'transitController@index');
 Route::post('transitloc', 'transitController@transitloc');
@@ -124,7 +117,6 @@ Route::post('addbb_to_loadt_complete', 'loadtruckController@addbb_to_loadt_compl
 Route::get('unloadbbt', 'loadtruckController@index_unloadt');
 Route::post('unloadloct', 'loadtruckController@unloadloct');
 Route::post('unloadloc_confirmt', 'loadtruckController@unloadloc_confirmt');
-
 
 // Production
 Route::get('production', 'productionController@index');
@@ -168,7 +160,6 @@ Route::post('postImport_bb_su', 'importController@postImport_bb_su');
 Route::post('postImport_bb_ki', 'importController@postImport_bb_ki');
 
 // Prepare BB
-
 Route::get('prepare', 'bbStockPrepareController@index');
 Route::get('prepare_/{function}', 'bbStockPrepareController@prepare');
 Route::post('prepare_user', 'bbStockPrepareController@prepare_user');
@@ -178,6 +169,8 @@ Route::get('prepare_table', 'bbStockPrepareController@prepare_table');
 
 Route::post('prepare_scan_fill', 'bbStockPrepareController@prepare_scan_fill');
 Route::post('prepare_scan_fill_confirm', 'bbStockPrepareController@prepare_scan_fill_confirm');
+
+// Extra 
 
 
 Route::controllers([

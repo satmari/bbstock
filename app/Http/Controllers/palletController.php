@@ -29,12 +29,12 @@ class palletController extends Controller {
 		// dd($pallet);
 
 		$pallet_in_db = DB::connection('sqlsrv')->select(DB::raw("SELECT
-		 * FROM bbstock WHERE pallet = '".$pallet."' and (location = 'KIKINDA WH' or location = 'SENTA WH') and status = 'STOCK' "));
-		// $pallet_in_db = DB::connection('sqlsrv')->select(DB::raw("SELECT count(id) FROM [bbStock].[dbo].bbstock WHERE pallet = '".$pallet."' and location = 'KIKINDA WH' and status = 'STOCK' "));
+		 * FROM bbstock WHERE pallet = '".$pallet."' and (location = 'RECEIVING KI WH' or location = 'SENTA WH') and status = 'STOCK' "));
+		// $pallet_in_db = DB::connection('sqlsrv')->select(DB::raw("SELECT count(id) FROM [bbStock].[dbo].bbstock WHERE pallet = '".$pallet."' and location = 'RECEIVING KI WH' and status = 'STOCK' "));
 		// dd($pallet_in_db);
 
 		if (!isset($pallet_in_db[0]->id)) {
-			$msg = 'Pallet not exist in KIKINDA WH or SENTA WH with status STOCK';
+			$msg = 'Pallet not exist in RECEIVING KI WH or SENTA WH with status STOCK';
 			return view('pallet.error', compact('msg'));
 		}
 
@@ -54,13 +54,13 @@ class palletController extends Controller {
 
 		// dd(substr($location, 0,6));
 
-		if ((substr($location, 0,8) != 'KIK TEMP') and (substr($location, 0,6)) != 'SENTA-') {
-			$msg = 'Location must start with KIK TEMP or SENTA-';
+		if (((substr($location, 0,8) != 'KIK TEMP') and (substr($location, 0,6)) != 'SENTA-') and ($location != 'NO_BALZA')) {
+			$msg = 'Location must start with KIK TEMP , SENTA- or NO_BALZA';
 			return view('pallet.error', compact('msg'));
 		}
 
 		$bb_to_set  = DB::connection('sqlsrv')->select(DB::raw("SELECT
-		 * FROM bbstock WHERE pallet = '".$pallet."' and (location = 'KIKINDA WH' or location = 'SENTA WH') and status = 'STOCK' "));
+		 * FROM bbstock WHERE pallet = '".$pallet."' and (location = 'RECEIVING KI WH' or location = 'SENTA WH') and status = 'STOCK' "));
 		// dd($bb_to_set);
 
 		$count_list = count($bb_to_set);

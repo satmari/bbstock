@@ -16,8 +16,7 @@ class exportController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
+	public function index() {
 		/*
 		public function export() {
 			$posts = bbStock::all();
@@ -45,8 +44,7 @@ class exportController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
-	{
+	public function create() {
 		$list = bbStock::all();
 
         $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());

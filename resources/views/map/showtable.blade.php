@@ -25,6 +25,7 @@ data-export-types="['excel']"
 			<th>Bagno</th>
 			<th>Palet</th>
 			<th>Updated at</th>
+			<th>BB Destination</th>
 			<th></th>
 			<th></th>
 		</tr>
@@ -44,6 +45,7 @@ data-export-types="['excel']"
 			<td>{{ $bb->bagno }}</td>
 			<td>{{ $bb->pallet }}</td>
 			<td>{{ $bb->updated_at }}</td>
+			<td>{{ $bb->destination }}</td>
 			<td><a href="{{url('/bbstock/'.$bb->id.'/delete')}}" class="btn btn-danger btn-xs ">Remove</a></td>
 			<td><a href="{{url('/bbstock/'.$bb->id.'/delete_pallet')}}" class="btn btn-warning btn-xs ">Remove Pallet</a></td>
 		</tr>

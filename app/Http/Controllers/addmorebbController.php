@@ -16,8 +16,7 @@ use Session;
 class addmorebbController extends Controller {
 
 
-	public function index()
-	{
+	public function index() {
 		//
 		$ses = Session::get('bb_to_add_array');
 		$inteosdb = Session::get('inteosdb');
@@ -29,8 +28,7 @@ class addmorebbController extends Controller {
         return view('addmorebb.index',compact('ses', 'inteosdb'));
 	}
 
-	public function set_to_add(Request $request)
-	{	
+	public function set_to_add(Request $request) {	
 		//validation
 		//$this->validate($request, ['bb_to_add'=>'required|max:10']);
 
@@ -181,8 +179,7 @@ class addmorebbController extends Controller {
 	        	// Log::error('Cannot find BB in Inteos');
 	        	$msg = "Cannot find BB in Inteos";
 	        	// return view('addmorebb.error', compact('msg'));
-	    	}
-				
+	    	}		
 		}
 
 		$bbaddarray = Session::get('bb_to_add_array');
@@ -207,8 +204,7 @@ class addmorebbController extends Controller {
 		return view('addmorebb.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
 	}
 
-	public function addbbloc(Request $request)
-	{
+	public function addbbloc(Request $request) {
 
 		$bbaddarray = Session::get('bb_to_add_array');
 		//dd($bbaddarray);
@@ -223,11 +219,9 @@ class addmorebbController extends Controller {
 		return view('addmorebb.success',compact('msg'));
 
 		}
-
 	}
 
-	public function addbbsave(Request $request)
-	{	
+	public function addbbsave(Request $request) {	
 
 		$input = $request->all(); // change use (delete or comment user Requestl; )
 		// var_dump($input);

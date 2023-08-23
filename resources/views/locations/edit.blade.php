@@ -21,7 +21,7 @@
 
 					<div class="panel-body">
 						<span>Location Destination: <span style="color:red;">*</span></span>
-						{!! Form::select('location_dest', array(''=>'','SUBOTICA'=>'SUBOTICA','KIKINDA'=>'KIKINDA','LAZAREVAC'=>'LAZAREVAC','SENTA'=>'SENTA','VALJEVO'=>'VALJEVO'), null, array('class' => 'form-control')); !!} 
+						{!! Form::select('location_dest', array(''=>'','SUBOTICA'=>'SUBOTICA','KIKINDA'=>'KIKINDA','LAZAREVAC'=>'LAZAREVAC','SENTA'=>'SENTA','VALJEVO'=>'VALJEVO','KAYRA'=>'KAYRA'), null, array('class' => 'form-control')); !!} 
 					</div>
 					
 

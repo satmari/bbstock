@@ -13,6 +13,7 @@
 	<link href="{{ asset('/css/bootstrap-table.css') }}" rel='stylesheet' type='text/css'>
 	<link href="{{ asset('/css/jquery-ui.min.css') }}" rel='stylesheet' type='text/css'>
 	<link href="{{ asset('/css/custom.css') }}" rel="stylesheet">
+	<link rel="manifest" href="{{ asset('/css/manifest.json') }}">
 
 </head>
 <body>
@@ -38,11 +39,9 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/') }}">Main menu</a></li>
 					</ul>
-					 
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/export') }}">Export to all CSV</a></li>
 					</ul>
-					
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/map') }}">Map</a></li>
 					</ul>

@@ -155,9 +155,26 @@ class productionController extends Controller {
 	public function give($id)
 	{
 		// dd($bb);
+		$username = Session::get('username');
 
-		$locations = locations::orderBy('id')->where('location_type','=','MODULE/LINE')->lists('location','location');
-		return view('production.give_confirm', compact('id', 'locations'));
+		//dd(substr($username, 0,1));
+
+		if (substr($username, 0,1) == 'S') {
+				$locations = locations::orderBy('id')->where('location_type','=','MODULE/LINE')->where('location','like','S%')->lists('location','location');
+
+		} else if (substr($username, 0,1) == 'K') {
+			$locations = locations::orderBy('id')->where('location_type','=','MODULE/LINE')->where('location','like','K%')->lists('location','location');
+
+		} else if (substr($username, 0,1) == 'Z') {
+			$locations = locations::orderBy('id')->where('location_type','=','MODULE/LINE')->where('location','like','Z%')->lists('location','location');
+
+		} else {
+			$locations = locations::orderBy('id')->where('location_type','=','MODULE/LINE')->lists('location','location');
+		}
+
+		// $locations = locations::orderBy('id')->where('location_type','=','MODULE/LINE')->lists('location','location');
+
+		return view('production.give_confirm', compact('id', 'locations','username'));
 
 	}
 

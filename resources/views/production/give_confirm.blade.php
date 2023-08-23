@@ -5,7 +5,7 @@
 	<div class="row vertical-center-row">
 		<div class="text-center col-md-4 col-md-offset-4">
 			<div class="panel panel-default">
-				<div class="panel-heading">Confirmation</div>
+				<div class="panel-heading">Confirmation give BB (from line <b>{{$username}}</b>)</div>
 				<br>
 					{!! Form::open(['method'=>'POST', 'url'=>'/give_confirm']) !!}
 

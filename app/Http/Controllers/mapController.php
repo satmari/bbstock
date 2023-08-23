@@ -54,7 +54,11 @@ class mapController extends Controller {
 
 	public function table() {
 
-		$bbstock = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock ORDER BY location asc, status asc, updated_at asc"));
+		$bbstock = DB::connection('sqlsrv')->select(DB::raw("SELECT b.* ,
+			(SELECT location_dest FROM [bbStock].[dbo].[locations] WHERE b.location = location) as destination
+			FROM bbStock as b
+			ORDER BY b.location asc, b.status asc, b.updated_at asc"));
+
 		return view('map.showtable',compact('bbstock'));
 	}
 	

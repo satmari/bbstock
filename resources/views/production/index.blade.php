@@ -2,7 +2,7 @@
 
 @section('content')
 
-{{ header( "refresh:240;url=/production" ) }}
+{{ header( "refresh:3600;url=/production" ) }}
 
 <div class="container-fluid">
     <div class="row vertical-center-row">
@@ -53,6 +53,7 @@
                 &nbsp &nbsp 
                 
 
+
                 </div>
 				
                 
@@ -100,7 +101,7 @@
 	                        
                             <td></td>
                             <td></td>
-                            <td></td>
+                            <td><a href="{{url('http://172.27.161.171/cutting/req_extrabb_line_history/'.$username)}}" class="right bt n bt n-default btn-info"><b>Cut request history</a></td>
                         </tr>
                     </thead>
                     <tbody class="searchable">

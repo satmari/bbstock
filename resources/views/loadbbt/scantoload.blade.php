@@ -36,7 +36,7 @@
 					<table class="table">
 						<thead>
 							<th>BB name</th>
-							<th></th>
+							<th>Number of BB: {{ $count_bbload_unique_tr }}</th>
 							
 						</thead>
 						@if(isset($bbloadarray_unique_tr)) 

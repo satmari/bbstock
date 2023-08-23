@@ -19,6 +19,7 @@ class bbStockController extends Controller {
 
 	    //return view('bbstock.create');
 	}
+
 	public function create(Request $request) {
 		//
 		//validation
@@ -132,16 +133,19 @@ class bbStockController extends Controller {
 		
 		return view('bbstock.success', compact('BlueBoxNum','po','StyCod','ColorCode','Size','BoxQuant','QtyofBB','location'));
 	}
+
 	public function show($id) {
 
 		$bb = bbStock::findOrFail($id);
 		return view('bbstock.show', compact('bb'));
 	}
+
 	public function edit($id) {
 
 		$bb = bbStock::findOrFail($id);		
 		return view('bbstock.edit', compact('bb'));
 	}
+
 	public function update($id, Request $request) {
 
 		$bb = bbStock::findOrFail($id);		
@@ -149,6 +153,7 @@ class bbStockController extends Controller {
 
 		return view('bbstock.show', compact('bb'));
 	}
+	
 	public function delete($id) {
 
 		$bb = bbStock::findOrFail($id);

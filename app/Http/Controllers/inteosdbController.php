@@ -35,8 +35,7 @@ class inteosdbController extends Controller {
         return view('inteosdb.index',compact('inteosdb'));
 	}
 
-	public function create(Request $request)
-	{
+	public function create(Request $request) {
 		//
 		$this->validate($request, ['inteos_bb_code' => 'required|max:10']);
 

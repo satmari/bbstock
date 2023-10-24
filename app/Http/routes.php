@@ -15,29 +15,36 @@ use App\bbStock;
 Route::get('/', 'mainController@index');
 Route::get('/home', 'mainController@index');
 
+// add to stock without extra operations
 Route::get('inteosdb', 'inteosdbController@index');
-Route::get('inteosdb/create', 'inteosdbController@create');
-//Route::get('inteosdb/{id}', 'inteosdbController@show');
 Route::post('inteosdb', 'inteosdbController@create');
+Route::post('create_bb', 'inteosdbController@create_bb');
 
-Route::post('inteosdb/create', 'bbstockController@create');
-Route::get('bbstock', 'bbstockController@index');
-Route::get('bbstock/create', 'bbstockController@create');
-//Route::get('bbstock/remove', 'bbstockController@remove');
-Route::get('bbstock/{id}', 'bbstockController@show');
-Route::get('bbstock/{id}/edit', 'bbstockController@edit');
-Route::post('bbstock', 'bbstockController@create');
-Route::post('bbstock/create', 'bbstockController@create');
-Route::patch('bbstock/{id}', 'bbstockController@update');
-Route::get('bbstock/{id}/delete', 'bbstockController@delete');
-Route::get('bbstock/{id}/delete_pallet', 'bbstockController@delete_pallet');
+// add to stock with extra operations
+Route::get('inteosdb2', 'inteosdb2Controller@index');
+Route::post('inteosdb2', 'inteosdb2Controller@create');
+Route::post('create_bb2', 'inteosdb2Controller@create_bb');
 
 // add more bb
 Route::get('addmorebb', 'addmorebbController@index');
 Route::post('set_to_add', 'addmorebbController@set_to_add');
 Route::post('addbbloc', 'addmorebbController@addbbloc');
 Route::post('addbbsave', 'addmorebbController@addbbsave');
-//Route::resource('bbstock', 'bbstockController');
+
+// Route::post('inteosdb/create', 'bbstockController@create');
+// Route::get('bbstock', 'bbstockController@index');
+// Route::get('bbstock/create', 'bbstockController@create');
+// Route::get('bbstock/remove', 'bbstockController@remove');
+// Route::post('bbstock/create', 'bbstockController@create');
+
+Route::get('bbstock/{id}', 'bbstockController@show');
+Route::get('bbstock/{id}/edit', 'bbstockController@edit');
+// Route::post('bbstock', 'bbstockController@create');
+Route::patch('bbstock/{id}', 'bbstockController@update');
+Route::get('bbstock/{id}/delete', 'bbstockController@delete');
+Route::get('bbstock/{id}/delete_pallet', 'bbstockController@delete_pallet');
+
+
 
 Route::get('removebb', 'removebbController@index');
 Route::get('removebb/destroy', 'removebbController@destroy');
@@ -83,10 +90,61 @@ Route::post('set_to_transit', 'transitController@set_to_transit');
 Route::post('addbb_to_transit', 'transitController@addbb_to_transit');
 Route::post('remove_to_transit', 'transitController@remove_to_transit');
 
+Route::get('transitbb2', 'transit2Controller@index');
+
 // Pallet
 Route::get('select_pallet', 'palletController@select_pallet');
 Route::post('select_pallet_confirm', 'palletController@select_pallet_confirm');
 Route::post('select_location_confirm', 'palletController@select_location_confirm');
+
+// Extra
+Route::get('extra_sku', 'extra_opController@extra_sku');
+Route::get('extra_sku_new', 'extra_opController@extra_sku_new');
+Route::post('extra_sku_insert', 'extra_opController@extra_sku_insert');
+Route::get('extra_sku_edit/{id}', 'extra_opController@extra_sku_edit');
+Route::get('extra_sku_view/{operation_id}/{sku}', 'extra_opController@extra_sku_view');
+Route::post('extra_sku_update', 'extra_opController@extra_sku_update');
+Route::post('extra_sku_delete/{id}', 'extra_opController@extra_sku_delete');
+
+Route::get('extra_style', 'extra_opController@extra_style');
+Route::get('extra_style_new', 'extra_opController@extra_style_new');
+Route::post('extra_style_insert', 'extra_opController@extra_style_insert');
+Route::get('extra_style_edit/{id}', 'extra_opController@extra_style_edit');
+Route::get('extra_style_view/{operation_id}/{style}', 'extra_opController@extra_style_view');
+Route::post('extra_style_update', 'extra_opController@extra_style_update');
+Route::post('extra_style_delete/{operation_id}', 'extra_opController@extra_style_delete');
+
+Route::get('extra_style_size', 'extra_opController@extra_style_size');
+Route::get('extra_style_size_new', 'extra_opController@extra_style_size_new');
+Route::post('extra_style_size_insert', 'extra_opController@extra_style_size_insert');
+Route::get('extra_style_size_edit/{id}', 'extra_opController@extra_style_size_edit');
+Route::get('extra_style_size_view/{operation_id}/{style_size}', 'extra_opController@extra_style_size_view');
+Route::post('extra_style_size_update', 'extra_opController@extra_style_size_update');
+Route::post('extra_style_size_delete/{id}', 'extra_opController@extra_style_size_delete');
+
+Route::get('extra_op', 'extra_opController@extra_op');
+Route::get('extra_op_new', 'extra_opController@extra_op_new');
+Route::post('extra_op_insert', 'extra_opController@extra_op_insert');
+Route::get('extra_op_edit/{id}', 'extra_opController@extra_op_edit');
+Route::post('extra_op_update', 'extra_opController@extra_op_update');
+Route::post('extra_op_delete/{id}', 'extra_opController@extra_op_delete');
+
+Route::get('op_by_op', 'extraController@op_by_op');
+Route::post('op_by_op_1', 'extraController@op_by_op_1');
+Route::post('op_by_op_2', 'extraController@op_by_op_2');
+Route::get('remove_empextra1s/{id}/{session}/{extra}', 'extraController@remove_empextra1s');
+Route::post('op_by_op_confirm', 'extraController@op_by_op_confirm');
+
+Route::get('op_by_bb', 'extraController@op_by_bb');
+Route::post('op_by_bb_1', 'extraController@op_by_bb_1');
+// Route::post('op_by_bb_2', 'extraController@op_by_bb_2');
+Route::get('remove_empextra2s/{id}/{session}/{bbcode}/{extra}', 'extraController@remove_empextra2s');
+Route::post('op_by_bb_confirm', 'extraController@op_by_bb_confirm');
+
+Route::get('all_by_bb', 'extraController@all_by_bb');
+Route::post('all_by_bb_post', 'extraController@all_by_bb_post');
+Route::get('remove_empextra3s/{id}/{bbcode}/{session}', 'extraController@remove_empextra3s');
+Route::post('all_by_bb_confirm', 'extraController@all_by_bb_confirm');
 
 
 /*
@@ -120,6 +178,7 @@ Route::post('unloadloc_confirmt', 'loadtruckController@unloadloc_confirmt');
 
 // Production
 Route::get('production', 'productionController@index');
+// Route::get('bbstock/production', 'productionController@index');
 Route::get('deliver/{username}', 'productionController@deliver');
 Route::get('deliver_confirm/{username}', 'productionController@deliver_confirm');
 Route::get('give/{bb}', 'productionController@give');
@@ -171,7 +230,6 @@ Route::post('prepare_scan_fill', 'bbStockPrepareController@prepare_scan_fill');
 Route::post('prepare_scan_fill_confirm', 'bbStockPrepareController@prepare_scan_fill_confirm');
 
 // Extra 
-
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

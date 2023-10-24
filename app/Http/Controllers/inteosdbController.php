@@ -1,11 +1,10 @@
-<?php 
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 //use Request;
 
 use App\bbStock;
@@ -20,7 +19,7 @@ class inteosdbController extends Controller {
 	public function index()	{
 
         //return view('bbstock.index', compact('bbstock'));
-
+        
         $inteosdb = Session::get('inteosdb');
         // dd($inteosdb);
 
@@ -74,8 +73,8 @@ class inteosdbController extends Controller {
 			} else {
 	        	// $validator->errors()->add('field', 'Something is wrong with this field!');
 	        	
-	        	Log::error('Cannot find BB in Subotica Inteos');
-	        	$msg = 'Cannot find BB in Subotica Inteos';
+	        	Log::error('Cannot find BB in Subotica or Senta Inteos');
+	        	$msg = 'Cannot find BB in Subotica or Senta Inteos';
 	        	return view('inteosdb.error', compact('msg'));
 			}
 
@@ -146,12 +145,11 @@ class inteosdbController extends Controller {
 		// $POnum =  $inteos_array[0]['POnum'];
 		$brcrtica = substr_count($inteos_array[0]['POnum'],"-");
 		// echo $brcrtica." ";
-			if ($brcrtica == 1)
-		{
+		if ($brcrtica == 1) {
 			list($one, $two) = explode('-', $inteos_array[0]['POnum']);
 			$POnum = $one;
 		} else {
-			$POnum = substr($inteos_array[0]['POnum'],-6);
+			$POnum = $inteos_array[0]['POnum'];
 		}
 
 		$SMVloc =  $inteos_array[0]['SMVloc'];
@@ -165,8 +163,7 @@ class inteosdbController extends Controller {
 		$brlinija = substr_count($Variant,"-");
 		// echo $brlinija." ";
 
-		if ($brlinija == 2)
-		{
+		if ($brlinija == 2) {
 			list($ColorCode, $size1, $size2) = explode('-', $Variant);
 			$Size = $size1."-".$size2;
 			// echo $color." ".$size;	
@@ -181,5 +178,118 @@ class inteosdbController extends Controller {
 		return view('inteosdb.create', compact('BlueBoxCode', 'BlueBoxNum', 'BoxQuant', 'BoxDate','POnum','SMVloc','Variant', 'ClrDesc', 'StyCod', 'ColorCode', 'Size', 'QtyofBB', 'Bagno' ));
 	}
 
+	public function create_bb(Request $request) {
+		// dd("test");
+		//
+		//validation
+		// $this->validate($request, ['BlueBoxCode'=>'required','QtyofBB'=>'required','BBLocation' => 'required']);
+
+		$inteosinput = $request->all(); // change use (delete or comment user Requestl; )
+		//var_dump($inteosinput);
+
+		$BlueBoxCode = $inteosinput['BlueBoxCode'];
+		$BlueBoxNum = $inteosinput['BlueBoxNum'];
+		//$po = $inteosinput['POnum'];
+		$POnum = $inteosinput['POnum'];
+		// $po = substr($inteosinput['POnum'], -6); 
+
+		$brcrtica = substr_count($inteosinput['POnum'],"-");
+		// echo $brcrtica." ";
+		if ($brcrtica == 1)
+		{
+			list($one, $two) = explode('-', $inteosinput['POnum']);
+			$po = $one;
+		} else {
+			$po = $inteosinput['POnum'];
+		}
+
+		$po = substr($po,-6); //should I change this?
+
+		$SMVloc = $inteosinput['SMVloc'];
+		$StyCod = $inteosinput['StyCod'];
+		$ColorCode = $inteosinput['ColorCode'];
+		$Size = $inteosinput['Size'];
+		$BoxQuant = $inteosinput['BoxQuant'];
+		$BoxDate = $inteosinput['BoxDate'];
+		$QtyofBB = $inteosinput['QtyofBB'];
+		$location = $inteosinput['BBLocation'];
+		$status = "STOCK";
+
+		$Variant = $inteosinput['Variant'];
+		$ClrDesc = $inteosinput['ClrDesc'];
+
+		$Bagno = $inteosinput['Bagno'];
+
+		$loc = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM locations WHERE location = '".$location."' and (location_type = 'STOCK' or location_type = 'RECEIVING')"));
+		
+		if (!isset($loc[0]->id)) {
+			$msg = "Scaned location does not exist, or is not correct type of location. ";
+			return view('inteosdb.create', compact('BlueBoxCode', 'BlueBoxNum', 'BoxQuant', 'BoxDate','POnum','SMVloc', 'Variant', 'ClrDesc', 'StyCod', 'Bagno', 'ColorCode', 'Size', 'QtyofBB', 'msg' ));
+		}
+
+		$style_sap = str_pad($StyCod, 9); 
+		$color_sap = str_pad($ColorCode, 4);
+		$size_sap = str_pad($Size, 5);
+
+		$sku = $style_sap.$color_sap.$size_sap;
+		
+		try {
+			$bbStock = new bbStock;
+
+			$bbStock->bbcode = $BlueBoxCode;
+			$bbStock->bbname = $BlueBoxNum;
+			$bbStock->po = $po;
+			$bbStock->pitch_time = round($SMVloc / 20 * $BoxQuant, 3);
+			$bbStock->style = $StyCod;
+			$bbStock->color = $ColorCode;
+			$bbStock->size = $Size;
+			$bbStock->qty = $BoxQuant;
+			$bbStock->boxdate = $BoxDate;
+			$bbStock->numofbb = $QtyofBB;
+
+			$bbStock->location = strtoupper($location);
+			$bbStock->status = $status;
+			$bbStock->bagno = $Bagno;
+			$bbStock->sku = $sku;
+
+			$bbStock->save();
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			
+			//return view('bbstock.error');		
+			
+			$bb = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock WHERE bbname = '".$BlueBoxNum."'"));
+			//dd($bb);
+			foreach ($bb as $b) {
+				$bbid = $b->id;
+			}
+			
+			$bbstockold = bbStock::findOrFail($bbid);
+			// dd($bb);
+			// $bbstockold->delete();
+			
+			// $bbstockold = new bbStock;
+			$bbstockold->bbcode = $BlueBoxCode;
+			$bbstockold->bbname = $BlueBoxNum;
+			$bbstockold->po = $po;
+			$bbstockold->pitch_time = round($SMVloc / 20 * $BoxQuant, 3);
+			$bbstockold->style = $StyCod;
+			$bbstockold->color = $ColorCode;
+			$bbstockold->size = $Size;
+			$bbstockold->qty = $BoxQuant;
+			$bbstockold->boxdate = $BoxDate;
+			$bbstockold->numofbb = $QtyofBB;
+
+			$bbstockold->location = strtoupper($location);
+			$bbstockold->status = $status;
+			$bbstockold->bagno = $Bagno;
+			$bbstockold->sku = $sku;
+
+			$bbstockold->save();
+			
+		}
+		
+		return view('bbstock.success', compact('BlueBoxNum','po','StyCod','ColorCode','Size','BoxQuant','QtyofBB','location'));
+	}
 	
 }

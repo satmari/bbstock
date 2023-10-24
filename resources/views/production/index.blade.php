@@ -2,7 +2,8 @@
 
 @section('content')
 
-{{ header( "refresh:3600;url=/production" ) }}
+<!-- {{-- header( "refresh:3600;url=/production" ) --}} -->
+<!-- {{-- header( "refresh:30;url=bbstock2/production" ) --}} -->
 
 <div class="container-fluid">
     <div class="row vertical-center-row">

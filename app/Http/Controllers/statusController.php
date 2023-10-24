@@ -66,10 +66,11 @@ class statusController extends Controller {
 		$input = $request->all(); 
 		$pass = $input['password'];
 
-		if ($pass == 'marijana') {
+		if ($pass == 'marijanaaa') {
 
 			$bbstock = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock ORDER BY po"));
 
+			dd("ARE YOU SURE?????")
 			//dd($bbstock);
 			$boxdeleted = 0;
 			$boxleft = 0;
@@ -103,7 +104,7 @@ class statusController extends Controller {
 				}
 			}
 		} else {
-			$msg = "Marijana, did you really forgot your password ?";
+			$msg = "Marijana, did you really forget your password ?";
 			return view('status.error',compact('msg'));			
 		}
 

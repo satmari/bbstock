@@ -33,7 +33,7 @@ class mainController extends Controller {
 		if (isset($user)) {
 			if ($user->is('admin')) { 
 			    // if user has at least one role
-			    $msg = "Hi admin";
+			    // $msg = "Hi admin";
 			    // return redirect('/');
 			    return view('first',compact('msg'));
 			}
@@ -46,7 +46,7 @@ class mainController extends Controller {
 
 			if ($user->is('magacin')) { 
 			    // if user has at least one role
-			    $msg = "Hi  magacin";
+			    // $msg = "Hi  magacin";
 				return view('first',compact('msg'));
 			}
 

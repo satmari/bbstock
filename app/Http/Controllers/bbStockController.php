@@ -12,14 +12,13 @@ use Illuminate\Support\Facades\Redirect;
 use App\bbStock;
 
 use DB;
+use Log;
+
+use Session;
 
 class bbStockController extends Controller {
 
-	public function index(/*Request $request*/)	{
-
-	    //return view('bbstock.create');
-	}
-
+	/*
 	public function create(Request $request) {
 		//
 		//validation
@@ -133,7 +132,7 @@ class bbStockController extends Controller {
 		
 		return view('bbstock.success', compact('BlueBoxNum','po','StyCod','ColorCode','Size','BoxQuant','QtyofBB','location'));
 	}
-
+	*/
 	public function show($id) {
 
 		$bb = bbStock::findOrFail($id);
@@ -171,4 +170,5 @@ class bbStockController extends Controller {
 
 		return Redirect::to('/table');
 	}
+	
 }

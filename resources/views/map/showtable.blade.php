@@ -2,7 +2,10 @@
 
 @section('first')
 
-<div class="container container-table">
+<div class="container-fluid">
+    <div class="row vertical-center-row">
+        <div class="text-center">
+
 <big><b>All Boxes</b></big>	
 
 <div class="input-group"> <span class="input-group-addon">Filter</span>
@@ -20,12 +23,12 @@ data-export-types="['excel']"
 			<th data-sortable="true" >Size</th>
 			<th>Qty</th>
 			<th>Qty of BB</th>
-			<th>Location</th>
-			<th>Status</th>
-			<th>Bagno</th>
-			<th>Palet</th>
-			<th>Updated at</th>
-			<th>BB Destination</th>
+			<th data-sortable="true">Location</th>
+			<th data-sortable="true">Status</th>
+			<th data-sortable="true">Bagno</th>
+			<th data-sortable="true">Palet</th>
+			<th data-sortable="true">Updated at</th>
+			<th data-sortable="true">BB Destination</th>
 			<th></th>
 			<th></th>
 		</tr>
@@ -52,6 +55,8 @@ data-export-types="['excel']"
 		@endforeach	
 	</tbody>
 </table>
+</div>
+</div>
 </div>
 
 @endsection

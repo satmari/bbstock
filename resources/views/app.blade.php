@@ -75,6 +75,15 @@
 	<script src="{{ asset('/js/choosen.js') }}" type="text/javascript" ></script>
 
 	<script type="text/javascript">
+
+
+$(function() {
+	$("#checkAll").click(function () {
+		console.log('test check');
+    	$(".check").prop('checked', $(this).prop('checked'));
+	});
+});
+
 $(function() {
     	
 	$('#po').autocomplete({
@@ -113,6 +122,8 @@ $(function() {
 	$("#checkAll").click(function () {
     	$(".check").prop('checked', $(this).prop('checked'));
 	});
+
+
 });
 </script>
 

@@ -66,11 +66,12 @@ class statusController extends Controller {
 		$input = $request->all(); 
 		$pass = $input['password'];
 
+		dd("ARE YOU SURE?????")
+
 		if ($pass == 'marijanaaa') {
 
 			$bbstock = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock ORDER BY po"));
 
-			dd("ARE YOU SURE?????")
 			//dd($bbstock);
 			$boxdeleted = 0;
 			$boxleft = 0;

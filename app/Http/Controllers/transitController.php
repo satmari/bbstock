@@ -80,7 +80,7 @@ class transitController extends Controller {
 
 		if ($bbcode) {
 
-			if ($inteosdb == '1') {
+			if (($inteosdb == '1') OR ($inteosdb == '3')) {
 
 				// Live database
 				$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY
@@ -343,27 +343,25 @@ class transitController extends Controller {
 		$location = $input['location'];
 		$inteosdb = $input['inteosdb'];
 		/*
-		$bbaddarray = Session::get('bb_to_add_array_tr');
-		//dd($bbaddarray);
+			$bbaddarray = Session::get('bb_to_add_array_tr');
+			//dd($bbaddarray);
+			if ($bbaddarray != null) {
 
-		if ($bbaddarray != null) {
+				$bbaddarray_unique_tr = array_map("unserialize", array_unique(array_map("serialize", $bbaddarray)));
+				// var_dump($bbaddarray_unique_tr);
 
-			$bbaddarray_unique_tr = array_map("unserialize", array_unique(array_map("serialize", $bbaddarray)));
-			// var_dump($bbaddarray_unique_tr);
+				foreach ($bbaddarray_unique_tr as $line => $value) {
+						
+					if(in_array($bb, $value)) {
+				    	unset($bbaddarray_unique_tr[$line]);
+				  	}
+				}
+				// dd($bbaddarray_unique_tr);
+				// Session::push('bb_to_add_array_tr',$bbaddarray_unique_tr); // dodato sada
 
-			foreach ($bbaddarray_unique_tr as $line => $value) {
-					
-				if(in_array($bb, $value)) {
-			    	unset($bbaddarray_unique_tr[$line]);
-			  	}
+				Session::set('bb_to_add_array_tr', null);
+				Session::set('bb_to_add_array_tr', $bbaddarray_unique_tr);
 			}
-			// dd($bbaddarray_unique_tr);
-			// Session::push('bb_to_add_array_tr',$bbaddarray_unique_tr); // dodato sada
-
-			Session::set('bb_to_add_array_tr', null);
-			Session::set('bb_to_add_array_tr', $bbaddarray_unique_tr);
-
-		}
 		*/
 		DB::connection('sqlsrv')->select(DB::raw("SET NOCOUNT ON;DELETE FROM temptransits WHERE bbname = '".$bb."'; SELECT TOP 1 id FROM temptransits"));
 		$bbaddarray_unique_tr = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM temptransits WHERE location = '".$location."' "));
@@ -429,6 +427,12 @@ class transitController extends Controller {
 
 				$bagno = $line->bagno;
 
+				$style_sap = str_pad($style, 9); 
+				$color_sap = str_pad($color, 4);
+				$size_sap = str_pad($size, 5);
+
+				$sku = trim($style_sap.$color_sap.$size_sap);
+
 				$status = "TRANSIT";
 
 				try {
@@ -446,6 +450,7 @@ class transitController extends Controller {
 					$bbStock->status = $status;
 					$bbStock->pitch_time = $pitch_time;
 					$bbStock->bagno = $bagno;
+					$bbStock->sku = $sku;
 
 					$bbStock->save();
 				}
@@ -476,6 +481,7 @@ class transitController extends Controller {
 					$bbstockold->location = strtoupper($location);
 					$bbstockold->status = $status;
 					// $bbstockold->pitch_time = round($smv / 20 * $qty, 3);
+					$bbstockold->sku = $sku;
 					
 					$bbstockold->save();
 				}

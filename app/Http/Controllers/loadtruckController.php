@@ -643,7 +643,10 @@ class loadtruckController extends Controller {
 		// dd($da);
 
 		$sql = DB::connection('sqlsrv')->select(DB::raw("UPDATE bbStock
-			SET status = 'STOCK', updated_at = '".$da."'
+			SET status = 'STOCK',
+				updated_at = '".$da."',
+				sku = REPLACE(LEFT(ISNULL(style,'')+'____',9), '_', ' ')+REPLACE(LEFT(ISNULL(color,'')+'____',4), '_', ' ')+size
+
 			OUTPUT INSERTED.id
 			WHERE location = '".$location."' and status = 'TRAVELING' "));
 		}
@@ -653,7 +656,10 @@ class loadtruckController extends Controller {
 			// dd($da);
 
 			$sql = DB::connection('sqlsrv')->select(DB::raw("UPDATE bbStock
-			SET status = 'STOCK', updated_at = '".$da."'
+			SET status = 'STOCK',
+				updated_at = '".$da."',
+				sku = REPLACE(LEFT(ISNULL(style,'')+'____',9), '_', ' ')+REPLACE(LEFT(ISNULL(color,'')+'____',4), '_', ' ')+size
+				
 			OUTPUT INSERTED.id
 			WHERE location = '".$location."' and status = 'TRAVELING' "));
 		

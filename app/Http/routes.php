@@ -25,11 +25,17 @@ Route::get('inteosdb2', 'inteosdb2Controller@index');
 Route::post('inteosdb2', 'inteosdb2Controller@create');
 Route::post('create_bb2', 'inteosdb2Controller@create_bb');
 
-// add more bb
+// add more bb without extra operations
 Route::get('addmorebb', 'addmorebbController@index');
 Route::post('set_to_add', 'addmorebbController@set_to_add');
 Route::post('addbbloc', 'addmorebbController@addbbloc');
 Route::post('addbbsave', 'addmorebbController@addbbsave');
+
+// add more bb without extra operations
+Route::get('addmorebb2', 'addmorebb2Controller@index');
+Route::post('set_to_add2', 'addmorebb2Controller@set_to_add');
+Route::post('addbbloc2', 'addmorebb2Controller@addbbloc');
+Route::post('addbbsave2', 'addmorebb2Controller@addbbsave');
 
 // Route::post('inteosdb/create', 'bbstockController@create');
 // Route::get('bbstock', 'bbstockController@index');
@@ -44,8 +50,6 @@ Route::patch('bbstock/{id}', 'bbstockController@update');
 Route::get('bbstock/{id}/delete', 'bbstockController@delete');
 Route::get('bbstock/{id}/delete_pallet', 'bbstockController@delete_pallet');
 
-
-
 Route::get('removebb', 'removebbController@index');
 Route::get('removebb/destroy', 'removebbController@destroy');
 Route::post('removebb/destroy', 'removebbController@destroy');
@@ -53,17 +57,17 @@ Route::get('removebb/destroybb', 'removebbController@destroybb');
 Route::post('removebb/destroybb', 'removebbController@destroybb');
 Route::get('removebb_choose/{id}', 'removebbController@removebb_choose');
 
-Route::get('search', 'searchController@index');
-Route::post('search', 'searchController@search');
+// Route::get('search', 'searchController@index');
+// Route::post('search', 'searchController@search');
 Route::get('search2', 'searchController@index2');
 Route::post('search2', 'searchController@search2');
+Route::get('view_op/{bbcode}', 'searchController@search2_op');
 Route::get('searchbypo', 'searchController@searchbypo');
 Route::post('searchbypo', 'searchController@searchbypopost');
-Route::get('searchbybb', 'searchController@searchbybb');
-Route::post('searchbybb', 'searchController@searchbybbpost');
+// Route::get('searchbybb', 'searchController@searchbybb');
+// Route::post('searchbybb', 'searchController@searchbybbpost');
 
 Route::get('export', 'exportController@create');
-
 Route::get('home', 'HomeController@index');
 
 Route::get('map', 'mapController@index');
@@ -146,7 +150,6 @@ Route::post('all_by_bb_post', 'extraController@all_by_bb_post');
 Route::get('remove_empextra3s/{id}/{bbcode}/{session}', 'extraController@remove_empextra3s');
 Route::post('all_by_bb_confirm', 'extraController@all_by_bb_confirm');
 
-
 /*
 Route::get('transitbb', 'transitController@index');
 Route::post('transitloc', 'transitController@transitloc');
@@ -218,6 +221,12 @@ Route::get('import', 'importController@index');
 Route::post('postImport_bb_su', 'importController@postImport_bb_su');
 Route::post('postImport_bb_ki', 'importController@postImport_bb_ki');
 
+// Import Extra
+Route::get('importextra', 'importExtraController@indexextra');
+Route::post('postImportExtraStyle', 'importExtraController@postImportExtraStyle');
+Route::post('postImportExtraStyleSize', 'importExtraController@postImportExtraStyleSize');
+Route::post('postImportExtraSKU', 'importExtraController@postImportExtraSKU');
+
 // Prepare BB
 Route::get('prepare', 'bbStockPrepareController@index');
 Route::get('prepare_/{function}', 'bbStockPrepareController@prepare');
@@ -230,22 +239,21 @@ Route::post('prepare_scan_fill', 'bbStockPrepareController@prepare_scan_fill');
 Route::post('prepare_scan_fill_confirm', 'bbStockPrepareController@prepare_scan_fill_confirm');
 
 // Extra 
-
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
 
 /*
-Route::any('getpodata', function() {
-	$term = Input::get('term');
+	Route::any('getpodata', function() {
+		$term = Input::get('term');
 
-	// $data = DB::connection('sqlsrv')->table('pos')->distinct()->select('po')->where('po','LIKE', $term.'%')->where('closed_po','=','Open')->groupBy('po')->take(10)->get();
-	$data = DB::connection('sqlsrv1')->select(DB::raw("SELECT TOP 10 (RIGHT([No_],6)) as po FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order] WHERE [Status] = '3' AND [No_] like '%".$term."%'"));
-	// var_dump($data);
-	foreach ($data as $v) {
-		$retun_array[] = array('value' => $v->po);
-	}
-return Response::json($retun_array);
-});
+		// $data = DB::connection('sqlsrv')->table('pos')->distinct()->select('po')->where('po','LIKE', $term.'%')->where('closed_po','=','Open')->groupBy('po')->take(10)->get();
+		$data = DB::connection('sqlsrv1')->select(DB::raw("SELECT TOP 10 (RIGHT([No_],6)) as po FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order] WHERE [Status] = '3' AND [No_] like '%".$term."%'"));
+		// var_dump($data);
+		foreach ($data as $v) {
+			$retun_array[] = array('value' => $v->po);
+		}
+	return Response::json($retun_array);
+	});
 */

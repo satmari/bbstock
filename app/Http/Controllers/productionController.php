@@ -22,8 +22,7 @@ use Auth;
 
 class productionController extends Controller {
 
-	public function index()
-	{
+	public function index() {
 		//
 		/*
 		$username = Session::get('username');
@@ -68,8 +67,7 @@ class productionController extends Controller {
 		return redirect('/');
 	}
 
-	public function deliver($username) 
-	{
+	public function deliver($username) {
 		// dd($username);
 		$count = DB::connection('sqlsrv')->select(DB::raw("SELECT COUNT(id) as c FROM bbStock WHERE location =  '".$username."' AND status = 'TRANSIT' "));
 		// dd($count[0]->c);
@@ -82,8 +80,7 @@ class productionController extends Controller {
 		return view('production.deliver_confirm', compact('username','count'));
 	}
 
-	public function deliver_confirm($username) 
-	{
+	public function deliver_confirm($username) {
 		try {
 
 		$da = date("Y-m-d H:i:s");
@@ -129,7 +126,10 @@ class productionController extends Controller {
 
 		
 		$sql1 = DB::connection('sqlsrv')->select(DB::raw("UPDATE bbStock
-			SET status = 'DELIVERED', updated_at = '".$da."'
+			SET status = 'DELIVERED', 
+				updated_at = '".$da."', 
+				sku = REPLACE(LEFT(ISNULL(style,'')+'____',9), '_', ' ')+REPLACE(LEFT(ISNULL(color,'')+'____',4), '_', ' ')+size
+
 			OUTPUT INSERTED.id
 			WHERE status = 'TRANSIT' and location = '".$username."'  "));
 		}
@@ -152,8 +152,7 @@ class productionController extends Controller {
 		return redirect('/production');
 	}
 
-	public function give($id)
-	{
+	public function give($id) {
 		// dd($bb);
 		$username = Session::get('username');
 
@@ -175,11 +174,9 @@ class productionController extends Controller {
 		// $locations = locations::orderBy('id')->where('location_type','=','MODULE/LINE')->lists('location','location');
 
 		return view('production.give_confirm', compact('id', 'locations','username'));
-
 	}
 
-	public function give_confirm(Request $request)
-	{
+	public function give_confirm(Request $request) {
 		$this->validate($request, ['location_new'=>'required']);
 
 		$location_input = $request->all(); // change use (delete or comment user Requestl; )
@@ -198,8 +195,7 @@ class productionController extends Controller {
 		return Redirect::to('/production');
 	}
 
-	public function receive($username)
-	{
+	public function receive($username) {
 		// dd($username);
 		$count = DB::connection('sqlsrv')->select(DB::raw("SELECT COUNT(id) as c FROM bbStock WHERE location = '".$username."' AND status = 'MOVING' "));
 		// dd($count[0]->c);
@@ -212,8 +208,7 @@ class productionController extends Controller {
 		return view('production.receive_confirm', compact('username','count'));
 	}
 
-	public function receive_confirm($username) 
-	{
+	public function receive_confirm($username) {
 		
 		try {
 
@@ -221,7 +216,10 @@ class productionController extends Controller {
 		// dd($da);
 		
 		$sql = DB::connection('sqlsrv')->select(DB::raw("UPDATE bbStock
-			SET status = 'DELIVERED', updated_at = '".$da."'
+			SET status = 'DELIVERED',
+				updated_at = '".$da."',
+				sku = REPLACE(LEFT(ISNULL(style,'')+'____',9), '_', ' ')+REPLACE(LEFT(ISNULL(color,'')+'____',4), '_', ' ')+size
+
 			OUTPUT INSERTED.id
 			WHERE status = 'MOVING' and location = '".$username."'  "));
 		}
@@ -242,8 +240,7 @@ class productionController extends Controller {
 		return redirect('/production');
 	}
 
-	public function bundle($id) 
-	{
+	public function bundle($id) {
 
 		$bbname = DB::connection('sqlsrv')->select(DB::raw("SELECT bbname FROM bbStock WHERE id = '".$id."' "));
 		// dd($bbname[0]->bbname);
@@ -253,15 +250,17 @@ class productionController extends Controller {
 		return view('production.bundle_confirm', compact('id','bb'));
 	}
 
-	public function bundle_confirm($id) 
-	{
+	public function bundle_confirm($id) {
 		try {
 
 		$da = date("Y-m-d H:i:s");
 		// dd($da);
 
 		$sql = DB::connection('sqlsrv')->select(DB::raw("UPDATE bbStock
-			SET status = 'WIP', updated_at = '".$da."'
+			SET status = 'WIP',
+				updated_at = '".$da."',
+				sku = REPLACE(LEFT(ISNULL(style,'')+'____',9), '_', ' ')+REPLACE(LEFT(ISNULL(color,'')+'____',4), '_', ' ')+size
+
 			OUTPUT INSERTED.id
 			WHERE id  = '".$id."' "));
 
@@ -309,7 +308,10 @@ class productionController extends Controller {
 			// dd($da);
 
 			$sql = DB::connection('sqlsrv')->select(DB::raw("UPDATE bbStock
-			SET status = 'WIP', updated_at = '".$da."'
+			SET status = 'WIP',
+				updated_at = '".$da."',
+				sku = REPLACE(LEFT(ISNULL(style,'')+'____',9), '_', ' ')+REPLACE(LEFT(ISNULL(color,'')+'____',4), '_', ' ')+size
+
 			OUTPUT INSERTED.id
 			WHERE id  = '".$id."' "));
 
@@ -354,8 +356,7 @@ class productionController extends Controller {
 		return redirect('/production');
 	}
 
-	public function to_finish()
-	{
+	public function to_finish() {
 		//
 
 		$db = DB::connection('sqlsrv')->select(DB::raw("SELECT bbcode,status FROM bbStock WHERE status != 'FINISHING' and status != 'COMPLETED' ORDER BY id DESC"));
@@ -387,7 +388,10 @@ class productionController extends Controller {
 
 					// dd("Status u Inteosu ".$inteos[0]->Status." , status u app: ".$db[$i]->status);
 					$sql = DB::connection('sqlsrv')->select(DB::raw("UPDATE bbStock
-					SET status = 'FINISHING', updated_at = '".$da."'
+					SET status = 'FINISHING',
+						updated_at = '".$da."',
+						sku = REPLACE(LEFT(ISNULL(style,'')+'____',9), '_', ' ')+REPLACE(LEFT(ISNULL(color,'')+'____',4), '_', ' ')+size
+						
 					OUTPUT INSERTED.id
 					WHERE bbcode  = '".$db[$i]->bbcode."' "));
 				}
@@ -396,8 +400,7 @@ class productionController extends Controller {
 		return redirect('/');
 	}
 
-	public function to_complete()
-	{
+	public function to_complete() {
 
 		$db = DB::connection('sqlsrv')->select(DB::raw("SELECT bbcode,status FROM bbStock WHERE status != 'COMPLETED' ORDER BY id DESC"));
 		// dd($db);
@@ -424,13 +427,7 @@ class productionController extends Controller {
 				if ($inteos[0]->Status == '99') {
 					
 					// dd("Status u Inteosu ".$inteos[0]->Status." , status u app: ".$db[$i]->status);
-					/*
-					$sql = DB::connection('sqlsrv')->select(DB::raw("UPDATE bbStock
-					SET status = 'COMPLETED'
-					OUTPUT INSERTED.id
-					WHERE bbcode  = '".$db[$i]->bbcode."' "));
-					*/
-
+				
 					$da = date("Y-m-d H:i:s");
 					// dd($da);
 

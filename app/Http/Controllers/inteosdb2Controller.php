@@ -148,7 +148,7 @@ class inteosdb2Controller extends Controller {
 		// $POnum =  $inteos_array[0]['POnum'];
 		$brcrtica = substr_count($inteos_array[0]['POnum'],"-");
 		// echo $brcrtica." ";
-			if ($brcrtica == 1)
+		if ($brcrtica == 1)
 		{
 			list($one, $two) = explode('-', $inteos_array[0]['POnum']);
 			$POnum = $one;
@@ -237,69 +237,23 @@ class inteosdb2Controller extends Controller {
 		$sku = trim($style_sap.$color_sap.$size_sap);
 
 		// new check EXTRA
-		// SKU
-
-		$check_bb_has_extras = DB::connection('sqlsrv')->select(DB::raw("SELECT id FROM [bbStock_extras] WHERE bbcode = '".$BlueBoxCode."' and active = 1"));
-		if (isset($check_bb_has_extras[0]->id)) {
-			// skip extra operations
-		} else {
-			// add extra operations
-			$check_sku = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [extra_skus] WHERE sku = '".$sku."' and active = 1 "));
-			if (isset($check_sku[0]->id)) {
-				// sku found
-				// var_dump("sku found");
-
-				// delete (set not active) all existing extras for bb (if exist)
-				// $set_not_active = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock_extras WHERE bbname = '".$BlueBoxNum."' and extra = '".$check_sku->extra."' "));
-
-				// add/update extra
-				foreach ($check_sku as $line) {
-					
-					try {
-						$bbStock_extra = new bbStock_extra;
-
-						$bbStock_extra->bbcode = $BlueBoxCode;
-						$bbStock_extra->bbname = $BlueBoxNum;
-						$bbStock_extra->operation = $line->operation;
-						$bbStock_extra->operation_id = $line->operation_id;
-						$bbStock_extra->operation_type = "sku";
-						$bbStock_extra->key = $line->key."_".$bbStock_extra->code;
-						$bbStock_extra->status = "NOT DONE";
-						$bbStock_extra->active = 1;
-						$bbStock_extra->save();
-					}
-					catch (\Illuminate\Database\QueryException $e) {
-						
-						// $update = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock_extras WHERE bbname = '".$BlueBoxNum."' and extra = '".$line->extra."' "));
-						// //dd($bb);
-						// foreach ($update as $b) {
-						// 	$bbid = $b->id;
-						// }
-						
-						// $bbStock_extraold = bbStock_extra::findOrFail($bbid);
-						// $bbStock_extraold->bbcode = $BlueBoxCode;
-						// $bbStock_extraold->bbname = $BlueBoxNum;
-						// $bbStock_extraold->extra = $line->extra;
-						// $bbStock_extraold->key = $line->key."_".$bbStock_extra->bbname;
-						// $bbStock_extraold->status = "NOT DONE";
-						// $bbStock_extraold->active = 1;
-						// $bbStock_extraold->save();
-					}
-				}
-
+			// SKU
+			$check_bb_has_extras = DB::connection('sqlsrv')->select(DB::raw("SELECT id FROM [bbStock_extras] WHERE bbcode = '".$BlueBoxCode."' and active = 1"));
+			if (isset($check_bb_has_extras[0]->id)) {
+				// skip extra operations
 			} else {
-
-				$style_size = trim($style_sap)." ".trim($size_sap);
-				$check_style_size = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [extra_style_sizes] WHERE style_size = '".$style_size."' and active = 1 "));
-
-				if (isset($check_style_size[0]->id)) {
-					// style_size found
-					// var_dump("style_size found");
+				// add extra operations
+				$check_sku = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [extra_skus] WHERE sku = '".$sku."' and active = 1 "));
+				if (isset($check_sku[0]->id)) {
+					// sku found
+					// var_dump("sku found");
 
 					// delete (set not active) all existing extras for bb (if exist)
+					// $set_not_active = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock_extras WHERE bbname = '".$BlueBoxNum."' and extra = '".$check_sku->extra."' "));
 
-					foreach ($check_style_size as $line) {
-					
+					// add/update extra
+					foreach ($check_sku as $line) {
+						
 						try {
 							$bbStock_extra = new bbStock_extra;
 
@@ -307,8 +261,8 @@ class inteosdb2Controller extends Controller {
 							$bbStock_extra->bbname = $BlueBoxNum;
 							$bbStock_extra->operation = $line->operation;
 							$bbStock_extra->operation_id = $line->operation_id;
-							$bbStock_extra->operation_type = "style_size";
-							$bbStock_extra->key = $line->key."_".$bbStock_extra->bbcode;
+							$bbStock_extra->operation_type = "sku";
+							$bbStock_extra->key = $line->key."_".$bbStock_extra->code;
 							$bbStock_extra->status = "NOT DONE";
 							$bbStock_extra->active = 1;
 							$bbStock_extra->save();
@@ -316,7 +270,7 @@ class inteosdb2Controller extends Controller {
 						catch (\Illuminate\Database\QueryException $e) {
 							
 							// $update = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock_extras WHERE bbname = '".$BlueBoxNum."' and extra = '".$line->extra."' "));
-							// // dd($update);
+							// //dd($bb);
 							// foreach ($update as $b) {
 							// 	$bbid = $b->id;
 							// }
@@ -333,20 +287,18 @@ class inteosdb2Controller extends Controller {
 					}
 
 				} else {
+					// STYLE SIZE
+					$style_size = trim($style_sap)." ".trim($size_sap);
+					$check_style_size = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [extra_style_sizes] WHERE style_size = '".$style_size."' and active = 1 "));
 
-					$style = trim($style_sap);
-					// dd($style);
-					$check_style = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [extra_styles] WHERE style = '".$style."' and active = 1 "));
-					// dd($check_style);
-
-					if (isset($check_style[0]->id)) {
-						// style found
-						// var_dump("style found");
+					if (isset($check_style_size[0]->id)) {
+						// style_size found
+						// var_dump("style_size found");
 
 						// delete (set not active) all existing extras for bb (if exist)
 
-						foreach ($check_style as $line) {
-							
+						foreach ($check_style_size as $line) {
+						
 							try {
 								$bbStock_extra = new bbStock_extra;
 
@@ -354,40 +306,89 @@ class inteosdb2Controller extends Controller {
 								$bbStock_extra->bbname = $BlueBoxNum;
 								$bbStock_extra->operation = $line->operation;
 								$bbStock_extra->operation_id = $line->operation_id;
-								$bbStock_extra->operation_type = "style";
+								$bbStock_extra->operation_type = "style_size";
 								$bbStock_extra->key = $line->key."_".$bbStock_extra->bbcode;
 								$bbStock_extra->status = "NOT DONE";
 								$bbStock_extra->active = 1;
 								$bbStock_extra->save();
-							
 							}
 							catch (\Illuminate\Database\QueryException $e) {
 								
-							// 	$update = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock_extras WHERE bbname = '".$BlueBoxNum."' and extra = '".$line->extra."' "));
-							// 	// dd($update);
-							// 	foreach ($update as $b) {
-							// 		$bbid = $b->id;
-							// 	}
+								// $update = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock_extras WHERE bbname = '".$BlueBoxNum."' and extra = '".$line->extra."' "));
+								// // dd($update);
+								// foreach ($update as $b) {
+								// 	$bbid = $b->id;
+								// }
 								
-							// 	$bbStock_extraold = bbStock_extra::findOrFail($bbid);
-							// 	$bbStock_extraold->bbcode = $BlueBoxCode;
-							// 	$bbStock_extraold->bbname = $BlueBoxNum;
-							// 	$bbStock_extraold->extra = $line->extra;
-							// 	$bbStock_extraold->key = $line->key."_".$bbStock_extra->bbname;
-							// 	$bbStock_extraold->status = "NOT DONE";
-							// 	$bbStock_extraold->active = 1;
-							// 	$bbStock_extraold->save();
+								// $bbStock_extraold = bbStock_extra::findOrFail($bbid);
+								// $bbStock_extraold->bbcode = $BlueBoxCode;
+								// $bbStock_extraold->bbname = $BlueBoxNum;
+								// $bbStock_extraold->extra = $line->extra;
+								// $bbStock_extraold->key = $line->key."_".$bbStock_extra->bbname;
+								// $bbStock_extraold->status = "NOT DONE";
+								// $bbStock_extraold->active = 1;
+								// $bbStock_extraold->save();
 							}
-							
 						}
+
 					} else {
-						// 
-						// var_dump("extra not found");
-					}
-				}	
+						// STYLE
+						$style = trim($style_sap);
+						// dd($style);
+						$check_style = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [extra_styles] WHERE style = '".$style."' and active = 1 "));
+						// dd($check_style);
+
+						if (isset($check_style[0]->id)) {
+							// style found
+							// var_dump("style found");
+
+							// delete (set not active) all existing extras for bb (if exist)
+
+							foreach ($check_style as $line) {
+								
+								try {
+									$bbStock_extra = new bbStock_extra;
+
+									$bbStock_extra->bbcode = $BlueBoxCode;
+									$bbStock_extra->bbname = $BlueBoxNum;
+									$bbStock_extra->operation = $line->operation;
+									$bbStock_extra->operation_id = $line->operation_id;
+									$bbStock_extra->operation_type = "style";
+									$bbStock_extra->key = $line->key."_".$bbStock_extra->bbcode;
+									$bbStock_extra->status = "NOT DONE";
+									$bbStock_extra->active = 1;
+									$bbStock_extra->save();
+								
+								}
+								catch (\Illuminate\Database\QueryException $e) {
+									
+								// 	$update = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock_extras WHERE bbname = '".$BlueBoxNum."' and extra = '".$line->extra."' "));
+								// 	// dd($update);
+								// 	foreach ($update as $b) {
+								// 		$bbid = $b->id;
+								// 	}
+									
+								// 	$bbStock_extraold = bbStock_extra::findOrFail($bbid);
+								// 	$bbStock_extraold->bbcode = $BlueBoxCode;
+								// 	$bbStock_extraold->bbname = $BlueBoxNum;
+								// 	$bbStock_extraold->extra = $line->extra;
+								// 	$bbStock_extraold->key = $line->key."_".$bbStock_extra->bbname;
+								// 	$bbStock_extraold->status = "NOT DONE";
+								// 	$bbStock_extraold->active = 1;
+								// 	$bbStock_extraold->save();
+								}
+								
+							}
+						} else {
+							
+							// var_dump("extra not found");
+						}
+					}	
+				}
+			
 			}
-		}
-		
+		//
+
 		try {
 			$bbStock = new bbStock;
 

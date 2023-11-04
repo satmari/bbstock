@@ -11,6 +11,7 @@
                 <div class="panel-body">
                     <div class="">
                         <a href="{{url('/extra_sku_new')}}" class="btn btn-default btn-info">Add new</a>
+                        <a href="{{url('/importextra')}}" class="btn btn-default btn-info">Import</a>
                     </div>
                 </div>
                 @endif

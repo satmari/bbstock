@@ -113,6 +113,7 @@ class inteosdbController extends Controller {
 
 				Log::error('Cannot find BB in any Inteos');
 	        	return view('inteosdb.error');
+		
 		}
 
 		function object_to_array($data)
@@ -231,7 +232,7 @@ class inteosdbController extends Controller {
 		$color_sap = str_pad($ColorCode, 4);
 		$size_sap = str_pad($Size, 5);
 
-		$sku = $style_sap.$color_sap.$size_sap;
+		$sku = trim($style_sap.$color_sap.$size_sap);
 		
 		try {
 			$bbStock = new bbStock;
@@ -246,12 +247,10 @@ class inteosdbController extends Controller {
 			$bbStock->qty = $BoxQuant;
 			$bbStock->boxdate = $BoxDate;
 			$bbStock->numofbb = $QtyofBB;
-
 			$bbStock->location = strtoupper($location);
 			$bbStock->status = $status;
 			$bbStock->bagno = $Bagno;
 			$bbStock->sku = $sku;
-
 			$bbStock->save();
 		}
 		catch (\Illuminate\Database\QueryException $e) {
@@ -265,10 +264,7 @@ class inteosdbController extends Controller {
 			}
 			
 			$bbstockold = bbStock::findOrFail($bbid);
-			// dd($bb);
-			// $bbstockold->delete();
-			
-			// $bbstockold = new bbStock;
+
 			$bbstockold->bbcode = $BlueBoxCode;
 			$bbstockold->bbname = $BlueBoxNum;
 			$bbstockold->po = $po;
@@ -279,12 +275,10 @@ class inteosdbController extends Controller {
 			$bbstockold->qty = $BoxQuant;
 			$bbstockold->boxdate = $BoxDate;
 			$bbstockold->numofbb = $QtyofBB;
-
 			$bbstockold->location = strtoupper($location);
 			$bbstockold->status = $status;
 			$bbstockold->bagno = $Bagno;
 			$bbstockold->sku = $sku;
-
 			$bbstockold->save();
 			
 		}

@@ -19,7 +19,7 @@ use DB;
 
 class extra_opController extends Controller {
 
-// SKU
+// SKU 
 	public function extra_sku() {
 		//
 		$data = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM extra_skus ORDER BY style, color, size  asc"));
@@ -402,7 +402,7 @@ class extra_opController extends Controller {
 		return Redirect::to('/extra_sku');
 	}
 
-// STYLE SIZE
+// STYLE SIZE 
 	public function extra_style_size() {
 		//
 		$data = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM extra_style_sizes ORDER BY style  asc"));
@@ -454,7 +454,6 @@ class extra_opController extends Controller {
 
 		try {
 			$db = new extra_style_size;
-
 			$db->style = $style;
 			$db->size = $size;
 			$db->style_size = $style_size;
@@ -782,7 +781,7 @@ class extra_opController extends Controller {
 		return Redirect::to('/extra_style_size');
 	}
 
-// STYLE
+// STYLE 
 	public function extra_style() {
 		//
 		$data = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM extra_styles ORDER BY style  asc"));
@@ -1097,8 +1096,7 @@ class extra_opController extends Controller {
 		return Redirect::to('/extra_style');
 	}
 
-// OPERATIONS
-
+// OPERATIONS 
 	public function extra_op() {
 		//
 		$data = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM extra_ops ORDER BY id  asc"));

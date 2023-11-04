@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 
 use App\bbStock;
 use App\bb_stock_log;
+use App\bbStock_extra;
 
 use DB;
 use Log;
 
 use Session;
 
-class addmorebbController extends Controller {
+class addmorebb2Controller extends Controller {
 
 	public function index() {
 		//
@@ -24,7 +25,7 @@ class addmorebbController extends Controller {
         	$inteosdb = '1';
         }
         
-        return view('addmorebb.index',compact('ses', 'inteosdb'));
+        return view('addmorebb2.index',compact('ses', 'inteosdb'));
 	}
 
 	public function set_to_add(Request $request) {	
@@ -74,7 +75,7 @@ class addmorebbController extends Controller {
 		        	
 		        	Log::error('Cannot find BB in Subotica or Senta Inteos');
 		        	$msg = 'Cannot find BB in Subotica or Senta Inteos';
-		        	return view('addmorebb.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
+		        	return view('addmorebb2.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
 				}
 
 			} elseif ($inteosdb == '2') {
@@ -105,7 +106,7 @@ class addmorebbController extends Controller {
 		        	
 		        	Log::error('Cannot find BB in Kikinda Inteos');
 		        	$msg = 'Cannot find BB in Kikinda Inteos';
-		        	return view('addmorebb.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
+		        	return view('addmorebb2.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
 
 				}
 
@@ -113,7 +114,7 @@ class addmorebbController extends Controller {
 
 					Log::error('Cannot find BB in any Inteos');
 					$msg = 'Cannot find BB in any Inteos';
-		        	return view('addmorebb.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
+		        	return view('addmorebb2.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
 			}
 		
 
@@ -204,7 +205,7 @@ class addmorebbController extends Controller {
 	        	
 	        	// Log::error('Cannot find BB in Inteos');
 	        	$msg = "Cannot find BB in Inteos";
-	        	// return view('addmorebb.error', compact('msg'));
+	        	// return view('addmorebb2.error', compact('msg'));
 	    	}		
 		}
 
@@ -227,7 +228,7 @@ class addmorebbController extends Controller {
 			// Session::push('bb_to_add_array',$bbaddarray_unique); // dodato sada
 		}
 
-		return view('addmorebb.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
+		return view('addmorebb2.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
 	}
 
 	public function addbbloc(Request $request) {
@@ -237,16 +238,16 @@ class addmorebbController extends Controller {
 		//dd($bbaddarray);
 
 		if (isset($bbaddarray)) {
-			return view('addmorebb.addloc');
+			return view('addmorebb2.addloc');
 
 		} else {
 			
 			$msg = 'List of BB is empty';
-			return view('addmorebb.index',compact('msg','inteosdb'));
+			return view('addmorebb2.index',compact('msg','inteosdb'));
 		}
 	}
 
-	public function addbbsave(Request $request) {	
+	public function addbbsave(Request $request) { 
 
 		$input = $request->all(); // change use (delete or comment user Requestl; )
 		// var_dump($input);
@@ -258,7 +259,7 @@ class addmorebbController extends Controller {
 		$loc = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM locations WHERE location = '".$location."' and (location_type = 'STOCK' or location_type = 'RECEIVING')"));
 		if (!isset($loc[0]->id)) {
 			$msg = "Scaned location does not exist or it is not STOCK or RECEIVING location type.";
-			return view('addmorebb.addloc', compact('msg'));
+			return view('addmorebb2.addloc', compact('msg'));
 		}
 
 		$bbaddarray = Session::get('bb_to_add_array');
@@ -306,6 +307,160 @@ class addmorebbController extends Controller {
 
 				$sku = trim($style_sap.$color_sap.$size_sap);
 
+
+				// new check EXTRA
+					// SKU
+					$check_bb_has_extras = DB::connection('sqlsrv')->select(DB::raw("SELECT id FROM [bbStock_extras] WHERE bbcode = '".$bbcode."' and active = 1"));
+					if (isset($check_bb_has_extras[0]->id)) {
+						// skip extra operations
+					} else {
+						// add extra operations
+						$check_sku = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [extra_skus] WHERE sku = '".$sku."' and active = 1 "));
+						if (isset($check_sku[0]->id)) {
+							// sku found
+							// var_dump("sku found");
+
+							// delete (set not active) all existing extras for bb (if exist)
+							// $set_not_active = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock_extras WHERE bbname = '".$bbname."' and extra = '".$check_sku->extra."' "));
+
+							// add/update extra
+							foreach ($check_sku as $line) {
+								
+								try {
+									$bbStock_extra = new bbStock_extra;
+
+									$bbStock_extra->bbcode = $bbcode;
+									$bbStock_extra->bbname = $bbname;
+									$bbStock_extra->operation = $line->operation;
+									$bbStock_extra->operation_id = $line->operation_id;
+									$bbStock_extra->operation_type = "sku";
+									$bbStock_extra->key = $line->key."_".$bbStock_extra->code;
+									$bbStock_extra->status = "NOT DONE";
+									$bbStock_extra->active = 1;
+									$bbStock_extra->save();
+								}
+								catch (\Illuminate\Database\QueryException $e) {
+									
+									// $update = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock_extras WHERE bbname = '".$bbname."' and extra = '".$line->extra."' "));
+									// //dd($bb);
+									// foreach ($update as $b) {
+									// 	$bbid = $b->id;
+									// }
+									
+									// $bbStock_extraold = bbStock_extra::findOrFail($bbid);
+									// $bbStock_extraold->bbcode = $bbcode;
+									// $bbStock_extraold->bbname = $bbname;
+									// $bbStock_extraold->extra = $line->extra;
+									// $bbStock_extraold->key = $line->key."_".$bbStock_extra->bbname;
+									// $bbStock_extraold->status = "NOT DONE";
+									// $bbStock_extraold->active = 1;
+									// $bbStock_extraold->save();
+								}
+							}
+
+						} else {
+							// STYLE SIZE
+							$style_size = trim($style_sap)." ".trim($size_sap);
+							$check_style_size = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [extra_style_sizes] WHERE style_size = '".$style_size."' and active = 1 "));
+
+							if (isset($check_style_size[0]->id)) {
+								// style_size found
+								// var_dump("style_size found");
+
+								// delete (set not active) all existing extras for bb (if exist)
+
+								foreach ($check_style_size as $line) {
+								
+									try {
+										$bbStock_extra = new bbStock_extra;
+
+										$bbStock_extra->bbcode = $bbcode;
+										$bbStock_extra->bbname = $bbname;
+										$bbStock_extra->operation = $line->operation;
+										$bbStock_extra->operation_id = $line->operation_id;
+										$bbStock_extra->operation_type = "style_size";
+										$bbStock_extra->key = $line->key."_".$bbStock_extra->bbcode;
+										$bbStock_extra->status = "NOT DONE";
+										$bbStock_extra->active = 1;
+										$bbStock_extra->save();
+									}
+									catch (\Illuminate\Database\QueryException $e) {
+										
+										// $update = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock_extras WHERE bbname = '".$bbname."' and extra = '".$line->extra."' "));
+										// // dd($update);
+										// foreach ($update as $b) {
+										// 	$bbid = $b->id;
+										// }
+										
+										// $bbStock_extraold = bbStock_extra::findOrFail($bbid);
+										// $bbStock_extraold->bbcode = $bbcode;
+										// $bbStock_extraold->bbname = $bbname;
+										// $bbStock_extraold->extra = $line->extra;
+										// $bbStock_extraold->key = $line->key."_".$bbStock_extra->bbname;
+										// $bbStock_extraold->status = "NOT DONE";
+										// $bbStock_extraold->active = 1;
+										// $bbStock_extraold->save();
+									}
+								}
+
+							} else {
+								// STYLE
+								$style = trim($style_sap);
+								// dd($style);
+								$check_style = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [extra_styles] WHERE style = '".$style."' and active = 1 "));
+								// dd($check_style);
+
+								if (isset($check_style[0]->id)) {
+									// style found
+									// var_dump("style found");
+
+									// delete (set not active) all existing extras for bb (if exist)
+
+									foreach ($check_style as $line) {
+										
+										try {
+											$bbStock_extra = new bbStock_extra;
+
+											$bbStock_extra->bbcode = $bbcode;
+											$bbStock_extra->bbname = $bbname;
+											$bbStock_extra->operation = $line->operation;
+											$bbStock_extra->operation_id = $line->operation_id;
+											$bbStock_extra->operation_type = "style";
+											$bbStock_extra->key = $line->key."_".$bbStock_extra->bbcode;
+											$bbStock_extra->status = "NOT DONE";
+											$bbStock_extra->active = 1;
+											$bbStock_extra->save();
+										
+										}
+										catch (\Illuminate\Database\QueryException $e) {
+											
+										// 	$update = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM bbStock_extras WHERE bbname = '".$bbname."' and extra = '".$line->extra."' "));
+										// 	// dd($update);
+										// 	foreach ($update as $b) {
+										// 		$bbid = $b->id;
+										// 	}
+											
+										// 	$bbStock_extraold = bbStock_extra::findOrFail($bbid);
+										// 	$bbStock_extraold->bbcode = $bbcode;
+										// 	$bbStock_extraold->bbname = $bbname;
+										// 	$bbStock_extraold->extra = $line->extra;
+										// 	$bbStock_extraold->key = $line->key."_".$bbStock_extra->bbname;
+										// 	$bbStock_extraold->status = "NOT DONE";
+										// 	$bbStock_extraold->active = 1;
+										// 	$bbStock_extraold->save();
+										}
+										
+									}
+								} else {
+									
+									// var_dump("extra not found");
+								}
+							}	
+						}
+					
+					}
+				//
+
 				try {
 					$bbStock = new bbStock;
 
@@ -324,7 +479,7 @@ class addmorebbController extends Controller {
 					$bbStock->status = $status;
 					$bbStock->bagno = $bagno;
 					$bbStock->sku = $sku;
-					$bbStock->save();
+					// $bbStock->save();
 				}
 				catch (\Illuminate\Database\QueryException $e) {
 					
@@ -357,19 +512,18 @@ class addmorebbController extends Controller {
 					$bbStock->status = $status;
 					$bbStock->bagno = $bagno;
 					$bbStock->sku = $sku;
-					$bbStock->save();
+					// $bbStock->save();
 				}
 				// return view('bbstock.success', compact('bbname','po','style','color','size','qty','numofbb','location'));
 			}
 
 			Session::set('bb_to_add_array', null);
 			$msg = "All scanned BBs succesfuly added to BBStock";
-			return view('addmorebb.success',compact('msg'));
+			return view('addmorebb2.success',compact('msg'));
 		}
 
 		Session::set('bb_to_add_array', null);
 		$msg = "List of BB to add is empty";
-		return view('addmorebb.success',compact('msg'));
+		return view('addmorebb2.success',compact('msg'));
 	}
-
 }

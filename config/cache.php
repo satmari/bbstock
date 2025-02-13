@@ -74,6 +74,6 @@ return [
 	|
 	*/
 
-	'prefix' => 'laravel',
+	'prefix' => 'laravel_bbs2',
 
 ];

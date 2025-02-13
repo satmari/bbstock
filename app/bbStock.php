@@ -15,11 +15,15 @@ class bbStock extends Model {
     {
         //return $query->where('po', 'LIKE', $po);
         return $query->where('po', '=', $po);
+        // return $query->where([['po', '=', $po],['status', '=', 'STOCK']]);
+
     }
 
     public function scopeSearchsize($query, $size)
-    {
+    {   
+
         return $query->where('size', '=', $size);
+        // return $query->where([['size', '=', $size],['status', '=', 'STOCK']]);
     }
 
 

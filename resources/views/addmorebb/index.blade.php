@@ -5,18 +5,14 @@
 	<div class="row vertical-center-row">
 		<div class="text-center col-md-4 col-md-offset-4">
 			<div class="panel panel-default">
-				<div class="panel-heading">Add BB to Stock</div>
+				<div class="panel-heading">Add multiple BB to Stock</div>
 				
-				@if(isset($msg))
-				<h4 style="color:red;">{{ $msg }}</h4>
-				@endif
-							
 				{!! Form::open(['url' => 'set_to_add']) !!}
 				<input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 				
 				<div class="panel-body">
 					<p>Location of Inteos: </p>
-					{!! Form::select('inteosdb_new', array('1'=>'Gordon','2'=>'Kikinda'), $inteosdb, array('class' => 'form-control')); !!} 
+					{!! Form::select('inteosdb_new', array('1'=>'Subotica','2'=>'Kikinda','3'=>'Senta'), $inteosdb, array('class' => 'form-control')); !!} 
 				</div>
 
 				<div class="panel-body">
@@ -25,23 +21,19 @@
 
 				
 				<div class="panel-body">
-					{!! Form::submit('Add to list BB', ['class' => 'btn btn-danger btn-lg center-block']) !!} 
+					{!! Form::submit('Add BB to list', ['class' => 'btn btn-danger btn-lg center-block']) !!} 
 				</div>
 				
 				@include('errors.list')
 				{!! Form::close() !!}
 				<hr>
 
-				{{-- 
-				<input id="proba" type="text" class="form-control" name="proba">
-				<div id="display"></div>
-				--}}
-
+				
 				@if(isset($bbaddarray_unique))
 					<table class="table">
 						<thead>
 							<td>BB name</td>
-							
+							<td></td>
 						</thead>
 
 					@foreach($bbaddarray_unique as $array)
@@ -53,9 +45,8 @@
 						    	@endif
 						    @endforeach
 					   		</td>
-					   		
+					   		<td></td>
 					    </tr>
-
 					@endforeach
 
 						<tfoot>
@@ -76,8 +67,12 @@
 
 
 				<div class="panel-body">
-					{!! Form::submit('Save BB list', ['class' => 'btn btn-danger btn-lg center-block']) !!}
+					{!! Form::submit('Add list to location', ['class' => 'btn btn-danger btn-lg center-block']) !!}
 				</div>
+
+				@if(isset($msg))
+					<h4 style="color:red;">{{ $msg }}</h4>
+				@endif
 
 				@include('errors.list')
 

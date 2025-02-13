@@ -12,7 +12,7 @@
 
 				<div class="panel-body">
 					<p>Location of Inteos: </p>
-					{!! Form::select('inteosdb_new', array('1'=>'Gordon','2'=>'Kikinda'), $inteosdb, array('class' => 'form-control')); !!} 
+					{!! Form::select('inteosdb_new', array('1'=>'Subotica','2'=>'Kikinda','3'=>'Senta'), $inteosdb, array('class' => 'form-control')); !!} 
 				</div>
 
 				<div class="panel-body">

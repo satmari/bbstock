@@ -1,132 +1,69 @@
 @extends('mainpage')
 
 @section('index')
-<div class="container container-table">
-	<!-- <div class="row vertical-center-row"> -->
-		<div class="row">
+<div class="container-fluid">
+    <div class="row vertical-center-row">
+        <div class="text-center">
+			<div class="panel panel-default">
+				<div class="panel-heading">Search for {{ $po }}</div>
 
-			<div class="col-xs-4 col-md-offset-1">
-			  	<div class="panel panel-default">
-
-				  <table class="table">
-				    <thead>
-				      <tr>
-				        <th>Sort by location (SUSPENDED first)</th>
-				        
-				      </tr>
-				    </thead>
-				    <tbody>
-				      <tr>
-				        <td>
-				        	@foreach ($search as $rez)
-								<table style="width:100%" class="table table-striped">
-								  <tr>
-								    <td>BB:</td>
-								    <td>{{$rez->po}} <b>{{substr($rez->bbname, -3)}}</b></td>		
-								  </tr>
-								  <tr>
-								    <td>SKU:</td>
-								    <td>{{$rez->style}} / {{$rez->color}}-<span style="color:red;"><b>{{$rez->size}}</b></span></td>		
-								  </tr>
-								  <tr>
-								    <td>PCS:</td>
-								    <td>{{$rez->qty}}</td>		
-								  </tr>
-								  <tr>
-								    <td>Box created:</td>
-								    <td>{{substr($rez->boxdate, 0, 19)}}</td>		
-								  </tr>
-								  <tr>
-								    <td>Num of Box:</td>
-								    <td>{{$rez->numofbb}}</td>		
-								  </tr>
-								  <tr style="border-bottom:1px solid #000">
-								    <td>Location:</td>
-								    {{--<td><h4><span style="color:blue"><b>{{$rez->location}}</b></span></h4></td>--}}
-								    <td><span style="color:blue"><b>{{$rez->location}}</b></span></td>
-								  </tr>
-								</table>
-							@endforeach
-				        </td>
-				      </tr>
-				    </tbody>
-				  </table>
-				  </div>
-			</div>
-
-			<div class="col-xs-2">
-
-			</div>
-
-			<div class="col-xs-4">
-			  	<div class="panel panel-default">
-					
-
-
-				  <table class="table">
-				    <thead>
-				      <tr>
-				        
-				        <th>Sort by box created date (Older first)</th>
-				      </tr>
-				    </thead>
-				    <tbody>
-				      <tr>
-				        <td>
-				        	@foreach ($search_by_date as $rez2)
-								<table style="width:100%" class="table table-striped">
-								  <tr>
-								    <td>BB:</td>
-								    <td>{{$rez2->po}} <b>{{substr($rez2->bbname, -3)}}</b></td>		
-								  </tr>
-								  <tr>
-								    <td>SKU:</td>
-								    <td>{{$rez2->style}} / {{$rez2->color}}-<span style="color:red;"><b>{{$rez2->size}}</b></span></td>		
-								  </tr>
-								  <tr>
-								    <td>PCS:</td>
-								    <td>{{$rez2->qty}}</td>		
-								  </tr>
-								  <tr>
-								    <td>Box created:</td>
-								    <td>{{substr($rez2->boxdate, 0, 19)}}</td>
-								  </tr>
-								  <tr>
-								    <td>Num of Box:</td>
-								    <td>{{$rez2->numofbb}}</td>		
-								  </tr>
-								  <tr style="border-bottom:1px solid #000">
-								    <td>Location:</td>
-								    {{--<td><h4><span style="color:blue"><b>{{$rez2->location}}</b></span></h4></td>--}}
-								    <td><span style="color:blue"><b>{{$rez2->location}}</b></span></td>
-								  </tr>
-								</table>
-							@endforeach
-				        </td>
-				      </tr>
-				    </tbody>
-				  </table>
-				
-
-				 </div>
-			</div>
-
-			<div class="col-xs-6 col-md-offset-3">
 				<br>
-				<div class="">
-						<a href="{{url('/search2')}}" class="btn btn-default btn-lg center-block">Search again</a>
+				<div>
+					@if (isset($data[0]->id))
+						PO: <b>{{ substr($data[0]->bbname,3,9) }}</b>
+						<br>
+						SKU: <b>{{ $data[0]->sku }}</b>
+						<br>
+					@endif
 				</div>
 				<br>
-				<div class="">
-						<a href="{{url('/removebb')}}" class="btn btn-default btn-lg center-block">Remove BB form Stock</a>
-				</div>
-				<br>
-				<div class="">
-						<a href="{{url('/')}}" class="btn btn-default btn-lg center-block">Back to main menu</a>
+				<!-- <div class="input-group"> <span class="input-group-addon">Filter</span> -->
+					<!-- <input id="filter" type="text" class="form-control" placeholder="Type here..."> -->
+				<!-- </div> -->
+				<table class="table table-striped table-bordered" id="sort">
+					<thead>
+						<tr>
+							<th data-sortable="true" >BB</th>
+							<!-- <th data-sortable="true" >SKU</th> -->
+							<th data-sortable="true" >Loc</th>
+							<th data-sortable="true" >Status</th>
+							<th data-sortable="true" >Qty</th>
+							<!-- <th data-sortable="true" >Updated at</th> -->
+							<th data-sortable="true" >READY</th>
+							<!-- <th></th> -->
+						</tr>
+					</thead>
+					<tbody class="searchable">
+						@foreach ($data as $line)	
+						<tr>
+							<td><span style="font-weight: bold;"><big>{{substr($line->bbname,12,3) }}</big></span></td>
+							{{-- <td>{{ $line->sku  }}</td> --}}
+							<td>{{ $line->location }}</td>
+							<td>{{ $line->status }}</td>
+							<td>{{ (int)$line->qty }}</td>
+							{{-- <td>{{ substr($line->updated_at,0,16) }}</td> --}}
+							<td>@if ($line->bb_ready == 'NOT READY')
+									<span style='color:red'>
+										<a href="{{ url('/view_op/'.$line->bbcode) }}" class="">
+										{{ $line->bb_ready }}
+										</a>
+									</span> 
+								@else
+									<span style='color:green'>
+										<a href="{{ url('/view_op/'.$line->bbcode) }}" class="">
+											{{ $line->bb_ready }}
+										</a>
+									</span> 
+								@endif
+							</td>
+							{{-- <td><a href="{{ url('/view_op/'.$line->bbcode) }}" class="btn btn-sucess btn-xs center-block">View OP</a></td> --}}
+						</tr>
+						@endforeach	
+					</tbody>
+				</table>
 				</div>
 			</div>
 		</div>
-
-	<!-- </div> -->
+	</div>
 </div>
 @endsection

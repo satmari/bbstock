@@ -9,6 +9,11 @@
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/css.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/custom.css') }}" rel="stylesheet">
+	<link href="{{ asset('/css/choosen.css') }}" rel="stylesheet">
+
+	<!-- <link href="{{ asset('/css/bootstrap.min.css') }}" rel='stylesheet' type='text/css'> -->
+	<link href="{{ asset('/css/jquery-ui.min.css') }}" rel='stylesheet' type='text/css'>
+	<!-- <link rel="manifest" href="{{ asset('/css/manifest.json') }}"> -->
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,18 +27,19 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					{{--<span class="sr-only">Toggle Navigation</span>--}}
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="{{ url('/') }}"><b>BBStock Application</b></a>
+				<a class="navbar-brand" href="{{ url('/') }}"><b>BBStock</b></a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				{{-- 
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Home</a></li>
 				</ul>
+				--}}
 
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
@@ -58,6 +64,76 @@
 
 	<script src="{{ asset('/js/jquery.min.js') }}" type="text/javascript" ></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript" ></script>
+
+    <script src="{{ asset('/js/bootstrap-table.js') }}" type="text/javascript" ></script>
+	<script src="{{ asset('/js/jquery-ui.min.js') }}" type="text/javascript" ></script>
+
+    <script src="{{ asset('/js/tableExport.js') }}" type="text/javascript" ></script>
+
+	<script src="{{ asset('/js/FileSaver.min.js') }}" type="text/javascript" ></script>
+	<script src="{{ asset('/js/bootstrap-table-export.js') }}" type="text/javascript" ></script>
+	<script src="{{ asset('/js/choosen.js') }}" type="text/javascript" ></script>
+
+	<script type="text/javascript">
+
+
+$(function() {
+	$("#checkAll").click(function () {
+		console.log('test check');
+    	$(".check").prop('checked', $(this).prop('checked'));
+	});
+});
+
+$(function() {
+    	
+	$('#po').autocomplete({
+		minLength: 3,
+		autoFocus: true,
+		source: '{{ URL('getpodata')}}'
+	});
+	$('#filter').keyup(function () {
+
+        var rex = new RegExp($(this).val(), 'i');
+        $('.searchable tr').hide();
+        $('.searchable tr').filter(function () {
+            return rex.test($(this).text());
+        }).show();
+	});
+
+	$(".chosen").chosen();
+
+	$('#sort').bootstrapTable({
+    
+	});
+
+	$('.table tr').each(function(){
+  		
+  		//$("td:contains('pending')").addClass('pending');
+  		//$("td:contains('confirmed')").addClass('confirmed');
+  		//$("td:contains('back')").addClass('back');
+  		//$("td:contains('error')").addClass('error');
+  		//$("td:contains('TEZENIS')").addClass('tezenis');
+
+  		// $("td:contains('TEZENIS')").function() {
+  		// 	$(this).index().addClass('tezenis');
+  		// }
+	});
+
+	$("#checkAll").click(function () {
+    	$(".check").prop('checked', $(this).prop('checked'));
+	});
+
+
+});
+</script>
+
+<script type="text/javascript">
+   $.ajaxSetup({
+       headers: {
+           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+       }
+   });
+</script>
 
 </body>
 </html>

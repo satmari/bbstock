@@ -17,7 +17,7 @@
 	<tbody>
 		@foreach ($bbstockbygroup as $bb)	
 		<tr>
-			<td>{{ substr($bb->bbname, -8)  }}</td>
+			<td>{{ $bb->bbname  }}</td>
 			<td>{{ $bb->numofbb }}</td>
 			<!-- <td><a href="{{url('/bbstock/'.$bb->id.'/delete')}}" class="btn btn-default btn-lg center-block">Remove</a></td> -->
 		</tr>

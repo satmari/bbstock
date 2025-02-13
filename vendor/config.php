@@ -6,7 +6,7 @@
     'timezone' => 'CET',
     'locale' => 'en',
     'fallback_locale' => 'en',
-    'key' => 'vBhUcphZPLKQuNp5zhw2znBLYLEN4wIY',
+    'key' => 'SHQbBeiE53eoeT6uNZwJboBkyIS0dxyq',
     'cipher' => 'rijndael-128',
     'log' => 'daily',
     'providers' => 
@@ -40,6 +40,8 @@
       26 => 'App\\Providers\\RouteServiceProvider',
       27 => 'Illuminate\\Html\\HtmlServiceProvider',
       28 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+      29 => 'Bican\\Roles\\RolesServiceProvider',
+      30 => 'Gbrock\\Table\\Providers\\TableServiceProvider',
     ),
     'aliases' => 
     array (
@@ -114,7 +116,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\xampp\\htdocs\\bbstock\\storage/framework/cache',
+        'path' => 'D:\\xampp\\htdocs\\bbstock2\\storage/framework/cache',
       ),
       'memcached' => 
       array (
@@ -135,17 +137,17 @@
         'connection' => 'default',
       ),
     ),
-    'prefix' => 'laravel',
+    'prefix' => 'laravel_bbs2',
   ),
   'compile' => 
   array (
     'files' => 
     array (
-      0 => 'D:\\xampp\\htdocs\\bbstock\\app\\Providers\\AppServiceProvider.php',
-      1 => 'D:\\xampp\\htdocs\\bbstock\\app\\Providers\\BusServiceProvider.php',
-      2 => 'D:\\xampp\\htdocs\\bbstock\\app\\Providers\\ConfigServiceProvider.php',
-      3 => 'D:\\xampp\\htdocs\\bbstock\\app\\Providers\\EventServiceProvider.php',
-      4 => 'D:\\xampp\\htdocs\\bbstock\\app\\Providers\\RouteServiceProvider.php',
+      0 => 'D:\\xampp\\htdocs\\bbstock2\\app\\Providers\\AppServiceProvider.php',
+      1 => 'D:\\xampp\\htdocs\\bbstock2\\app\\Providers\\BusServiceProvider.php',
+      2 => 'D:\\xampp\\htdocs\\bbstock2\\app\\Providers\\ConfigServiceProvider.php',
+      3 => 'D:\\xampp\\htdocs\\bbstock2\\app\\Providers\\EventServiceProvider.php',
+      4 => 'D:\\xampp\\htdocs\\bbstock2\\app\\Providers\\RouteServiceProvider.php',
     ),
     'providers' => 
     array (
@@ -160,16 +162,16 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'D:\\xampp\\htdocs\\bbstock\\storage/database.sqlite',
+        'database' => 'D:\\xampp\\htdocs\\bbstock2\\storage/database.sqlite',
         'prefix' => '',
       ),
       'mysql' => 
       array (
         'driver' => 'mysql',
-        'host' => '172.27.161.222',
-        'database' => 'bbStock',
-        'username' => 'bbstock',
-        'password' => 'bbstock',
+        'host' => '172.27.161.200',
+        'database' => 'bbstock',
+        'username' => 'sa',
+        'password' => 'gordon2013',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix' => '',
@@ -178,10 +180,10 @@
       'pgsql' => 
       array (
         'driver' => 'pgsql',
-        'host' => '172.27.161.222',
-        'database' => 'bbStock',
-        'username' => 'bbstock',
-        'password' => 'bbstock',
+        'host' => '172.27.161.200',
+        'database' => 'bbstock',
+        'username' => 'sa',
+        'password' => 'gordon2013',
         'charset' => 'utf8',
         'prefix' => '',
         'schema' => 'public',
@@ -189,10 +191,19 @@
       'sqlsrv' => 
       array (
         'driver' => 'sqlsrv',
-        'host' => '172.27.161.222',
-        'database' => 'bbStock',
-        'username' => 'bbstock',
-        'password' => 'bbstock',
+        'host' => '172.27.161.200',
+        'database' => 'bbstock',
+        'username' => 'sa',
+        'password' => 'gordon2013',
+        'prefix' => '',
+      ),
+      'sqlsrv1' => 
+      array (
+        'driver' => 'sqlsrv',
+        'host' => '172.27.161.221\\GPD',
+        'database' => 'gordon_live',
+        'username' => 'sa',
+        'password' => 'gordon2013',
         'prefix' => '',
       ),
       'sqlsrv2' => 
@@ -211,6 +222,24 @@
         'database' => 'BdkCLZKKA',
         'username' => 'gordon',
         'password' => 'gordon',
+        'prefix' => '',
+      ),
+      'sqlsrv6' => 
+      array (
+        'driver' => 'sqlsrv',
+        'host' => '172.27.73.221\\NAVISION',
+        'database' => 'Fiorano_LIVE',
+        'username' => 'danijelb',
+        'password' => 'danijel1!',
+        'prefix' => '',
+      ),
+      'sqlsrv7' => 
+      array (
+        'driver' => 'sqlsrv',
+        'host' => '172.27.161.200',
+        'database' => 'trebovanje',
+        'username' => 'sa',
+        'password' => 'gordon2013',
         'prefix' => '',
       ),
     ),
@@ -235,7 +264,7 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\xampp\\htdocs\\bbstock\\storage/app',
+        'root' => 'D:\\xampp\\htdocs\\bbstock2\\storage/app',
       ),
       's3' => 
       array (
@@ -326,6 +355,21 @@
       'table' => 'failed_jobs',
     ),
   ),
+  'roles' => 
+  array (
+    'connection' => NULL,
+    'separator' => '.',
+    'pretend' => 
+    array (
+      'enabled' => false,
+      'options' => 
+      array (
+        'is' => true,
+        'can' => true,
+        'allowed' => true,
+      ),
+    ),
+  ),
   'services' => 
   array (
     'mailgun' => 
@@ -352,10 +396,10 @@
   'session' => 
   array (
     'driver' => 'file',
-    'lifetime' => 120,
+    'lifetime' => 144000,
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\xampp\\htdocs\\bbstock\\storage/framework/sessions',
+    'files' => 'D:\\xampp\\htdocs\\bbstock2\\storage/framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'lottery' => 
@@ -363,7 +407,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'laravel_session',
+    'cookie' => 'laravel_session_bbstock2',
     'path' => '/',
     'domain' => NULL,
     'secure' => false,
@@ -372,9 +416,9 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\xampp\\htdocs\\bbstock\\resources\\views',
+      0 => 'D:\\xampp\\htdocs\\bbstock2\\resources\\views',
     ),
-    'compiled' => 'D:\\xampp\\htdocs\\bbstock\\storage\\framework\\views',
+    'compiled' => 'D:\\xampp\\htdocs\\bbstock2\\storage\\framework\\views',
   ),
   'excel' => 
   array (
@@ -392,7 +436,7 @@
         'host' => 'localhost',
         'port' => 11211,
       ),
-      'dir' => 'D:\\xampp\\htdocs\\bbstock\\storage/cache',
+      'dir' => 'D:\\xampp\\htdocs\\bbstock2\\storage/cache',
     ),
     'properties' => 
     array (
@@ -457,7 +501,7 @@
       ),
       'store' => 
       array (
-        'path' => 'D:\\xampp\\htdocs\\bbstock\\storage/exports',
+        'path' => 'D:\\xampp\\htdocs\\bbstock2\\storage/exports',
         'returnInfo' => false,
       ),
       'pdf' => 
@@ -467,15 +511,15 @@
         array (
           'DomPDF' => 
           array (
-            'path' => 'D:\\xampp\\htdocs\\bbstock/vendor/dompdf/dompdf/',
+            'path' => 'D:\\xampp\\htdocs\\bbstock2/vendor/dompdf/dompdf/',
           ),
           'tcPDF' => 
           array (
-            'path' => 'D:\\xampp\\htdocs\\bbstock/vendor/tecnick.com/tcpdf/',
+            'path' => 'D:\\xampp\\htdocs\\bbstock2/vendor/tecnick.com/tcpdf/',
           ),
           'mPDF' => 
           array (
-            'path' => 'D:\\xampp\\htdocs\\bbstock/vendor/mpdf/mpdf/',
+            'path' => 'D:\\xampp\\htdocs\\bbstock2/vendor/mpdf/mpdf/',
           ),
         ),
       ),
@@ -632,5 +676,11 @@
         ),
       ),
     ),
+  ),
+  'gbrock-tables' => 
+  array (
+    'key_field' => 'sort',
+    'key_direction' => 'dir',
+    'default_direction' => 'asc',
   ),
 );

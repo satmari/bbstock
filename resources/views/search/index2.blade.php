@@ -9,24 +9,15 @@
 				
 				{!! Form::open(['url' => 'search2']) !!}
 				<input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
-				{{--
-				<p>BB code: </p>
-				<div class="panel-body">
-					{!! Form::input('number', 'bb_code', null, ['class' => 'form-control']) !!}
-				</div>
-				--}}
+				
 				<p>Po: </p>
 				<div class="panel-body">
 					{!! Form::input('number', 'po', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
 				</div>
-				<p>Size: </p>
-				<div class="panel-body">
-					{{--{!! Form::input('string', 'size', null, ['class' => 'form-control']) !!}--}}
-					{!! Form::select('size', array(''=>'any','XS'=>'XS','S'=>'S','M'=>'M','L'=>'L','XL'=>'XL','XXL'=>'XXL','M/L'=>'M/L','S/M'=>'S/M','3-4'=>'3-4','5-6'=>'5-6','7-8'=>'7-8','9-10'=>'9-10','11-12'=>'11-12'), '', array('class' => 'form-control')); !!} 
-				</div>
+				
 
 				<div class="panel-body">
-					{!! Form::submit('Search BB', ['class' => 'btn btn-primary btn-lg center-block']) !!}
+					{!! Form::submit('Search', ['class' => 'btn btn-primary btn-lg center-block']) !!}
 				</div>
 
 				@include('errors.list')

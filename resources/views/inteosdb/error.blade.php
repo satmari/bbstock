@@ -15,7 +15,7 @@
 				</h4>
 				<hr>
 				<div class="">
-						<a href="{{url('/workstudy')}}" class="btn btn-default btn-lg center-block">Try again to add BB</a>
+						<a href="{{url('/inteosdb')}}" class="btn btn-default btn-lg center-block">Try again to add BB</a>
 				</div>
 				<br>
 				<div class="">

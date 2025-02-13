@@ -21,30 +21,41 @@
 				--}}
 				<hr>
 					
-				{!! Form::open(['url' => 'bbstock/create']) !!}
+				{{-- {!! Form::open(['url' => 'bbstock/create']) !!} --}}
+				{!! Form::open(['url' => 'create_bb']) !!}
+
+				{!! Form::hidden('BlueBoxCode', $BlueBoxCode) !!}
+				{!! Form::hidden('BlueBoxNum', $BlueBoxNum) !!}
+				{!! Form::hidden('BoxQuant', $BoxQuant) !!}
+				{!! Form::hidden('BoxDate', $BoxDate) !!}
+				{!! Form::hidden('POnum', $POnum) !!}
+				{!! Form::hidden('SMVloc', $SMVloc) !!}
+				{!! Form::hidden('Variant', $Variant) !!}
+				{!! Form::hidden('ClrDesc', $ClrDesc) !!}
+				{!! Form::hidden('StyCod', $StyCod) !!}
+				{!! Form::hidden('ColorCode', $ColorCode) !!}
+				{!! Form::hidden('Size', $Size) !!}
+				{!! Form::hidden('Bagno', $Bagno) !!}
 
 				<div class="panel-body">
 					<p>Number of BB:</p>
-					{!! Form::select('QtyofBB', array('1'=>1,'2'=>2,'3'=>3,'4'=>4,'5'=>5, '6'=>6), null, array('class' => 'form-control')); !!} 
+					{!! Form::select('QtyofBB', array('0'=>0,'1'=>1,'2'=>2,'3'=>3,'4'=>4,'5'=>5, '6'=>6), $QtyofBB, array('class' => 'form-control')); !!} 
 				</div>
+				
 				<div class="panel-body">
 					<p>BB Location: </p>
 					{!! Form::text('BBLocation', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
+
 				</div>
-					{!! Form::hidden('BlueBoxCode', $BlueBoxCode, ['class' => 'form-control']) !!}
-					{!! Form::hidden('BlueBoxNum', $BlueBoxNum, ['class' => 'form-control']) !!}
-					{!! Form::hidden('BoxQuant', $BoxQuant, ['class' => 'form-control']) !!}
-					{!! Form::hidden('BoxDate', $BoxDate, ['class' => 'form-control']) !!}
-					{!! Form::hidden('POnum', $POnum, ['class' => 'form-control']) !!}
-					{!! Form::hidden('Variant', $Variant, ['class' => 'form-control']) !!}
-					{!! Form::hidden('ClrDesc', $ClrDesc, ['class' => 'form-control']) !!}
-					{!! Form::hidden('StyCod', $StyCod, ['class' => 'form-control']) !!}
-					{!! Form::hidden('ColorCode', $ColorCode, ['class' => 'form-control']) !!}
-					{!! Form::hidden('Size', $Size, ['class' => 'form-control']) !!}
+					
 
 				<div class="panel-body">
 					{!! Form::submit('Add BB to Stock', ['class' => 'btn btn-success btn-lg center-block']) !!}
 				</div>
+
+				@if (isset($msg))
+					<span style="color:red">{{ $msg }}</span>
+				@endif
 
 				@include('errors.list')
 

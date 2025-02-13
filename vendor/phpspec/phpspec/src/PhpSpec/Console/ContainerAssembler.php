@@ -20,7 +20,7 @@ use PhpSpec\CodeAnalysis\TokenizedTypeHintRewriter;
 use PhpSpec\CodeAnalysis\VisibilityAccessInspector;
 use PhpSpec\Console\Assembler\PresenterAssembler;
 use PhpSpec\Process\Prerequisites\SuitePrerequisites;
-use SebastianBergmann\Exporter\Exporter;
+use PhpSpec\Util\ReservedWordsMethodNameChecker;
 use PhpSpec\Process\ReRunner;
 use PhpSpec\Util\MethodAnalyser;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -45,6 +45,7 @@ class ContainerAssembler
      */
     public function build(ServiceContainer $container)
     {
+        $this->setupParameters($container);
         $this->setupIO($container);
         $this->setupEventDispatcher($container);
         $this->setupConsoleEventDispatcher($container);
@@ -61,6 +62,14 @@ class ContainerAssembler
         $this->setupSubscribers($container);
         $this->setupCurrentExample($container);
         $this->setupShutdown($container);
+    }
+
+    private function setupParameters(ServiceContainer $container)
+    {
+        $container->setParam(
+            'generator.private-constructor.message',
+            'Do you want me to make the constructor of {CLASSNAME} private for you?'
+        );
     }
 
     private function setupIO(ServiceContainer $container)
@@ -151,7 +160,8 @@ class ContainerAssembler
             return new Listener\CollaboratorMethodNotFoundListener(
                 $c->get('console.io'),
                 $c->get('locator.resource_manager'),
-                $c->get('code_generator')
+                $c->get('code_generator'),
+                $c->get('util.reserved_words_checker')
             );
         });
         $container->setShared('event_dispatcher.listeners.named_constructor_not_found', function (ServiceContainer $c) {
@@ -165,7 +175,8 @@ class ContainerAssembler
             return new Listener\MethodNotFoundListener(
                 $c->get('console.io'),
                 $c->get('locator.resource_manager'),
-                $c->get('code_generator')
+                $c->get('code_generator'),
+                $c->get('util.reserved_words_checker')
             );
         });
         $container->setShared('event_dispatcher.listeners.stop_on_failure', function (ServiceContainer $c) {
@@ -194,6 +205,9 @@ class ContainerAssembler
         });
         $container->setShared('util.method_analyser', function () {
             return new MethodAnalyser();
+        });
+        $container->setShared('util.reserved_words_checker', function () {
+            return new ReservedWordsMethodNameChecker();
         });
         $container->setShared('event_dispatcher.listeners.bootstrap', function (ServiceContainer $c) {
             return new Listener\BootstrapListener(
@@ -287,9 +301,15 @@ class ContainerAssembler
         });
 
         $container->set('code_generator.generators.private_constructor', function (ServiceContainer $c) {
-            return new CodeGenerator\Generator\PrivateConstructorGenerator(
-                $c->get('console.io'),
-                $c->get('code_generator.templates')
+            return new CodeGenerator\Generator\OneTimeGenerator(
+                new CodeGenerator\Generator\ConfirmingGenerator(
+                    $c->get('console.io'),
+                    $c->getParam('generator.private-constructor.message'),
+                    new CodeGenerator\Generator\PrivateConstructorGenerator(
+                        $c->get('console.io'),
+                        $c->get('code_generator.templates')
+                    )
+                )
             );
         });
 
@@ -352,7 +372,7 @@ class ContainerAssembler
 
                 $config = array_merge($defaults, $suite);
 
-                if (!is_dir($config['src_path'])) {
+                if (!empty($config['src_path']) && !is_dir($config['src_path'])) {
                     mkdir($config['src_path'], 0777, true);
                 }
                 if (!is_dir($config['spec_path'])) {
@@ -664,7 +684,7 @@ class ContainerAssembler
             );
         });
         $container->setShared('process.rerunner.platformspecific.passthru', function (ServiceContainer $c) {
-            return ReRunner\PassthruReRunner::withExecutionContext(
+            return ReRunner\ProcOpenReRunner::withExecutionContext(
                 $c->get('process.phpexecutablefinder'),
                 $c->get('process.executioncontext')
             );

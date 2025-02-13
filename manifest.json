@@ -1,0 +1,13 @@
+{ 
+
+  "name": "BBStock application", 
+
+  "short_name": "BBStock application", 
+
+  "start_url": "http://172.27.161.172/bbstock2", 
+
+  "display": "standalone"
+
+  
+
+}

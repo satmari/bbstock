@@ -84,6 +84,15 @@ return [
 			'prefix'   => '',
 		],
 
+		'sqlsrv1' => [
+			'driver'   => 'sqlsrv',
+			'host'     => env('DB_HOST1', 'localhost'),
+			'database' => env('DB_DATABASE1', 'forge'),
+			'username' => env('DB_USERNAME1', 'forge'),
+			'password' => env('DB_PASSWORD1', ''),
+			'prefix'   => '',
+		],
+
 		'sqlsrv2' => [
 			'driver'   => 'sqlsrv',
 			'host'     => env('DB_HOST2', 'localhost'),
@@ -99,6 +108,24 @@ return [
 			'database' => env('DB_DATABASE5', 'forge'),
 			'username' => env('DB_USERNAME5', 'forge'),
 			'password' => env('DB_PASSWORD5', ''),
+			'prefix'   => '',
+		],
+
+		'sqlsrv6' => [
+			'driver'   => 'sqlsrv',
+			'host'     => env('DB_HOST6', 'localhost'),
+			'database' => env('DB_DATABASE6', 'forge'),
+			'username' => env('DB_USERNAME6', 'forge'),
+			'password' => env('DB_PASSWORD6', ''),
+			'prefix'   => '',
+		],
+
+		'sqlsrv7' => [
+			'driver'   => 'sqlsrv',
+			'host'     => env('DB_HOST7', 'localhost'),
+			'database' => env('DB_DATABASE7', 'forge'),
+			'username' => env('DB_USERNAME7', 'forge'),
+			'password' => env('DB_PASSWORD7', ''),
 			'prefix'   => '',
 		],
 

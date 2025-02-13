@@ -147,8 +147,8 @@ class searchController extends Controller {
              WHERE        (BB_INTKEY = bb.INTKEY)) AS BBExtraOperations, 
              SUBSTRING(bb.BlueBoxNum, 1, 14) AS ProdOrder
              
-             ,(SELECT status FROM [172.27.161.221\GPD].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_status
-             ,(SELECT location FROM [172.27.161.221\GPD].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_location
+             ,(SELECT status FROM [172.27.161.200].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_status
+             ,(SELECT location FROM [172.27.161.200].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_location
              
             FROM         CNF_BlueBox AS bb LEFT OUTER JOIN
              CNF_PO AS po ON bb.IntKeyPO = po.INTKEY LEFT OUTER JOIN
@@ -209,8 +209,8 @@ class searchController extends Controller {
              WHERE        (BB_INTKEY = bb.INTKEY)) AS BBExtraOperations, 
              SUBSTRING(bb.BlueBoxNum, 1, 14) AS ProdOrder
              
-             ,(SELECT status FROM [172.27.161.221\GPD].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_status
-             ,(SELECT location FROM [172.27.161.221\GPD].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_location
+             ,(SELECT status FROM [172.27.161.200].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_status
+             ,(SELECT location FROM [172.27.161.200].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_location
              
 			FROM         [172.27.161.221\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_BlueBox AS bb LEFT OUTER JOIN
              [172.27.161.221\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_PO AS po ON bb.IntKeyPO = po.INTKEY LEFT OUTER JOIN
@@ -299,8 +299,8 @@ class searchController extends Controller {
              WHERE        (BB_INTKEY = bb.INTKEY)) AS BBExtraOperations, 
              SUBSTRING(bb.BlueBoxNum, 1, 14) AS ProdOrder
              
-             ,(SELECT status FROM [172.27.161.221\GPD].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_status
-             ,(SELECT location FROM [172.27.161.221\GPD].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_location
+             ,(SELECT status FROM [172.27.161.200].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_status
+             ,(SELECT location FROM [172.27.161.200].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_location
              
              
              
@@ -361,8 +361,8 @@ class searchController extends Controller {
              WHERE        (BB_INTKEY = bb.INTKEY)) AS BBExtraOperations, 
              SUBSTRING(bb.BlueBoxNum, 1, 14) AS ProdOrder
              
-             ,(SELECT status FROM [172.27.161.221\GPD].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_status
-             ,(SELECT location FROM [172.27.161.221\GPD].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_location
+             ,(SELECT status FROM [172.27.161.200].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_status
+             ,(SELECT location FROM [172.27.161.200].[bbStock].[dbo].[bbStock] AS bbstock WHERE bbstock.bbname = bb.BlueBoxNum) as BBStock_location
              
 			FROM         [172.27.161.221\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_BlueBox AS bb LEFT OUTER JOIN
              [172.27.161.221\INTEOSKKA].[BdkCLZKKA].[dbo].CNF_PO AS po ON bb.IntKeyPO = po.INTKEY LEFT OUTER JOIN

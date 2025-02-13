@@ -18,7 +18,8 @@ class addmorebb2Controller extends Controller {
 
 	public function index() {
 		//
-		$ses = Session::get('bb_to_add_array');
+		// $ses = Session::get('bb_to_add_array');
+		$ses = Session::set('bb_to_add_array',null);
 		$inteosdb = Session::get('inteosdb');
 
 		if (is_null($inteosdb)) {
@@ -139,7 +140,12 @@ class addmorebb2Controller extends Controller {
 
 				$BlueBoxCode = $bbcode;
 				//$InitKey = $inteos_array[0]['INTKEY'];
-				$IntKeyPO =  $inteos_array[0]['IntKeyPO'];
+				if (isset($inteos_array[0]['IntKeyPO'])) {
+					$IntKeyPO =  $inteos_array[0]['IntKeyPO'];	
+				} else {
+					$IntKeyPO =  '';
+				}
+				
 				$SMVloc =  $inteos_array[0]['SMVloc'];
 				$BlueBoxNum =  $inteos_array[0]['BlueBoxNum'];
 				$BoxQuant =  $inteos_array[0]['BoxQuant'];
@@ -211,7 +217,7 @@ class addmorebb2Controller extends Controller {
 
 		$bbaddarray = Session::get('bb_to_add_array');
 		//dd($bbaddarray);
-
+		$sumofbb = 0;
 		if ($bbaddarray != null) {
 
 			$bbaddarray_unique = array_map("unserialize", array_unique(array_map("serialize", $bbaddarray)));
@@ -228,6 +234,54 @@ class addmorebb2Controller extends Controller {
 			// Session::push('bb_to_add_array',$bbaddarray_unique); // dodato sada
 		}
 
+		return view('addmorebb2.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
+	}
+
+	public function removebb_from_list ($bbcode) {
+		// dd($bbcode);
+
+		$bbaddarray = Session::get('bb_to_add_array');
+		$inteosdb = Session::get('inteosdb');
+		// var_dump($bbaddarray);
+		// dd($bbaddarray);
+		
+		$bbaddarray_unique = array_map("unserialize", array_unique(array_map("serialize", $bbaddarray)));
+
+		// Iterate through the array
+		foreach ($bbaddarray_unique as $key => $item) {
+		    // Check if the "BlueBoxCode" is equal to "907356731"
+		    if ($item["BlueBoxCode"] === $bbcode) {
+		        // Remove the array from the original array
+		        unset($bbaddarray_unique[$key]);
+		    }
+		}
+
+		// Re-index the array after unsetting elements
+		// $yourArray = array_values($yourArray);
+
+		// dd($bbaddarray_unique);
+		Session::set('bb_to_add_array', $bbaddarray_unique);
+		$bbaddarray = Session::get('bb_to_add_array');
+
+		$sumofbb = 0;
+		if ($bbaddarray != null) {
+
+			$bbaddarray_unique = array_map("unserialize", array_unique(array_map("serialize", $bbaddarray)));
+			// dd($bbaddarray_unique);
+
+			$sumofbb = 0;
+			foreach ($bbaddarray_unique as $line) {
+				foreach ($line as $key => $value) {
+					if ($key == 'BlueBoxCode') {
+						$sumofbb+=1;
+					}
+				}
+			}
+			// Session::push('bb_to_add_array',$bbaddarray_unique); // dodato sada
+		}
+		// dd($bbaddarray_unique);
+
+		$msg = 'BB removed from the list';
 		return view('addmorebb2.index',compact('bbaddarray_unique','sumofbb','msg','inteosdb'));
 	}
 

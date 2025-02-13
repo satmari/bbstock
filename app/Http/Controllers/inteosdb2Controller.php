@@ -230,6 +230,12 @@ class inteosdb2Controller extends Controller {
 			return view('inteosdb2.create', compact('BlueBoxCode', 'BlueBoxNum', 'BoxQuant', 'BoxDate','POnum','SMVloc', 'Variant', 'ClrDesc', 'StyCod', 'Bagno', 'ColorCode', 'Size', 'QtyofBB', 'msg' ));
 		}
 
+		// dd($QtyofBB);
+		if ($QtyofBB == 0) {
+			$msg = "Number of BB: must be different than 0 ";
+			return view('inteosdb2.create', compact('BlueBoxCode', 'BlueBoxNum', 'BoxQuant', 'BoxDate','POnum','SMVloc', 'Variant', 'ClrDesc', 'StyCod', 'Bagno', 'ColorCode', 'Size', 'QtyofBB', 'msg' ));
+		}
+
 		$style_sap = str_pad($StyCod, 9); 
 		$color_sap = str_pad($ColorCode, 4);
 		$size_sap = str_pad($Size, 5);

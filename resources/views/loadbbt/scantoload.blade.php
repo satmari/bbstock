@@ -36,7 +36,9 @@
 					<table class="table">
 						<thead>
 							<th>BB name</th>
+							
 							<th>Number of BB: {{ $count_bbload_unique_tr }}</th>
+							<th>{{ $count_bbload_numofbb }}</th>
 							
 						</thead>
 						@if(isset($bbloadarray_unique_tr)) 
@@ -48,6 +50,8 @@
 										@if($key == 'bbname')
 										<td>
 								    		{{ substr($value, -9,6) }} <b>{{ substr($value, -3) }}</b>
+								    	</td>
+								    	
 								    	</td>
 								    	<td>
 								    		{!! Form::open(['url' => 'remove_to_loadt']) !!}
@@ -61,6 +65,12 @@
 											{!! Form::close() !!}
 										</td>
 								    	@endif
+								    	@if($key == 'numofbb')
+								    	<td>
+								    		{{ $value }}
+								    	</td>
+								    	@endif
+
 								    
 							   		@endforeach
 							    </tr>

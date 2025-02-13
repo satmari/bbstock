@@ -11,7 +11,7 @@
 				<input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 
 				<div class="panel-body">
-					{!! Form::select('location_new', ['' => ''] + $locations, null,['class' => 'form-control']) !!}
+					{!! Form::select('location_new', ['' => ''] + $locations, $location_new ,['class' => 'form-control']) !!}
 				</div>
 				
 				<div class="panel-body">

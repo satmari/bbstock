@@ -23,6 +23,9 @@ class extraController extends Controller {
 // BY OP
 	public function op_by_op () {
 
+		$ses = Session::getId();
+		$delete_ses = DB::connection('sqlsrv')->update(DB::raw("DELETE FROM [bbStock].[dbo].[tempextra1s] WHERE ses = '".$ses."' "));
+
 		$operations = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT operation FROM [bbStock].[dbo].[bbStock_extras] WHERE status = 'NOT DONE' "));
 		return view('extra.op_by_op', compact('operations'));
 	}
@@ -37,8 +40,8 @@ class extraController extends Controller {
 		if ($input['operation'] == '') {
 			
 			$operations = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT operation FROM [bbStock].[dbo].[bbStock_extras] WHERE status = 'NOT DONE' and active = 1"));
-			$msg = 'Operation must be selected';
-			return view('extra.op_by_op', compact('operations','msg'));
+			$msge = 'Operation must be selected';
+			return view('extra.op_by_op', compact('operations','msge'));
 		} else {
 			$operation = $input['operation'];
 		}
@@ -47,8 +50,8 @@ class extraController extends Controller {
 			and operation = '".$operation."' "));
 		
 		$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra1s] WHERE ses = '".$ses."' "));
-
-		return view('extra.op_by_op_1', compact('bbs', 'operation', 'bblist', 'ses'));
+		$msgs = '';
+		return view('extra.op_by_op_1', compact('bbs', 'operation', 'bblist', 'ses', 'msgs'));
 	}
 
 	public function op_by_op_2(Request $request) {
@@ -71,20 +74,55 @@ class extraController extends Controller {
 			and operation = '".$operation."' "));
 
 			$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra1s] WHERE ses = '".$ses."' "));
-			$msg = 'BB must be selected or scanned';
-			return view('extra.op_by_op_1', compact('bbs','msg','operation','bblist','ses'));
+			$msge = 'BB must be selected or scanned';
+			return view('extra.op_by_op_1', compact('bbs','msge','operation','bblist','ses'));
 		}
 		
-		$databbs = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras] WHERE bbcode = '".$bbcode."' and status = 'NOT DONE' and active = 1 "));
+		// error handling	
+		$databbs = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras] WHERE bbcode = '".$bbcode."'
+			 and status = 'NOT DONE' and active = 1 and operation = '".$operation."'"));
 				
 		if (!isset($databbs[0]->bbname)) {
 			
-			$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras] WHERE status = 'NOT DONE' and active = 1 
-			and operation = '".$operation."' "));
+			$bb_main = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock] WHERE bbcode = '".$bbcode."' "));
+			if (!isset($bb_main[0]->id)) {
+				
+				$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra1s] WHERE ses = '".$ses."' "));
+				$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] /*WHERE status = 'NOT DONE'*/ "));
+				$msge = 'This BB is not in BBStock app';
+				return view('extra.op_by_op_1', compact('bbs','msge','operation','bblist','ses'));
+				
+			} else {
 
-			$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra1s] WHERE ses = '".$ses."' "));
-			$msg = 'BB not found in BBStock table with specific extra operation';
-			return view('extra.op_by_op_1', compact('bbs','msg','operation','bblist','ses'));	
+
+				$bb_extra = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras] WHERE bbcode = '".$bbcode."' "));
+				if (!isset($bb_extra[0]->id)) {
+					
+					$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra1s] WHERE ses = '".$ses."' "));
+					$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] /*WHERE status = 'NOT DONE'*/ "));
+					$msge = 'This BB is in BBStock app but doesent have any operations assigned';
+					return view('extra.op_by_op_1', compact('bbs','msge','operation','bblist','ses'));
+
+				} else {
+
+					$bb_extra2 = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras] WHERE bbcode = '".$bbcode."' and active = '1' "));
+					
+					if (!isset($bb_extra2[0]->id)) {
+
+						$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra1s] WHERE ses = '".$ses."' "));
+						$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] /*WHERE status = 'NOT DONE'*/ "));
+						$msge = 'Can not find any ACTIVE operation for this BB';
+						return view('extra.op_by_op_1', compact('bbs','msge','operation','bblist','ses'));	
+					
+					} else {
+
+						$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra1s] WHERE ses = '".$ses."' "));
+						$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] /*WHERE status = 'NOT DONE'*/ "));
+						$msge = 'Can not find any operation with status NOT DONE for this BB';
+						return view('extra.op_by_op_1', compact('bbs','msge','operation','bblist','ses'));	
+					}
+				}
+			}
 		}
 
 		try {
@@ -105,7 +143,8 @@ class extraController extends Controller {
 		$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras] WHERE status = 'NOT DONE' and active = 1 
 			and operation = '".$operation."' "));
 		$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra1s] WHERE ses = '".$ses."' "));
-		return view('extra.op_by_op_1', compact('bbs', 'operation', 'bblist', 'ses'));
+		$msgs = '';
+		return view('extra.op_by_op_1', compact('bbs', 'operation', 'bblist', 'ses', 'msgs'));
 	}	
 
 	public function remove_empextra1s($id, $session, $operation) {
@@ -118,8 +157,8 @@ class extraController extends Controller {
 			and operation = '".$operation."' "));
 
 		$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra1s] WHERE ses = '".$ses."' "));
-		$msg1 = 'Successfuly removed';
-		return view('extra.op_by_op_1', compact('bbs','msg1','operation','bblist','ses'));	
+		$msgs = 'Successfuly removed';
+		return view('extra.op_by_op_1', compact('bbs','msgs','operation','bblist','ses'));	
 	}
 
 	public function op_by_op_confirm (Request $request) {
@@ -150,9 +189,9 @@ class extraController extends Controller {
 		$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras] WHERE status = 'NOT DONE' and active = 1 
 			and operation = '".$operation."' "));
 		$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra1s] WHERE ses = '".$ses."' "));
-		$msg1 = 'Successfuly confirmed';
+		$msgs = 'Successfuly confirmed';
 
-		return view('extra.op_by_op_1', compact('bbs', 'msg1' ,'operation', 'bblist', 'ses'));
+		return view('extra.op_by_op_1', compact('bbs', 'msgs' ,'operation', 'bblist', 'ses'));
 	}
 
 // BY BB
@@ -175,20 +214,53 @@ class extraController extends Controller {
 			$bbcode = $input['bbcode'];
 			// $bbname = $input['bbname'];
 
+		} else if ($input['bbcode2'] != "") {
+			$bbcode = $input['bbcode2'];
+
 		} else {
 			$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] /*WHERE status = 'NOT DONE'*/ "));
 
-			$msg = 'BB must be selected or scanned';
-			return view('extra.op_by_bb', compact('bbs','msg','ses'));
+			$msge = 'BB must be selected or scanned';
+			return view('extra.op_by_bb', compact('bbs','msge','ses'));
 		}
 		
-		
+		// error handling		
 		$operationlist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras] WHERE 
 		 	bbcode = '".$bbcode."' and active = '1'"));
 		// dd($operationlist);
-		$bbname = $operationlist[0]->bbname;
-		//$oplist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra2s] WHERE ses = '".$ses."' "));
-		return view('extra.op_by_bb_1', compact('bbcode','bbname','operationlist','ses')); 
+
+		if (!isset($operationlist[0]->bbname)) {
+
+			$bb_main = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock] WHERE bbcode = '".$bbcode."' "));
+			if (!isset($bb_main[0]->id)) {
+				
+				$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] /*WHERE status = 'NOT DONE'*/ "));
+				$msge = 'This BB is not in BBStock app';
+				return view('extra.op_by_bb', compact('bbs','msge','ses'));
+				
+			} else {
+
+				$bb_extra = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras] WHERE bbcode = '".$bbcode."' "));
+				if (!isset($bb_extra[0]->id)) {
+					
+					$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] /*WHERE status = 'NOT DONE'*/ "));
+					$msge = 'This BB is in BBStock but doesent have any operations assigned';
+					return view('extra.op_by_bb', compact('bbs','msge','ses'));
+
+				} else {
+
+					$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] /*WHERE status = 'NOT DONE'*/ "));
+					$msge = 'Can not find any ACTIVE operation for this BB';
+					return view('extra.op_by_bb', compact('bbs','msge','ses'));	
+				}
+			}
+
+		} else {
+			$bbname = $operationlist[0]->bbname;
+			//$oplist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra2s] WHERE ses = '".$ses."' "));
+			$msgs = '';
+			return view('extra.op_by_bb_1', compact('bbcode','bbname','operationlist','msgs','ses')); 	
+		}
 	}
 
 	public function op_by_bb_confirm(Request $request) {
@@ -240,16 +312,18 @@ class extraController extends Controller {
 
 		$operationlist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras] WHERE 
 		 	bbcode = '".$bbcode."' and active = '1'"));
-		$msg1 = 'Succesfuly saved';
+		$msgs = 'Succesfuly saved';
 
-		return view('extra.op_by_bb_1', compact('bbcode','bbname','operationlist','ses','msg1'));
+		return view('extra.op_by_bb_1', compact('bbcode','bbname','operationlist','ses','msgs'));
 	}
 
 // BY ALL 
 	public function all_by_bb () {
 
 		$ses = Session::getId();
-		$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra3s] WHERE ses = '".$ses."' "));
+		$delete_ses = DB::connection('sqlsrv')->update(DB::raw("DELETE FROM [bbStock].[dbo].[tempextra3s] WHERE ses = '".$ses."' "));
+		// $bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra3s] WHERE ses = '".$ses."' "));
+		$bblist;
 		$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] WHERE status = 'NOT DONE' "));
 
 		// dd($bblist);
@@ -273,8 +347,8 @@ class extraController extends Controller {
 			$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] WHERE status = 'NOT DONE' "));
 
 			$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra3s] WHERE ses = '".$ses."' "));
-			$msg = 'BB must be selected or scanned';
-			return view('extra.all_by_bb', compact('bbs','msg','bblist','ses'));
+			$msge = 'BB must be selected or scanned';
+			return view('extra.all_by_bb', compact('bbs','msge','bblist','ses'));
 		}
 
 		$databbs = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras] WHERE
@@ -298,8 +372,8 @@ class extraController extends Controller {
 		$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] WHERE status = 'NOT DONE' "));
 		// dd($bblist);
 		$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra3s] WHERE ses = '".$ses."' "));
-
-		return view('extra.all_by_bb', compact('bbs','bblist','ses'));
+		$msgs = '';
+		return view('extra.all_by_bb', compact('bbs','bblist','ses','msgs'));
 	}
 
 	public function remove_empextra3s($id, $bbcode, $session) {
@@ -311,8 +385,8 @@ class extraController extends Controller {
 		$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] WHERE status = 'NOT DONE' "));
 		// dd($bblist);
 		$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra3s] WHERE ses = '".$ses."' "));
-		$msg1 = 'Successfuly removed';
-		return view('extra.all_by_bb', compact('bbs','bblist','ses','msg1'));
+		$msgs = 'Successfuly removed';
+		return view('extra.all_by_bb', compact('bbs','bblist','ses','msgs'));
 	}
 
 	public function all_by_bb_confirm(Request $request) {
@@ -340,8 +414,8 @@ class extraController extends Controller {
 		$bbs = DB::connection('sqlsrv')->select(DB::raw("SELECT DISTINCT bbname, bbcode FROM [bbStock].[dbo].[bbStock_extras] WHERE status = 'NOT DONE' "));
 		// dd($bblist);
 		$bblist = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[tempextra3s] WHERE ses = '".$ses."' "));
-		$msg1 = 'Successfuly confirmed';
-		return view('extra.all_by_bb', compact('bbs','bblist','ses','msg1'));
+		$msgs = 'Successfuly confirmed';
+		return view('extra.all_by_bb', compact('bbs','bblist','ses','msgs'));
 	}
 
 }

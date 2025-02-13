@@ -39,7 +39,7 @@
 
 				<div class="panel-body">
 					<p>Number of BB:</p>
-					{!! Form::select('QtyofBB', array('1'=>1,'2'=>2,'3'=>3,'4'=>4,'5'=>5, '6'=>6), $QtyofBB, array('class' => 'form-control')); !!} 
+					{!! Form::select('QtyofBB', array('0'=>0,'1'=>1,'2'=>2,'3'=>3,'4'=>4,'5'=>5, '6'=>6), $QtyofBB, array('class' => 'form-control')); !!} 
 				</div>
 				
 				<div class="panel-body">

@@ -42,6 +42,7 @@
 							@foreach($array as $key => $value)
 								@if($key == 'BlueBoxNum')
 						    		{{ $value }}
+						    		<a href="{{ url('removebb_from_list/'.$array['BlueBoxCode'] ) }}" class="btn btn-xs btn-danger">X</a>
 						    	@endif
 						    @endforeach
 					   		</td>

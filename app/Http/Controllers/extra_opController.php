@@ -390,14 +390,59 @@ class extra_opController extends Controller {
 	public function extra_sku_delete($id) {
 
 		$db = extra_sku::findOrFail($id);
-		
-		try {
-			$db->active = 0;
-			$db->save();
-		}
-		catch (\Illuminate\Database\QueryException $e) {
-			return view('extra_sku.error');			
-		}
+		$db->active = 0;
+		$db->save();
+
+		$sku = $db->sku;
+		// dd($sku);
+		$old_operation_id = $db->operation_id;
+
+		// additional check 
+			$check_bb = DB::connection('sqlsrv')->select(DB::raw("SELECT 
+				b.[bbcode],
+				b.[bbname]
+				--b.*
+			  FROM [bbStock].[dbo].[bbStock] as b
+			  WHERE b.[status] = 'STOCK' AND b.[sku] = '".$sku."' "));
+			// dd($check_bb);
+
+			foreach ($check_bb as $line) {
+
+				$if_exist_extra = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM [bbStock].[dbo].[bbStock_extras]
+					WHERE bbcode = '".$line->bbcode."' AND operation_id = '".$old_operation_id."' "));
+				// dd($if_exist_extra);
+				// if setup exist in extra
+				if (isset($if_exist_extra[0]->id)) {
+					// exist in extra
+					foreach ($if_exist_extra as $extra) {
+						// dd($extra);
+						$id = $extra->id;
+						$existing_operation_type = $extra->operation_type;
+						$existing_operation_id = $extra->operation_id;
+						$old_operation_id;
+						$operation_id;
+						// dd('new operation id: '.$operation_id.'  , existing_operation_id: '.$existing_operation_id);
+
+						if ($existing_operation_type == 'sku') {
+
+							$bbStock_extra = bbStock_extra::findOrFail($extra->id);
+							$bbStock_extra->delete();
+						} 
+						if ($existing_operation_type == 'style_size') {
+
+							
+						} 
+						if ($existing_operation_type == 'style') {
+
+						}
+					}
+					
+				} else {
+					
+				}
+
+			}
+		// close		
 
 		return Redirect::to('/extra_sku');
 	}
@@ -1085,11 +1130,9 @@ class extra_opController extends Controller {
 							$bbStock_extra->delete();
 						}
 					}
-					
 				} else {
 					
 				}
-
 			}
 		// close
 
@@ -1178,19 +1221,20 @@ class extra_opController extends Controller {
 		return Redirect::to('/extra_op');
 	}
 
-	public function extra_op_delete($id) {
+	// disabled
+	// public function extra_op_delete($id) {
 
-		$db = extra_op::findOrFail($id);
+	// 	$db = extra_op::findOrFail($id);
 		
-		try {
-			$db->active = 0;
-			$db->save();
-		}
-		catch (\Illuminate\Database\QueryException $e) {
-			return view('extra_op.error');			
-		}
+	// 	try {
+	// 		$db->active = 0;
+	// 		$db->save();
+	// 	}
+	// 	catch (\Illuminate\Database\QueryException $e) {
+	// 		return view('extra_op.error');			
+	// 	}
 
-		return Redirect::to('/extra_op');
-	}
+	// 	return Redirect::to('/extra_op');
+	// }
 
 }

@@ -66,7 +66,6 @@
 					@include('errors.list')
 
 					{!! Form::close() !!}
-					<hr>
 					
 					
 					

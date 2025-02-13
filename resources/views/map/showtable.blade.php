@@ -29,8 +29,8 @@ data-export-types="['excel']"
 			<th data-sortable="true">Palet</th>
 			<th data-sortable="true">Updated at</th>
 			<th data-sortable="true">BB Destination</th>
-			<th>test</th>
-			<th>test</th>
+			<!-- <th>test</th> -->
+			<!-- <th>test</th> -->
 			<th></th>
 			<th></th>
 		</tr>
@@ -51,14 +51,14 @@ data-export-types="['excel']"
 			<td>{{ $bb->pallet }}</td>
 			<td>{{ substr($bb->updated_at,0,16)}}</td>
 			<td>{{ $bb->destination }}</td>
-			<td>
+			<!-- <td>
 				@if ($bb->bb_ready == 'NOT READY')
 					<span style='color:red'>{{ $bb->bb_ready }}</span> 
 				@else
 					<span style='color:green'>{{ $bb->bb_ready }}</span> 
 				@endif
-			</td>
-			<td><a href="{{ url('/view_op/'.$bb->bbcode) }}" class="btn btn-sucess btn-xs center-block">View OP</a></td>
+			</td> -->
+			<!-- <td><a href="{{ url('/view_op/'.$bb->bbcode) }}" class="btn btn-sucess btn-xs center-block">View OP</a></td> -->
 			<td><a href="{{ url('/bbstock/'.$bb->id.'/delete')}}" class="btn btn-danger btn-xs ">Remove</a></td>
 			<td><a href="{{ url('/bbstock/'.$bb->id.'/delete_pallet')}}" class="btn btn-warning btn-xs ">Remove Pallet</a></td>
 		</tr>

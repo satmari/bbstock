@@ -53,9 +53,12 @@ class palletController extends Controller {
 		// var_dump("Location is: ".$location." ,");
 
 		// dd(substr($location, 0,6));
-
-		if (((substr($location, 0,8) != 'KIK TEMP') and (substr($location, 0,6)) != 'SENTA-') and ($location != 'NO_BALZA')) {
-			$msg = 'Location must start with KIK TEMP , SENTA- or NO_BALZA';
+		//SENTA BUNDLE
+		if (((substr($location, 0,8) != 'KIK TEMP') and
+			 (substr($location, 0,6)) != 'SENTA-') and 
+			 ($location != 'SENTA BUNDLE') and 
+			 ($location != 'NO_BALZA')) {
+			$msg = 'Location must start with KIK TEMP , SENTA- ,SENTA BUNDLE or NO_BALZA';
 			return view('pallet.error', compact('msg'));
 		}
 

@@ -2,7 +2,9 @@
 
 @section('first')
 
-<div class="container container-table">
+<div class="container-fluid">
+    <div class="row vertical-center-row">
+        <div class="text-center">
 <big><b>All Boxes</b></big>	
 
 <div class="input-group"> <span class="input-group-addon">Filter</span>
@@ -40,7 +42,6 @@ data-export-types="['excel']">
 			<td>{{ $bb->qty }}</td>
 			<td>{{ $bb->location }}</td>
 			<td>{{ $bb->status }}</td>
-
 			<td>{{ $bb->boxdate }}</td>
 			<td>{{ $bb->updated_at }}</td>
 			
@@ -48,6 +49,8 @@ data-export-types="['excel']">
 		@endforeach	
 	</tbody>
 </table>
+		</div>
+	</div>
 </div>
 
 @endsection

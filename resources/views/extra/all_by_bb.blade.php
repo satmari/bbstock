@@ -40,6 +40,18 @@
 				@if(isset($msg1))
 					<span style="color:green">{{ $msg1 }}</span>
 				@endif
+				@if(isset($msge))
+					<span style="color:red">{{ $msge }}</span>
+					<audio autoplay="true" style="display:none;">
+						<source src="{{ asset('/css/2.wav') }}" type="audio/wav">
+					</audio>
+				@endif
+				@if(isset($msgs))
+					<span style="color:green">{{ $msgs }}</span>
+					<audio autoplay="true" style="display:none;">
+						<source src="{{ asset('/css/1.wav') }}" type="audio/wav">
+					</audio>
+				@endif
 				
 				@include('errors.list')
 				{!! Form::close() !!}
@@ -61,6 +73,13 @@
 						<td><a href="{{ url('remove_empextra3s/'.$d->id.'/'.$d->bbcode.'/'.$d->ses) }}" class="btn btn-xs btn-danger">X</a> </td>
 					</tr>
 					@endforeach
+					<tr>
+						<td>Total:
+						</td>
+					   	<td>
+						<big><b>{{ count($bblist) }}</b></big>
+					   	</td>
+					</tr>
 					</tbody>
 				</table>
 				<br>

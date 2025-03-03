@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Po;
 use App\User;
 use App\bbStock;
+use App\bb_stock_prepare_import;
 // use App\role_user;
 use DB;
 
@@ -701,6 +702,69 @@ class importController extends Controller {
 	    }
 		// return redirect('/');
 		dd('Done Kikinda');
+	}
+
+	public function postImport_bb_stock_prepare_import(Request $request) {
+	    $getSheetName = Excel::load(Request::file('file1'))->getSheetNames();
+	    
+	    foreach($getSheetName as $sheetName)
+	    {
+	        //if ($sheetName === 'Product-General-Table')  {
+	    	//selectSheetsByIndex(0)
+	           	// DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+	            //DB::table('users')->truncate();
+	
+	            //Excel::selectSheets($sheetName)->load($request->file('file'), function ($reader)
+	            //Excel::selectSheets($sheetName)->load(Input::file('file'), function ($reader)
+	            //Excel::filter('chunk')->selectSheetsByIndex(0)->load(Request::file('file'))->chunk(50, function ($reader)
+	            Excel::filter('chunk')->selectSheets($sheetName)->load(Request::file('file1'))->chunk(5000, function ($reader)
+	            
+	            {
+	                $readerarray = $reader->toArray();
+	                //var_dump($readerarray);
+
+	                foreach($readerarray as $row)
+	                {
+
+
+			            // dd($row);
+						$pro = $row['pro'];
+						$extra_mat_skeda = $row['extra_mat_skeda'];
+						$qty_to_remove_from_stock = (int)$row['qty_to_remove_from_stock'];
+						// dd($qty_to_remove_from_stock);
+
+						$table = new bb_stock_prepare_import;
+
+						$table->pro = $pro;
+						$table->extra_mat_skeda = $extra_mat_skeda;
+						$table->qty_to_remove_from_stock = $qty_to_remove_from_stock;
+									
+						$table->save();
+
+						/*
+	                	$sql = DB::connection('sqlsrv1')->select(DB::raw("SET NOCOUNT ON;
+	                		UPDATE [BdkCLZG].[dbo].[CNF_BlueBox] 
+							SET [Status] = '99'
+							WHERE [BlueBoxNum] = '".$row['bb']."';
+							SELECT TOP 1 [BlueBoxNum] FROM [BdkCLZG].[dbo].[CNF_BlueBox]
+					   "));
+					   */
+
+	                	//Kikinda
+						
+	      //           	$sql = DB::connection('sqlsrv2')->select(DB::raw("SET NOCOUNT ON;
+	      //           		UPDATE [172.27.161.221\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_BlueBox]
+							// SET [Status] = '99'
+							// WHERE [BlueBoxNum] = '".$row['bb']."';
+							// SELECT TOP 1 [BlueBoxNum] FROM [172.27.161.221\INTEOSKKA].[BdkCLZKKA].[dbo].[CNF_BlueBox]
+					  //  "));
+ 						 
+						
+	                }
+	            });
+	    }
+		// return redirect('/');
+		dd('Done');
 	}
 }
 

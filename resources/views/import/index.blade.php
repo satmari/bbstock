@@ -35,6 +35,20 @@
 				<!-- <hr> -->
 			</div>
 			<div class="panel panel-default">
+				<div class="panel-heading"><b>bbstock_prepare_import</b></div>
+				
+				{!! Form::open(['files'=>True, 'method'=>'POST', 'action'=>['importController@postImport_bb_stock_prepare_import']]) !!}
+					<div class="panel-body">
+						{!! Form::file('file1', ['class' => 'center-block']) !!}
+					</div>
+					<div class="panel-body">
+						{!! Form::submit('Import', ['class' => 'btn btn-warning center-block']) !!}
+					</div>
+					@include('errors.list')
+				{!! Form::close() !!}
+				<!-- <hr> -->
+			</div>
+			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="">
 						<a href="{{url('/')}}" class="btn btn-default btn-lg center-block">Back to main menu</a>

@@ -220,6 +220,7 @@ Route::get('import', 'importController@index');
 // Route::post('postImportSAPval', 'importController@postImportSAPval');
 Route::post('postImport_bb_su', 'importController@postImport_bb_su');
 Route::post('postImport_bb_ki', 'importController@postImport_bb_ki');
+Route::post('postImport_bb_stock_prepare_import', 'importController@postImport_bb_stock_prepare_import');
 
 // Import Extra
 Route::get('importextra', 'importExtraController@indexextra');

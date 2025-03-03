@@ -328,6 +328,7 @@ class ComposerStaticInita5b3300db605b12c56ff18c56546d88a
         'CreateBBStockExtrasTable' => __DIR__ . '/../..' . '/database/migrations/2023_09_01_085237_create_bbstock_extras_table.php',
         'CreateBbStockExtraLogsTable' => __DIR__ . '/../..' . '/database/migrations/2023_11_06_093950_create_bb_stock_extra_logs_table.php',
         'CreateBbStockLogsTable' => __DIR__ . '/../..' . '/database/migrations/2018_11_07_081541_create_bb_stock_logs_table.php',
+        'CreateBbStockPrepareImportsTable' => __DIR__ . '/../..' . '/database/migrations/2025_03_03_121659_create_bb_stock_prepare_imports_table.php',
         'CreateBbStockPreparesTable' => __DIR__ . '/../..' . '/database/migrations/2020_02_02_210431_create_bb_stock_prepares_table.php',
         'CreateBbStockTable' => __DIR__ . '/../..' . '/database/migrations/2015_11_04_214959_create_bb_stock_table.php',
         'CreateBundlelogsTable' => __DIR__ . '/../..' . '/database/migrations/2019_06_07_081329_create_bundlelogs_table.php',
